@@ -4,7 +4,7 @@ LinkedEarth LeapFROGS
 Module 5: Using GitHub for your research
 Link: https://linked.earth/LeapFROGS/module5
 
-1. Create a repository for your project. Make sure you choose and appropriate license and add a README.md file. To be able to complete the full exercise, the repository should be kept public. &#2611;
+1. **DONE**: Create a repository for your project. Make sure you choose and appropriate license and add a README.md file. To be able to complete the full exercise, the repository should be kept public.
 2. Clone the repository on your local machine using GitHub Desktop. Add your work to the local repository and edit the README.md file to give your information about your code, including which notebook to run and where to find the data. If you choose to use a series of .py files for your workflow, describe in which order they should be run and what input/output should be expected.
 3. Commit your changes and push to the main branch.
 4. Open an issue about adding a citation file to the project.
