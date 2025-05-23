@@ -1,7 +1,7 @@
 # Hands on exercise
 
-LinkedEarth LeapFROGS
-Module 5: Using GitHub for your research
+LinkedEarth LeapFROGS\n
+Module 5: Using GitHub for your research\n
 Link: https://linked.earth/LeapFROGS/module5
 
 1. **DONE**: Create a repository for your project. Make sure you choose and appropriate license and add a README.md file. To be able to complete the full exercise, the repository should be kept public.
