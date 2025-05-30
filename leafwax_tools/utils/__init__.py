@@ -1,3 +1,5 @@
 """
-Contains all basic block functionf for leafwax_tools
+Contains all basic block functions for leafwax_tools
 """
+
+from .check_for_data import *
