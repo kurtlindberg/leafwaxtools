@@ -1,1 +1,5 @@
-
+.DS_Store
+/leafwax_tools/__pycache__
+/leafwax_tools/api/__pycache__
+**/__pycache__
+./docs/_build/**
