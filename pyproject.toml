@@ -5,7 +5,7 @@ description = "A package for calculating common indices from plant leaf wax dist
 readme = "README.md"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Kurt Lindberg", email = "kurtrlindberg@gmail.com" }]
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = ["pandas", "numpy"]
 
 [tool.setuptools]
