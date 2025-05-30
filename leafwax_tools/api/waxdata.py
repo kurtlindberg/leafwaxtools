@@ -45,7 +45,7 @@ class WaxData:
             raise TypeError("Expecting type: pandas.core.frame.DataFrame")
 
 
-    def tot_conc(self, data_type, conc_name="conc", log=False, ret_name="tot_conc"):
+    def total_conc(self, data_type, conc_name="conc", log=False, ret_name="tot_conc"):
         """
         Calculates the total leaf wax concentration of each sample (DataFrame row)
 
@@ -58,11 +58,11 @@ class WaxData:
         log : bool, optional
             Whether or not to calulcate the log of total leaf wax concentration. The default is False.
         ret_name : str, optional
-            Name of the returned Pandas Series 'tot_conc'. The default is "tot_conc".
+            Name of the returned Pandas Series 'total_conc'. The default is "tot_conc".
 
         Returns
         -------
-        tot_conc : pandas.core.series.Series
+        total_conc : pandas.core.series.Series
             Pandas Series of leaf wax total concentrations per sample.
 
         """
@@ -72,26 +72,26 @@ class WaxData:
         conc_data_type = data_type + conc_name
         conc_df = self.data.filter(regex=conc_data_type)
         conc_arr = np.array(conc_df)
-        tot_conc_arr = np.zeros(len(conc_arr[:,0]))
+        total_conc_arr = np.zeros(len(conc_arr[:,0]))
         
         # add check for if self.data.conc_ugg_plant exists
         # warn user if not exists
         
         for row in range(0, len(conc_arr[:,0])):
             
-            tot_conc_arr[row] = np.nansum(conc_arr[row,:])
+            total_conc_arr[row] = np.nansum(conc_arr[row,:])
                 
-            if tot_conc_arr[row] == 0:
-                tot_conc_arr[row] = np.nan
+            if total_conc_arr[row] == 0:
+                total_conc_arr[row] = np.nan
                     
         if log is True:
-            tot_conc_arr = np.log(tot_conc_arr)
+            total_conc_arr = np.log(total_conc_arr)
         else:
-            tot_conc_arr = tot_conc_arr
+            total_conc_arr = total_conc_arr
         
-        tot_conc = pd.Series(data=tot_conc_arr, name=ret_name)
+        total_conc = pd.Series(data=total_conc_arr, name=ret_name)
         
-        return tot_conc
+        return total_conc
 
 
     '''
