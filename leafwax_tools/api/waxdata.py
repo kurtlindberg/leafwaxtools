@@ -3,12 +3,39 @@ The WaxData module is the main class for manipulating leaf wax data
 imported as a pandas.core.frame.DataFrame
 """
 
+
 import pandas as pd
 import numpy as np
 import warnings
+from ..utils import validate_data
+
 
 class WaxData:
-
+    
+    """
+    Represents leaf wax data imported as a pandas DataFrame.
+    
+    Parameters
+    ----------
+    input_data : pandas.core.frame.DataFrame
+        Pandas DataFrame of leaf wax data
+        
+    Attributes
+    ----------
+    input_data : pandas.core.frame.DataFrame
+        Pandas DataFrame of leaf wax data
+        
+    
+    Examples
+    --------
+    
+    .. jupyter-execute::
+        
+        import leafwax_tools as leafwax
+        wax_data = leafwax.WaxData(input_data=wax_df)
+        
+    """
+    
     
     def __init__(self, input_data):
 
@@ -16,24 +43,39 @@ class WaxData:
 
         if type(input_data) != pd.core.frame.DataFrame:
             raise TypeError("Expecting type: pandas.core.frame.DataFrame")
-            
-        f_data = self.data.filter(regex="f")
-        if len(f_data.columns) == 0:
-            warnings.warn("Warning: column names do not label FAMEs (n-alkanoic acids) compound class with an 'f'; i.e. c20_fconc")
-            
-        a_data = self.data.filter(regex="a")
-        if len(a_data.columns) == 0:
-            warnings.warn("Warning: column names do not label n-alkanes compound class with an 'a'\n; i.e. c20_aconc")
-
-        # add checks for column names
 
 
     def tot_conc(self, data_type, conc_name="conc", log=False, ret_name="tot_conc"):
+        """
+        Calculates the total leaf wax concentration of each sample (DataFrame row)
+
+        Parameters
+        ----------
+        data_type : str
+            Leaf wax compound class to search for; FAMEs/n-alkanoic acids ("f"), n-alkanes ("a")
+        conc_name : str, optional
+            String within self.data column names denoting leaf wax chain-length concentrations. The default is "conc".
+        log : bool, optional
+            Whether or not to calulcate the log of total leaf wax concentration. The default is False.
+        ret_name : str, optional
+            Name of the returned Pandas Series 'tot_conc'. The default is "tot_conc".
+
+        Returns
+        -------
+        tot_conc : pandas.core.series.Series
+            Pandas Series of leaf wax total concentrations per sample.
+
+        """
+        
+        validate_data(self.data, data_type)
         
         conc_data_type = data_type + conc_name
         conc_df = self.data.filter(regex=conc_data_type)
         conc_arr = np.array(conc_df)
         tot_conc_arr = np.zeros(len(conc_arr[:,0]))
+        
+        # add check for if self.data.conc_ugg_plant exists
+        # warn user if not exists
         
         for row in range(0, len(conc_arr[:,0])):
             
@@ -52,6 +94,7 @@ class WaxData:
         return tot_conc
 
 
+    '''
     def rel_abd(self, data_type, conc_name="conc", start=20, end=30, all_chain=True):
 
         conc_data_type = data_type + conc_name
@@ -90,7 +133,8 @@ class WaxData:
         rel_abd = pd.DataFrame(data=rel_abd_arr, columns = wax_conc.columns)
 
         return rel_abd
-
+    '''
+    
     '''
     def acl(self, data_type, conc_name="conc", start=20, end=30, ret_name="acl"):
 
@@ -126,8 +170,6 @@ class WaxData:
     '''
 
     # def cpi():
-
-    # def tot_conc():
 
     # def paq():
 
