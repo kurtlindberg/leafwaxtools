@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Tests for Cat Class
 """
@@ -23,6 +21,9 @@ import pandas as pd
 import numpy as np
 from leafwax_tools import WaxData
 
+# Path to test data
+DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
+
 class TestwaxdataWaxDataInit:
     ''' Test for WaxData instantiation '''
     
@@ -40,16 +41,5 @@ class TestwaxdataWaxDataInit:
        wax_data = WaxData(wax_arr)
        
        assert type(wax_data) == pd.core.frame.DataFrame
-        
-class TestwaxdataWaxDataTotConc:
-    ''' Test for tot_conc function'''
-
-class TestwaxdataWaxDataRelAbd:
-    ''' Test for rel_abd function '''
-    
-# class TestwaxdataWaxDataAcl:
-#     ''' Test for acl function '''
-    
-    
         
         
