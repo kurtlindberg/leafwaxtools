@@ -1,0 +1,20 @@
+[project]
+name = "leafwax_tools"
+version = "1.0.0"
+description = "A package for calculating common indices from plant leaf wax distribution and isotopic data"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Kurt Lindberg", email = "kurtrlindberg@gmail.com" }]
+requires-python = ">=3.13"
+dependencies = ["pandas", "numpy"]
+
+[tool.setuptools]
+license-files = []
+
+[project.urls]
+Homepage = "https://github.com/kurtlindberg/leafwax-tools"
+Issues = "https://github.com/kurtrlindberg/leafwax-tools/issues"
+
+[build-system]
+requires = ["setuptools>=69.0.2", "wheel"]
+build-backend = "setuptools.build_meta"
