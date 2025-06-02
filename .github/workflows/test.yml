@@ -1,0 +1,38 @@
+name: run pytest
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+
+    - name: Checkout files in repo
+      uses: actions/checkout@v3
+
+    - name: Setup Miniconda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: leafwax
+        environment-file: environment.yml
+        python-version: "3.12.9"
+        auto-activate-base: false
+
+    - name: Conda list
+      run: |
+        conda activate leafwax
+        conda list
+    - name: Test with pytest
+      run: |
+        conda activate leafwax
+        pip install pytest-cov
+        pytest leafwax_tools/tests --cov --cov-config=.coveragerc -svv -W ignore::UserWarning
