@@ -16,6 +16,8 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
+import os
+from pathlib import Path
 import pytest
 import pandas as pd
 import numpy as np
