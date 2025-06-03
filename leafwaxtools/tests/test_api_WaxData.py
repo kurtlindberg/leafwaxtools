@@ -21,7 +21,7 @@ from pathlib import Path
 import pytest
 import pandas as pd
 import numpy as np
-from leafwax_tools import WaxData
+from leafwaxtools import WaxData
 
 # Path to test data
 DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
