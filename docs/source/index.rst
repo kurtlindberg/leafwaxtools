@@ -12,7 +12,13 @@ Getting Started
 ===============
 
 .. toctree::
-   :maxdepth: 1
    :caption: Using leafwaxtools
+   :maxdepth: 1
    
    api.rst
+
+Search leafwaxtools
+===================
+
+* :ref:`genindex`
+* :ref:`search`
