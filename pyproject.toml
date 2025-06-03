@@ -1,6 +1,6 @@
 [project]
-name = "leafwax_tools"
-version = "1.0.0"
+name = "leafwaxtools"
+version = "0.0.2"
 description = "A package for calculating common indices from plant leaf wax distribution and isotopic data"
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -12,8 +12,8 @@ dependencies = ["pandas", "numpy"]
 license-files = []
 
 [project.urls]
-Homepage = "https://github.com/kurtlindberg/leafwax-tools"
-Issues = "https://github.com/kurtrlindberg/leafwax-tools/issues"
+Homepage = "https://github.com/kurtlindberg/leafwaxtools"
+Issues = "https://github.com/kurtrlindberg/leafwaxtools/issues"
 
 [build-system]
 requires = ["setuptools>=69.0.2", "wheel"]
