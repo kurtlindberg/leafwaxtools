@@ -1,13 +1,13 @@
-cff-version: 0.0.1
+cff-version: 0.0.2
 message: "If you use this software, please cite it as below"
 authors:
   - family-names: "Lindberg"
     given-names: "Kurt"
     orcid: "https://orcid.org/0000-0003-0863-1598"
 
-title: "leafwax_tools: A package for calculating common indices from plant leaf wax distribution and isotopic data"
+title: "leafwaxtools: A package for calculating common indices from plant leaf wax distribution and isotopic data"
 version: v0.0.2-alpha
 date-released: 2025-05-30
 doi: "https://doi.org/10.5281/zenodo.15558248"
-url: "https://github.com/kurtlindberg/leafwax_tools"
+url: "https://github.com/kurtlindberg/leafwaxtools"
   
