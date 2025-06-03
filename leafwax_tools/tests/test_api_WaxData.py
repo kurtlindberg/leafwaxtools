@@ -25,12 +25,13 @@ from leafwax_tools import WaxData
 
 # Path to test data
 DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
+data_path = os.path.join(DATA_DIR, 'Hollister_et_al_2022_leafwax_data.xlsx')
 
 class TestwaxdataWaxDataInit:
     ''' Test for WaxData instantiation '''
     
     def test_init_t0(self):
-        test_df = pd.read_excel('../data/Hollister_et_al_2022_leafwax_data.xlsx')
+        test_df = pd.read_excel(data_path)
         test_data = WaxData(test_df)
         
         assert type(test_data.data) == pd.core.frame.DataFrame
@@ -38,7 +39,7 @@ class TestwaxdataWaxDataInit:
         
     @pytest.mark.xfail
     def test_init_t1(self):
-       wax_df = pd.read_excel('../data/Hollister_et_al_2022_leafwax_data.xlsx')
+       wax_df = pd.read_excel(data_path)
        wax_arr = np.array(wax_df)
        wax_data = WaxData(wax_arr)
        
