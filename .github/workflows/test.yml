@@ -35,4 +35,4 @@ jobs:
       run: |
         conda activate leafwax
         pip install pytest-cov
-        pytest leafwax_tools/tests --cov --cov-config=.coveragerc -svv -W ignore::UserWarning
+        pytest leafwaxtools/tests --cov --cov-config=.coveragerc -svv -W ignore::UserWarning
