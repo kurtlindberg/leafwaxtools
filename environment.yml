@@ -9,5 +9,6 @@ dependencies:
   - pytest
   - numpy
   - pandas
+  - openpyxl
   - pip:
     - '-e .'
