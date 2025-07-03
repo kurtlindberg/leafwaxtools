@@ -1,21 +1,14 @@
-api package
-===========
+.. _api:
 
-Submodules
-----------
+leafwaxtools User API
+======================
 
-api.waxdata module
-------------------
+leafwaxtools is a Python package.
 
-.. automodule:: api.waxdata
+The following describes the WaxData class that supports the functionality of leafwaxtools
+
+WaxData (leafwaxtools.WaxData)
+""""""""""""""""""""""""""""""
+
+.. autoclass:: leafwaxtools.api.waxdata.WaxData
    :members:
-   :show-inheritance:
-   :undoc-members:
-
-Module contents
----------------
-
-.. automodule:: api
-   :members:
-   :show-inheritance:
-   :undoc-members:
