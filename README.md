@@ -10,7 +10,7 @@ See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) f
 
 ## Documentation
 
-Online documentation is in progress, but will soon be available through readthedocs.
+Online documentation is available through [readthedocs](https://leafwax-tools.readthedocs.io/en/latest/index.html).
 
 ## Installation
 
