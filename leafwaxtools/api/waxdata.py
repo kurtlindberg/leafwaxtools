@@ -31,8 +31,8 @@ class WaxData:
     
     .. jupyter-execute::
         
-        import leafwax_tools as leafwax
-        wax_data = leafwax.WaxData(input_data=wax_df)
+        import leafwaxtools as leafwax
+        # wax_data = leafwax.WaxData(input_data=wax_df)
         
     """
     
