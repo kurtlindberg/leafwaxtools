@@ -1,5 +1,5 @@
 """
-Contains all basic block functions for leafwax_tools
+Contains all basic block functions for leafwaxtools
 """
 
 from .validate_data import *
