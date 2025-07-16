@@ -7,20 +7,20 @@ channels:
   - default
   - conda-forge
 dependencies:
-  - python=3.12.9
+  - python=3.12
   - pip
   - pytest
   - ipykernel
+  - sphinx
+  - numpydoc>=1.1.0
+  - nbsphinx
+  - ipython
+  - sphinx-rtd-theme>=1.0.0
+  - jupyter-sphinx
+  - sphinx-copybutton
   - numpy
   - pandas
   - openpyxl
   - pip:
     - git+https://github.com/kurtlindberg/leafwaxtools.git@main
-    - Sphinx
-    - numpydoc>=1.1.0
-    - nbsphinx
-    - IPython
     - readthedocs-sphinx-search>=0.3.2
-    - sphinx-rtd-theme>=1.0.0
-    - jupyter-sphinx
-    - sphinx-copybutton
