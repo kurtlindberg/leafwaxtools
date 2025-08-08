@@ -6,8 +6,7 @@ authors:
     orcid: "https://orcid.org/0000-0003-0863-1598"
 
 title: "leafwaxtools: A package for calculating common indices from plant leaf wax distribution and isotopic data"
-version: v1.0.0
-date-released: 2025-05-30
-doi: "https://doi.org/10.5281/zenodo.15558248"
+version: v1.1.1
+date-released: 2025-08-08
 url: "https://github.com/kurtlindberg/leafwaxtools"
   
