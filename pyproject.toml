@@ -1,6 +1,6 @@
 [project]
 name = "leafwaxtools"
-version = "1.1.1"
+version = "1.2.0"
 description = "A package for calculating common indices from plant leaf wax distribution and isotopic data"
 readme = "README.md"
 license = { text = "Apache-2.0" }
