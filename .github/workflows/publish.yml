@@ -1,9 +1,15 @@
 name: Upload Python Package
 
 on:
+  # Run automatically *once* when a release us published
   release:
     branches: [ main ]
   workflow_dispatch:
+
+# Prevent duplicate runs for the same ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
