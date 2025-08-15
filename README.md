@@ -6,7 +6,7 @@ A package for calculating common indicies from plant leaf wax distribution and i
 
 ## Versions
 
-See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v1.1.1).
+See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v1.2.0).
 
 ## Documentation
 
