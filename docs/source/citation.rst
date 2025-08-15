@@ -15,7 +15,7 @@ author = {Lindberg, Kurt},
 month = june,
 title = {{leafwaxtools: A package for calculating common indices from plant leaf wax distributions and isotopic data}},
 url = {https://github.com/kurtlindberg/leafwaxtools},
-version = {v1.1.1},
+version = {v1.2.0},
 year = {2025}
 }
 
