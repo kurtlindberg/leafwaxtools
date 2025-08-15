@@ -47,12 +47,13 @@ class WaxData:
 
     def total_conc(self, data_type, conc_name="conc", log=False, ret_name="tot_conc"):
         """
-        Calculates the total leaf wax concentration of each sample (DataFrame row)
+        Calculates the total leaf wax concentration of each sample 
+        (DataFrame row).
 
         Parameters
         ----------
         data_type : str
-            Leaf wax compound class to search for; FAMEs/n-alkanoic acids ("f"), n-alkanes ("a")
+            Leaf wax compound class to search for; FAMEs/n-alkanoic acids ("f"), n-alkanes ("a").
         conc_name : str, optional
             String within self.data column names denoting leaf wax chain-length concentrations. The default is "conc".
         log : bool, optional
@@ -74,11 +75,12 @@ class WaxData:
         conc_arr = np.array(conc_df)
         total_conc_arr = np.zeros(len(conc_arr[:,0]))
         
+        # add args to choose chain-length range like other functions
+        
         # add check for if self.data.conc_ugg_plant exists
         # warn user if not exists
         
         for row in range(0, len(conc_arr[:,0])):
-            
             total_conc_arr[row] = np.nansum(conc_arr[row,:])
                 
             if total_conc_arr[row] == 0:
@@ -93,28 +95,52 @@ class WaxData:
         
         return total_conc
 
-
-    '''
+    
     def rel_abd(self, data_type, conc_name="conc", start=20, end=30, all_chain=True):
+        """
+        Calculates the relative abundance (fraction out of 1) of each leaf wax
+        carbon chain-length within a specified range for each sample 
+        (DataFrame row).
 
+        Parameters
+        ----------
+        data_type : str
+            Leaf wax compound class to search for; FAMEs/n-alkanoic acids ("f"), n-alkanes ("a").
+        conc_name : str, optional
+            String within self.data column names denoting leaf wax chain-length concentrations. The default is "conc".
+        start : int, optional
+            Shortest leaf wax carbon chain-length. The default is 20.
+        end : int, optional
+            Longest leaf wax carbon chain-length. The default is 30.
+        all_chain : bool, optional
+            Whether or not to use all carbon chain-lengths within the range or just the dominant ones. The default is True.
+
+        Returns
+        -------
+        rel_abd : pandas.core.frame.DataFrame
+            Pandas DataFrame of leaf wax carbon chain-length relative 
+            abundances per sample.
+
+        """
+        
+        validate_data(self.data, data_type)
+        
         conc_data_type = data_type + conc_name
-
         wax_conc_all = self.data.filter(regex=conc_data_type).fillna(0)
         wax_conc = pd.DataFrame()
+        
         chain_lengths = list(range(start, end+1))
 
         if all_chain is True:
             chain_lengths = chain_lengths
-
         else:
-            if data_type == "f":
-                chain_lengths = [num for num in chain_lengths if num % 2 == 0]
-            elif data_type == "a":
-                chain_lengths = [num for num in chain_lengths if num % 2 == 1]
-            else:
-                raise ValueError("data_type can only be 'f' or 'a'")
-
-        ## Filter for carbon chain-length concentration data within start-end range
+            match data_type:
+                case "f":
+                    chain_lengths = [num for num in chain_lengths if num % 2 == 0]         
+                case "a":
+                    chain_lengths = [num for num in chain_lengths if num % 2 == 1]
+                    
+        # Filter for carbon chain-length concentration data within start-end range
         for n in chain_lengths:
             wax_chain = pd.DataFrame(
                 data=np.array(wax_conc_all.filter(items=["c"+str(n)+"_"+conc_data_type])),
@@ -133,18 +159,54 @@ class WaxData:
         rel_abd = pd.DataFrame(data=rel_abd_arr, columns = wax_conc.columns)
 
         return rel_abd
-    '''
     
-    '''
-    def acl(self, data_type, conc_name="conc", start=20, end=30, ret_name="acl"):
+    
+    def acl(self, data_type, conc_name="conc", start=20, end=30, all_chain=True, ret_name="acl"):
+        """
+        Calculates the Average Chain-Length (ACL) of the specified leaf wax 
+        carbon chain-length range for each sample (DataFrame row).
 
+        Parameters
+        ----------
+        data_type : str
+            Leaf wax compound class to search for; FAMEs/n-alkanoic acids ("f"), n-alkanes ("a").
+        conc_name : str, optional
+            String within self.data column names denoting leaf wax chain-length concentrations. The default is "conc".
+        start : int, optional
+            Shortest leaf wax carbon chain-length. The default is 20.
+        end : int, optional
+            Longest leaf wax carbon chain-length. The default is 30.
+        all_chain : bool, optional
+            Whether or not to use all carbon chain-lengths within the range or just the dominant ones. The default is True.
+        ret_name : str, optional
+            Name of the returned Pandas Series 'acl'. The default is "acl".
+
+        Returns
+        -------
+        acl : pandas.core.series.Series
+            Pandas Series of ACL values per sample.
+
+        """
+        
+        validate_data(self.data, data_type)
+        
         conc_data_type = data_type + conc_name
         wax_conc_all = self.data.filter(regex=conc_data_type).fillna(0)
         # wax_conc_all = wax_conc_all.fillna(0)
-        chain_lengths = list(range(start, end+1))
         wax_conc = pd.DataFrame()
+        
+        chain_lengths = list(range(start, end+1))
 
-        ## Filter for carbon chain-length concentration data within start-end range
+        if all_chain is True:
+            chain_lengths = chain_lengths
+        else:
+            match data_type:
+                case "f":
+                    chain_lengths = [num for num in chain_lengths if num % 2 == 0]         
+                case "a":
+                    chain_lengths = [num for num in chain_lengths if num % 2 == 1]
+
+        # Filter for carbon chain-length concentration data within start-end range
         for n in chain_lengths:
             chain=pd.DataFrame(
                 data=np.array(wax_conc_all.filter(regex=str(n))),
@@ -156,18 +218,18 @@ class WaxData:
         acl_numer = np.zeros(len(wax_conc_arr[:,0]))
         acl_arr = np.zeros(len(wax_conc[:,0]))
 
-        ## Calculate ACL for each row (sample)
+        # Calculate ACL for each row (sample)
         for row in range(0, len(wax_conc_arr[:,0])):
             for col in range(0, len(wax_conc_arr[0,:])):
 
                 acl_numer[row] += wax_conc_arr[row,col] * chain_lengths[col]
-
-                acl_arr[row] = acl_numer[row]/np.sum(wax_conc_arr[row,:])
+            
+            acl_arr[row] = acl_numer[row]/np.sum(wax_conc_arr[row,:])
 
         acl = pd.Series(data=acl_arr, name=ret_name)
 
         return acl
-    '''
+    
 
     # def cpi():
 
