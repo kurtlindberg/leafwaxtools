@@ -6,7 +6,7 @@ A package for calculating common indicies from plant leaf wax distribution and i
 
 ## Versions
 
-See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v1.1.1).
+See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v1.2.0).
 
 ## Documentation
 
@@ -14,7 +14,7 @@ Online documentation is available through [readthedocs](https://leafwax-tools.re
 
 ## Installation
 
-The latest stable release is available through [Pypi](https://pypi.org/project/leafwaxtools/). We recommend using Anaconda or Miniconda with a dedicated environment. Full installation instructions will be made availabel soon.
+The latest stable release is available through [Pypi](https://pypi.org/project/leafwaxtools/). We recommend using Anaconda or Miniconda with a dedicated environment. Full installation instructions will be made available soon.
 
 ## Citation
 
