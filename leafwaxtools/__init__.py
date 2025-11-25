@@ -1,9 +1,8 @@
 # Import leafwaxtools modules
 
 import leafwaxtools.utils as utils
-from .api import WaxData
 from .api import Chain
-from .api import Iso
+from .api import Isotope
 
 
 # get the version
