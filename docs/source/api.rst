@@ -5,10 +5,16 @@ leafwaxtools User API
 
 leafwaxtools is a Python package.
 
-The following describes the WaxData class that supports the functionality of leafwaxtools
+The following describes the Chain and Isotope classes that support the functionality of leafwaxtools
 
-WaxData (leafwaxtools.WaxData)
+Chain (leafwaxtools.Chain)
+""""""""""""""""""""""""""
+
+.. autoclass:: leafwaxtools.api.chain.Chain
+   :members:
+
+Isotope (leafwaxtools.Isotope)
 """"""""""""""""""""""""""""""
 
-.. autoclass:: leafwaxtools.api.waxdata.WaxData
+.. autoclass:: leafwaxtools.api.isotope.Isotope
    :members:
