@@ -10,5 +10,8 @@ dependencies:
   - numpy
   - pandas
   - openpyxl
+  - scikit-learn
+  - scipy
   - pip:
     - '-e .'
+    - composition_stats
