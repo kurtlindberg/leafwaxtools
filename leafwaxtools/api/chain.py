@@ -3,14 +3,14 @@ The Chain module is the class for performing calculations using plant wax
 chain-length concentration/abundance data imported as a 2D array-like object
 """
 
-# from enum import Enum
+
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from composition_stats import clr, closure, multiplicative_replacement
 import scipy.stats
-import warnings
+# import warnings
 # from ..utils import validate_data
 
 
@@ -168,7 +168,7 @@ class Chain:
 
 
 
-    def pca(self, chain_lengths, use_clr=False):
+    def pca(self, chain_lengths, use_clr=True):
 
         if type(chain_lengths) is not type(list()):
             raise TypeError(
