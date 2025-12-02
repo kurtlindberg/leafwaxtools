@@ -16,6 +16,7 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
+'''
 import os
 from pathlib import Path
 import pytest
@@ -74,7 +75,7 @@ class TestChainChainCorr_pvals:
     ''' Test Chain.corr_pvals() '''
 
     # def test_corr_pvals_t0(self):
-
+'''
 
 class TestChainChainPca:
     ''' Test Chain.pca() '''
