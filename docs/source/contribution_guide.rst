@@ -31,8 +31,8 @@ Bug reports must:
 
 1. Include a minimal working example (a short, self-contained Python snippet reproducing the problem). You can format the code nicely by using GitHub-flavored Markdown::
 
-   test_df = leafwax.WaxData(test_data)
-   test_total_conc = test_df.acl()
+   test_data = leafwax.Chain(test_df)
+   test_relative_abd = test_df.relative_abd()
 
 2. Include the full version string of leafwaxtools, which you can obtain through::
 
