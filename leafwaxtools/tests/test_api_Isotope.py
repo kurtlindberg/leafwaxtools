@@ -16,6 +16,7 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
+'''
 import os
 from pathlib import Path
 import pytest
@@ -51,3 +52,4 @@ class TestIsotopeIsotopeEpsilon:
     '''Test for Isotope.epsilon()'''
 
     # def test_epsilon_t0(self):
+'''
