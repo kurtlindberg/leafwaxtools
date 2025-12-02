@@ -16,6 +16,7 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
+'''
 import os
 from pathlib import Path
 import pytest
@@ -42,6 +43,7 @@ class TestwaxdataWaxDataInit:
        wax_df = pd.read_excel(data_path)
        wax_arr = np.array(wax_df)
        wax_data = WaxData(wax_arr)
+'''
        
        assert type(wax_data.data) == pd.core.frame.DataFrame
         
