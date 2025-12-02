@@ -67,7 +67,7 @@ THis will install the latest official release, which you can view `here <https:/
 
    pip install git+https://github.com/kurtlindberg/leafwaxtools.git
 
-This version may contain bugs not caught by our continuous integration test suite; if so, please report them via `github issues <https://github.com/kurtlindberg/leafwaxtools/issues>`_
+This version may contain bugs not caught by our continuous integration test suite; if so, please report them via `github issues <https://github.com/kurtlindberg/leafwaxtools/issues>`_.
 
 If you would like to use Spyder for code development:
 
@@ -82,4 +82,4 @@ If you intent on using leafwaxtools within a Jupyter Notebook, we recommend usin
     conda install ipykernel
     python -m ipykernel install --user --name=leafwax
 
-The first line will install ipykernel and its dependencies, including IPython, Jupyter, etc. The second line will make sure the leafwax environment is visible to Jupyter (see `this page for context <https://quierozf.com/entries/jupyter-kernels-how-to-add-change-remove>`_)
+The first line will install ipykernel and its dependencies, including IPython, Jupyter, etc. The second line will make sure the leafwax environment is visible to Jupyter (see `this page for context <https://quierozf.com/entries/jupyter-kernels-how-to-add-change-remove>`_).
