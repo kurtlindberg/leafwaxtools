@@ -16,35 +16,34 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
-'''
-import os
-from pathlib import Path
-import pytest
-import pandas as pd
-import numpy as np
-from leafwaxtools import WaxData
+
+# import os
+# from pathlib import Path
+# import pytest
+# import pandas as pd
+# import numpy as np
+# from leafwaxtools import WaxData
 
 # Path to test data
-DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
-data_path = os.path.join(DATA_DIR, 'Hollister_et_al_2022_leafwax_data.xlsx')
+# DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
+# data_path = os.path.join(DATA_DIR, 'Hollister_et_al_2022_leafwax_data.xlsx')
 
-class TestwaxdataWaxDataInit:
-    ''' Test for WaxData instantiation '''
+# class TestwaxdataWaxDataInit:
+    # ''' Test for WaxData instantiation '''
     
-    def test_init_t0(self):
-        test_df = pd.read_excel(data_path)
-        test_data = WaxData(test_df)
+    # def test_init_t0(self):
+        # test_df = pd.read_excel(data_path)
+        # test_data = WaxData(test_df)
         
-        assert type(test_data.data) == pd.core.frame.DataFrame
-        #assert WaxData.data == test_data
+        # assert type(test_data.data) == pd.core.frame.DataFrame
+        # #assert WaxData.data == test_data
         
-    @pytest.mark.xfail
-    def test_init_t1(self):
-       wax_df = pd.read_excel(data_path)
-       wax_arr = np.array(wax_df)
-       wax_data = WaxData(wax_arr)
-'''
+    # @pytest.mark.xfail
+    # def test_init_t1(self):
+       # wax_df = pd.read_excel(data_path)
+       # wax_arr = np.array(wax_df)
+       # wax_data = WaxData(wax_arr)
        
-       assert type(wax_data.data) == pd.core.frame.DataFrame
+       # assert type(wax_data.data) == pd.core.frame.DataFrame
         
         
