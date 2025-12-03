@@ -3,10 +3,10 @@ The Iso module is the class for performing calculation using plant wax stable
 isotope data imported as a 2D array-like object
 """
 
-import pandas as pd
+# import pandas as pd
 import numpy as np
 import scipy.stats
-from ..utils import validate_data
+# from ..utils import validate_data
 
 
 class Isotope:
