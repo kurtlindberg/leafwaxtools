@@ -17,28 +17,66 @@ Notes on how to test:
 '''
 
 
-# import os
-# from pathlib import Path
-# import pytest
-# import pandas as pd
-# import numpy as np
-# from leafwaxtools import Chain, Isotope
+import os
+from pathlib import Path
+import pytest
+import pandas as pd
+import numpy as np
+from leafwaxtools import Chain
 
-# # Path to test data
-# DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
-# data_path = os.path.join(DATA_DIR, "Lindberg_Arctic_terrestrial_plantwaxes.csv")
+# Path to test data
+DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
+data_path = os.path.join(DATA_DIR, "gorbey2021qpt.csv")
 
 
-# class TestChainChainInit:
-#     Test for Chain instantiation
+class TestChainChainInit:
+    ''' Test for Chain instantiation '''
 
-#     # @pytest.mark.xfail
-#     def test_init_t0(self):
-#         test_df = pd.read_excel(data_path)
-#         test_data = Chain(np.array(test_df))
+    def test_init_t0(self):
+        
+        qpt_df = pd.read_csv(data_path)
+        qpt_chain_df = qpt_df[
+            [
+                'c22concentration',
+                'c24concentration',
+                'c26concentration',
+                'c28concentration',
+            ]
+        ]
+        qpt_chain_arr = np.array(qpt_chain_df)
+        qpt_chain_obj = Chain(qpt_chain_arr)
+        
+        assert qpt_chain_obj.data.all() == qpt_chain_arr.all()
+    
+    
+    def test_init_t1(self):
+        
+        qpt_df = pd.read_csv(data_path)
+        qpt_chain_df = qpt_df[
+            [
+                'c22concentration',
+                'c24concentration',
+                'c26concentration',
+                'c28concentration',
+            ]
+        ]
+        qpt_chain_arr = np.array(qpt_chain_df)
+        qpt_chain_obj = Chain(qpt_chain_arr)
+        
+        assert qpt_chain_obj.data.ndim == 2
 
-#         assert type(test_data.data) == pd.core.frame.DataFrame
-#         #assert WaxData.data == test_data
+
+    @pytest.mark.xfail
+    def test_init_t2(self):
+        
+        qpt_df = pd.read_csv(data_path)
+        qpt_chain_df = qpt_df[
+            [
+                'c22concentration',
+            ]
+        ]
+        qpt_chain_arr = np.array(qpt_chain_df)
+        qpt_chain_obj = Chain(qpt_chain_arr)
 
 
 # class TestChainChainTotal_conc:
