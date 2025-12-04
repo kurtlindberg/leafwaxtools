@@ -1,6 +1,6 @@
 """
-The Chain module is the class for performing calculations using plant wax
-chain-length concentration/abundance data imported as a 2D array-like object
+The Chain module is the class for performing calculations using wax carbon 
+chain-length concentration/abundance data imported as a 2D array-like object.
 """
 
 
@@ -15,15 +15,65 @@ import scipy.stats
 
 
 class Chain:
-
-
+    """
+    Represents leaf wax carbon chain-length concentration/abundance data
+    imported as a 2-D, array-like object (i.e., list, array) with rows 
+    representing unique samples and columns representing unique data types.
+    
+    Parameters
+    ----------
+    input_data : 2-D array-like
+        User leaf wax data.
+        
+    Attributes
+    ----------
+    input_data : 2-D array-like
+        User leaf wax data.
+        
+    
+    Examples
+    --------
+    
+    .. jupyter-execute::
+        
+        from leafwaxtools import Chain
+        
+    """
+   
     def __init__(self, input_data):
 
         self.data = input_data
+        
+        if input_data.ndim != 2:
+            raise TypeError("'input_data' must be 2-dimensional")
 
 
-    def total_conc(self, calculate_log=False, zero_total=0):
+    def total_conc(self, zero_total=0, calculate_log=False):
+        """
+        Calculates the total concentration of each sample (row).
 
+        Parameters
+        ----------
+        zero_total : int, optional
+            Return value if the sum of all columns in a row = 0. The default 
+            is 0.
+        calculate_log : bool, optional
+            Returns log (base e) of the sum of each row instead of just the 
+            sum. The default is False.
+
+        Raises
+        ------
+        ValueError
+            DESCRIPTION.
+
+        Returns
+        -------
+        total_conc : numpy.ndarray
+            1-D Numpy array of total leaf wax concentrations for each sample 
+            (row).
+
+        """
+        
         total_conc = np.zeros(len(self.data[:,0]))
 
         for row in range(0, len(self.data[:,0])):
@@ -44,6 +94,27 @@ class Chain:
 
 
     def relative_abd(self, calculate_percent=False):
+        """
+        Calculates the relative abundance (fraction out of 1 or percentage) of 
+        each leaf wax carbon chain-length for each sample (row).
+
+        Parameters
+        ----------
+        calculate_percent : bool, optional
+            DESCRIPTION. The default is False.
+
+        Raises
+        ------
+        ValueError
+            Raises an error when 'calculate_percent' is neither True nor False.
+
+        Returns
+        -------
+        rel_abd : numpy.ndarray
+            2-D Numpy array of leaf wax chain-length relative abundances 
+            (columns) for each sample (row).
+
+        """
 
         rel_abd = np.zeros(np.shape(self.data))
 
@@ -68,6 +139,39 @@ class Chain:
 
 
     def acl(self, chain_lengths):
+        """
+        Calculates the Average Chain-Length (ACL; Bray & Evans, 1961; Bush & 
+        McInerney, 2013) of each sample (row).
+        
+        References:
+        Bray, E. E., & Evans, E. D. (1961). Distribution of n-paraffins as a 
+        clue to recognition of source beds. Geochimica et Cosmochimica Acta, 
+        22(1), 2-15. https://doi.org/10.1016/0016-7037(61)90069-2
+        
+        Bush, R. T., & McInerney, F. A. (2013). Leaf wax n-alkane 
+        distributions in and across modern plants: Implications for 
+        paleoecology and chemotaxonomy. Geochimica et Cosmochimica Acta, 117, 
+        161-179. https://doi.org/10.1016/j.gca.2013.04.016
+
+        Parameters
+        ----------
+        chain_lengths : list
+            List of integers or floats representing the carbon chain-length 
+            number of each column.
+
+        Raises
+        ------
+        TypeError
+            Raises an error if 'chain_lengths' is not a list.
+        ValueError
+            Raises an error if 'chain_lengths' is an empty list.
+
+        Returns
+        -------
+        acl : numpy.ndarray
+            1-D Numpy array of ACL values for each sample (row).
+
+        """
 
         if type(chain_lengths) is not type(list()):
             raise TypeError(
@@ -93,6 +197,40 @@ class Chain:
 
 
     def cpi(self, chain_lengths, even_over_odd=True):
+        """
+        Calculates the Carbon Preference Index (CPI; Marzi et al., 1993) of 
+        each sample (row).
+        
+        References:
+        Marzi, R., Torkelson, B. E., & Olson, R. K. (1993). A revised carbon 
+        preference index. Organic Geochemistry, 20(8), 1303-1306.
+        https://doi.org/10.1016/0146-6380(93)90016-5
+
+        Parameters
+        ----------
+        chain_lengths : list
+            List of integers or floats representing the carbon chain-length 
+            number of each column.
+        even_over_odd : bool, optional
+            Calculates the CPI of even-chain over odd-chain leaf waxes (use 
+            case for n-alkanoic acids). Change to False to calculate the CPI 
+            of odd-chain over even-chain waxes (use case for n-alkanes). The 
+            default is True.
+
+        Raises
+        ------
+        TypeError
+            Raises an error if 'chain_lengths' is not a list.
+        ValueError
+            Raises an error if 'chain_lengths' is an empty list or if 
+            'even_over_odd' is neither True nor False.
+
+        Returns
+        -------
+        cpi : numpy.ndarray
+            1-D Numpy array of CPI values for each sample (row).
+
+        """
 
         if type(chain_lengths) is not type(list()):
             raise TypeError(
@@ -132,6 +270,24 @@ class Chain:
 
 
     def corr_rvals(self, minimum_obs=2):
+        """
+        Calculates the Pearson correlation r-values between each leaf wax 
+        chain-length (column).
+
+        Parameters
+        ----------
+        minimum_obs : int, optional
+            Minimum number of observations (samples/rows) required to return a
+            Pearson r-value. The default is 2.
+
+        Returns
+        -------
+        r_vals : numpy.ndarray
+            2-D Numpy array of Pearson correlation r-values between each leaf 
+            wax chain-length (column) with all values in the major diagonal 
+            equal to 1.
+
+        """
 
         r_vals = np.zeros((len(self.data[0,:]), len(self.data[0,:])))
 
@@ -150,6 +306,23 @@ class Chain:
 
 
     def corr_pvals(self, minimum_obs=2):
+        """
+        Calculates the Pearson correlation p-values between each leaf wax 
+        chain-length (column).
+
+        Parameters
+        ----------
+        minimum_obs : int, optional
+            Minimum number of observations (samples/rows) required to return a
+            Pearson r-value. The default is 2.
+
+        Returns
+        -------
+        p_vals : numpy.ndarray
+            2-D Numpy array of Pearson correlation p-values between each leaf 
+            wax chain-length (column).
+
+        """
 
         p_vals = np.zeros((len(self.data[0,:]), len(self.data[0,:])))
 
@@ -169,6 +342,50 @@ class Chain:
 
 
     def pca(self, chain_lengths, use_clr=True):
+        """
+        Performs a Principal Component Analysis (PCA) on the leaf wax 
+        chain-length data with the centered log-ratio transform (clr; 
+        Aitchison, 1982) applied to the input compositional data (Gloor et al. 
+        2017).
+                                                                  
+        References:
+        Aitchison, J. (1982). The statistical analysis of compositional data. 
+        Journal of the Royal Statistical Society: Series B (Methodological), 
+        44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
+        
+        Gloor, G. B., Macklaim, J. M., Pawlowsky-Glahn, V., & Egozcue, J. J. 
+        (2017). Microbiome datasets are compositional: and this is not 
+        optional. Frontiers in microbiology, 8, 2224.
+        https://doi.org/10.3389/fmicb.2017.02224
+
+        Parameters
+        ----------
+        chain_lengths : list
+            List of integers or floats representing the carbon chain-length 
+            number of each column..
+        use_clr : bool, optional
+            Calculates the clr of the leaf wax chain-length abundance data, 
+            replacing 0 values with 1/N where N is the number of chain-lengths 
+            (columns). The default is True.
+
+        Raises
+        ------
+        TypeError
+            Raises an error if 'chain_lengths' is not a list.
+        ValueError
+            Raises an error if 'chain_lengths' is an empty list or if 
+            'use_clr' is neither True nor False.
+
+        Returns
+        -------
+        pca_dict : dict
+            Dictionary of PCA results including the PC scores for each factor 
+            loading (chain-lengths/columns) and sample (rows). For more 
+            details on all of the returns in pca_dict['pca'], please see the 
+            documentation for the scikit-learn PCA function (sklearn.PCA()) 
+            https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
+
+        """
 
         if type(chain_lengths) is not type(list()):
             raise TypeError(
@@ -238,8 +455,8 @@ class Chain:
             wax_scale_pc = 1.0 / (wax_pc.max() - wax_pc.min())
             wax_pc_score = wax_pc * wax_scale_pc
 
-            pca_dict.update({f"wax_pc{i+1}": wax_pc})
-            pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
+            # pca_dict.update({f"wax_pc{i+1}": wax_pc})
+            # pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
             pca_dict.update({f"wax_pc{i+1}_score": wax_pc_score})
 
 
