@@ -29,25 +29,25 @@ Notes on how to test:
 
 
 # class TestIsotopeIsotopeInit:
-#     ''' Test for Isotope instantiation '''
+#     Test for Isotope instantiation
 
 #     # @pytest.mark.xfail
 #     # def test_init_t0(self):
 
 
 # class TestIsotopeIsotopeIso_range:
-#     ''' Test for Isotope.iso_range() '''
+#     Test for Isotope.iso_range()
 
 #     # def test_iso_range_t0(self):
 
 
 # class TestIsotopeIsotopeIso_avg:
-#     ''' Test for Isootpe.iso_avg() '''
+#     Test for Isootpe.iso_avg()
 
 #     # def test_iso_avg_t0(self):
 
 
 # class TestIsotopeIsotopeEpsilon:
-#     '''Test for Isotope.epsilon()'''
+#     Test for Isotope.epsilon()
 
 #     # def test_epsilon_t0(self):
