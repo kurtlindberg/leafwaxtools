@@ -1,6 +1,6 @@
 # Import leafwaxtools modules
 
-import leafwaxtools.utils as utils
+# import leafwaxtools.utils as utils
 from .api import Chain
 from .api import Isotope
 
