@@ -16,23 +16,66 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
-# import os
-# from pathlib import Path
-# import pytest
-# import pandas as pd
-# import numpy as np
-# from leafwaxtools import Chain, Isotope
+import os
+from pathlib import Path
+import pytest
+import pandas as pd
+import numpy as np
+from leafwaxtools import Isotope
 
-# # Path to test data
-# DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
-# data_path = os.path.join(DATA_DIR, "Lindberg_Arctic_terrestrial_plantwaxes.csv")
+# Path to test data
+DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
+data_path = os.path.join(DATA_DIR, "gorbey2021qpt.csv")
 
 
-# class TestIsotopeIsotopeInit:
-#     Test for Isotope instantiation
+class TestIsotopeIsotopeInit:
+    ''' Test for Isotope instantiation '''
 
-#     # @pytest.mark.xfail
-#     # def test_init_t0(self):
+    def test_init_t0(self):
+        
+        qpt_df = pd.read_csv(data_path)
+        qpt_isotope_df = qpt_df[
+            [
+                'c22d2h',
+                'c24d2h',
+                'c26d2h',
+                'c28d2h'
+            ]
+        ]
+        qpt_isotope_arr = np.array(qpt_isotope_df)
+        qpt_isotope_obj = Isotope(qpt_isotope_arr)
+        
+        assert qpt_isotope_obj.data.all() == qpt_isotope_arr.all()
+        
+    
+    def test_init_t1(self):
+        
+        qpt_df = pd.read_csv(data_path)
+        qpt_isotope_df = qpt_df[
+            [
+                'c22d2h',
+                'c24d2h',
+                'c26d2h',
+                'c28d2h'
+            ]
+        ]
+        qpt_isotope_arr = np.array(qpt_isotope_df)
+        qpt_isotope_obj = Isotope(qpt_isotope_arr)
+        
+        assert qpt_isotope_obj.data.ndim == 2
+    
+        
+    @pytest.mark.xfail    
+    def test_init_t2(self):
+        
+        qpt_df = pd.read_csv(data_path)
+        qpt_isotope_df = qpt_df[
+            [
+                'c22d2h',
+            ]
+        ]
+        qpt_isotope_arr = np.array(qpt_isotope_df)
+        qpt_isotope_obj = Isotope(qpt_isotope_arr)
 
 
 # class TestIsotopeIsotopeIso_range:
