@@ -1,5 +1,5 @@
 # This environment includes all the required packages for this repo including running the test suite.
-name: leafwax
+name: leafwax_rtd
 version: 2
 sphinx:
   configuration: docs/source/conf.py
