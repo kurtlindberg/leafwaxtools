@@ -29,16 +29,16 @@ Bug reports are an important part of improving any software. Having a complete b
 Trying the bug-producing code out on the master branch is often a worthwhile exercise to confirm the bug still exists. It is also worth searching existing bug reports and pull requests to see if the issue has already been reported and/or fixed.
 Bug reports must:
 
-1. Include a minimal working example (a short, self-contained Python snippet reproducing the problem). You can format the code nicely by using GitHub-flavored Markdown::
+a. Include a minimal working example (a short, self-contained Python snippet reproducing the problem). You can format the code nicely by using GitHub-flavored Markdown::
 
-   test_df = leafwax.WaxData(test_data)
-   test_total_conc = test_df.acl()
+   test_data = leafwax.Chain(test_df)
+   test_relative_abd = test_df.relative_abd()
 
-2. Include the full version string of leafwaxtools, which you can obtain through::
+b. Include the full version string of leafwaxtools, which you can obtain through::
 
    leafwax.__version__
 
-3. Explain why the current behavior is wrong/not desired and what you expect or would like to see instead.
+c. Explain why the current behavior is wrong/not desired and what you expect or would like to see instead.
 
 
 Working with the leafwaxtools codebase

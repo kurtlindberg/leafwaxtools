@@ -1,8 +1,8 @@
 """
-Tests for Cat Class
+Tests for Isotope Class
 """
 
-''' Tests for pyCatSim.api.cat.Cat
+''' Tests for leafwaxtools.api.isotope.Isotope
 
 Naming rules:
 1. class: Test{filename}{Class}{method} with appropriate camel case
@@ -16,34 +16,38 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
-
 # import os
 # from pathlib import Path
 # import pytest
 # import pandas as pd
 # import numpy as np
-# from leafwaxtools import WaxData
+# from leafwaxtools import Chain, Isotope
 
-# Path to test data
+# # Path to test data
 # DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
-# data_path = os.path.join(DATA_DIR, 'Hollister_et_al_2022_leafwax_data.xlsx')
+# data_path = os.path.join(DATA_DIR, "Lindberg_Arctic_terrestrial_plantwaxes.csv")
 
-# class TestwaxdataWaxDataInit:
-    # ''' Test for WaxData instantiation '''
-    
-    # def test_init_t0(self):
-        # test_df = pd.read_excel(data_path)
-        # test_data = WaxData(test_df)
-        
-        # assert type(test_data.data) == pd.core.frame.DataFrame
-        # #assert WaxData.data == test_data
-        
-    # @pytest.mark.xfail
-    # def test_init_t1(self):
-       # wax_df = pd.read_excel(data_path)
-       # wax_arr = np.array(wax_df)
-       # wax_data = WaxData(wax_arr)
-       
-       # assert type(wax_data.data) == pd.core.frame.DataFrame
-        
-        
+
+# class TestIsotopeIsotopeInit:
+#     Test for Isotope instantiation
+
+#     # @pytest.mark.xfail
+#     # def test_init_t0(self):
+
+
+# class TestIsotopeIsotopeIso_range:
+#     Test for Isotope.iso_range()
+
+#     # def test_iso_range_t0(self):
+
+
+# class TestIsotopeIsotopeIso_avg:
+#     Test for Isootpe.iso_avg()
+
+#     # def test_iso_avg_t0(self):
+
+
+# class TestIsotopeIsotopeEpsilon:
+#     Test for Isotope.epsilon()
+
+#     # def test_epsilon_t0(self):
