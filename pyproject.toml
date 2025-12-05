@@ -1,6 +1,6 @@
 [project]
 name = "leafwaxtools"
-version = "1.2.0"
+version = "2.0.0"
 description = "A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data"
 readme = "README.md"
 license = { text = "Apache-2.0" }
