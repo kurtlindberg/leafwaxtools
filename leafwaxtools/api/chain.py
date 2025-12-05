@@ -18,17 +18,18 @@ class Chain:
     """
     Represents leaf wax carbon chain-length concentration/abundance data
     imported as a 2-D, array-like object (i.e., list, array) with rows 
-    representing unique samples and columns representing unique data types.
+    representing unique samples and columns representing unique data types 
+    (carbon chain-length number).
     
     Parameters
     ----------
     input_data : 2-D array-like
-        User leaf wax data.
+        User leaf wax chain-length concentration/abundance data.
         
     Attributes
     ----------
     input_data : 2-D array-like
-        User leaf wax data.
+        User leaf wax chain-length concentration/abundance data.
         
     
     Examples
@@ -44,13 +45,13 @@ class Chain:
 
         self.data = input_data
         
-        if input_data.ndim != 2:
+        if self.data.ndim != 2:
             raise TypeError("'input_data' must be 2-dimensional")
 
 
     def total_conc(self, zero_total=0, calculate_log=False):
         """
-        Calculates the total concentration of each sample (row).
+        Calculates the total concentration of each sample (rows).
 
         Parameters
         ----------
@@ -64,7 +65,7 @@ class Chain:
         Raises
         ------
         ValueError
-            DESCRIPTION.
+            Raises an error when 'calculate_log' is neither True nor False.
 
         Returns
         -------
@@ -96,12 +97,13 @@ class Chain:
     def relative_abd(self, calculate_percent=False):
         """
         Calculates the relative abundance (fraction out of 1 or percentage) of 
-        each leaf wax carbon chain-length for each sample (row).
+        each leaf wax carbon chain-length (columns) for each sample (rows).
 
         Parameters
         ----------
         calculate_percent : bool, optional
-            DESCRIPTION. The default is False.
+            Calculate each chain-length relative abundance as a percentage 
+            instead of a fraction of 1. The default is False.
 
         Raises
         ------
@@ -141,9 +143,10 @@ class Chain:
     def acl(self, chain_lengths):
         """
         Calculates the Average Chain-Length (ACL; Bray & Evans, 1961; Bush & 
-        McInerney, 2013) of each sample (row).
+        McInerney, 2013) of each sample (rows).
         
         References:
+            
         Bray, E. E., & Evans, E. D. (1961). Distribution of n-paraffins as a 
         clue to recognition of source beds. Geochimica et Cosmochimica Acta, 
         22(1), 2-15. https://doi.org/10.1016/0016-7037(61)90069-2
@@ -199,9 +202,10 @@ class Chain:
     def cpi(self, chain_lengths, even_over_odd=True):
         """
         Calculates the Carbon Preference Index (CPI; Marzi et al., 1993) of 
-        each sample (row).
+        each sample (rows).
         
         References:
+            
         Marzi, R., Torkelson, B. E., & Olson, R. K. (1993). A revised carbon 
         preference index. Organic Geochemistry, 20(8), 1303-1306.
         https://doi.org/10.1016/0146-6380(93)90016-5
@@ -272,7 +276,8 @@ class Chain:
     def corr_rvals(self, minimum_obs=2):
         """
         Calculates the Pearson correlation r-values between each leaf wax 
-        chain-length (column).
+        chain-length (columns). To be extended with other correlation methods 
+        (Spearman, Kendall Tau) in a future version.
 
         Parameters
         ----------
@@ -308,7 +313,8 @@ class Chain:
     def corr_pvals(self, minimum_obs=2):
         """
         Calculates the Pearson correlation p-values between each leaf wax 
-        chain-length (column).
+        chain-length (columns). To be extended with other correlation methods 
+        (Spearman, Kendall Tau) in a future version.
 
         Parameters
         ----------
@@ -349,6 +355,7 @@ class Chain:
         2017).
                                                                   
         References:
+            
         Aitchison, J. (1982). The statistical analysis of compositional data. 
         Journal of the Royal Statistical Society: Series B (Methodological), 
         44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
