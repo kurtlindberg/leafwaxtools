@@ -4,7 +4,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 
-import leafwaxtools as leafwax
+import leafwaxtools
 import sys
 import os
 
@@ -22,8 +22,8 @@ sys.path.insert(0,os.path.abspath('../leafwaxtools'))
 project = 'leafwaxtools'
 copyright = '2025, Kurt Lindberg'
 author = 'Kurt Lindberg'
-release = leafwax.__version__
-version = leafwax.__version__
+release = leafwaxtools.__version__
+version = leafwaxtools.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
