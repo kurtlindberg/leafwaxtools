@@ -24,12 +24,12 @@ class Chain:
     Parameters
     ----------
     input_data : 2-D array-like
-        User leaf wax chain-length data.
+        User leaf wax chain-length concentration/abundance data.
         
     Attributes
     ----------
     input_data : 2-D array-like
-        User leaf wax chain-length data.
+        User leaf wax chain-length concentration/abundance data.
         
     
     Examples
@@ -65,7 +65,7 @@ class Chain:
         Raises
         ------
         ValueError
-            DESCRIPTION.
+            Raises an error when 'calculate_log' is neither True nor False.
 
         Returns
         -------
@@ -102,7 +102,8 @@ class Chain:
         Parameters
         ----------
         calculate_percent : bool, optional
-            DESCRIPTION. The default is False.
+            Calculate each chain-length relative abundance as a percentage 
+            instead of a fraction of 1. The default is False.
 
         Raises
         ------
