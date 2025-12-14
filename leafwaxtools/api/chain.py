@@ -83,13 +83,14 @@ class Chain:
             if total_conc[row] == 0:
                 total_conc[row] = zero_total
 
-        match calculate_log:
-            case True:
-                total_conc = np.log(total_conc)
-            case False:
-                total_conc = total_conc
-            case _:
-                raise ValueError("'calculate_log' must either be True or False (default)")
+        if calculate_log is True:
+            total_conc = np.log(total_conc)
+
+        elif calculate_log is False:
+            total_conc = total_conc
+
+        else:
+             raise ValueError("'calculate_log' must either be True or False (default)")
 
         return total_conc
 
@@ -125,17 +126,16 @@ class Chain:
 
                 rel_abd[row,col] = self.data[row,col]/np.sum(self.data[row,:])
                 
-        match calculate_percent:
-            case True:
-                for row in range(0, len(self.data[:,0])):
+        if calculate_percent is True:
+            for row in range(0, len(self.data[:,0])):
                     for col in range(0, len(self.data[0,:])):
                         rel_abd[row,col] = rel_abd[row,col]*100
-                
-            case False:
-                rel_abd = rel_abd
-            
-            case _:
-                raise ValueError("'calculate_percent' must either be True or False (default)")
+
+        elif calculate_percent is False:
+            rel_abd = rel_abd
+
+        else:
+            raise ValueError("'calculate_percent' must either be True or False (default)")
 
         return rel_abd
 
@@ -176,7 +176,7 @@ class Chain:
 
         """
 
-        if type(chain_lengths) is not type(list()):
+        if type(chain_lengths) is not list:
             raise TypeError(
                 "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 24, 26, 28]"
             )
@@ -185,6 +185,8 @@ class Chain:
             raise ValueError(
                 "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
+
+        # Add check if len(chain_lengths) != # of data columns
 
         acl_numer = np.zeros(len(self.data[:,0]))
         acl = np.zeros(len(self.data[:,0]))
@@ -236,7 +238,7 @@ class Chain:
 
         """
 
-        if type(chain_lengths) is not type(list()):
+        if type(chain_lengths) is not list:
             raise TypeError(
                 "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 23, 24, 25, 26]"
             )
@@ -258,17 +260,16 @@ class Chain:
         data_odd = np.array(data.filter(items=(map(str, chain_lengths_odd))))
         cpi = np.zeros(len(self.data[:,0]))
 
-        match even_over_odd:
-            case True:
-                for row in range(0, len(self.data[:,0])):
+        if even_over_odd is True:
+            for row in range(0, len(self.data[:,0])):
                     cpi[row] = (np.nansum(data_even[row,0:-1]) + np.nansum(data_even[row,1:])) / (2 * np.nansum(data_odd[row,:]))
 
-            case False:
-                for row in range(0, len(self.data[:,0])):
+        elif even_over_odd is False:
+             for row in range(0, len(self.data[:,0])):
                     cpi[row] = (np.nansum(data_odd[row,0:-1]) + np.nansum(data_odd[row,1:])) / (2 * np.nansum(data_even[row,:]))
 
-            case _:
-                raise ValueError("'even_over_odd' must be True (default) or False")
+        else:
+             raise ValueError("'even_over_odd' must be True (default) or False")
 
         return cpi
 
@@ -394,7 +395,7 @@ class Chain:
 
         """
 
-        if type(chain_lengths) is not type(list()):
+        if type(chain_lengths) is not list:
             raise TypeError(
                 "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 23, 24, 25, 26]"
             )
@@ -415,18 +416,16 @@ class Chain:
             if np.sum(self.data[row,:]) == 0:
         '''
 
+        if use_clr is True:
+            wax_relabd = closure(multiplicative_replacement(self.data))
+            wax_clr = clr(wax_relabd)
+            wax_data = pd.DataFrame(data=wax_clr, columns=chain_lengths)
 
-        match use_clr:
-            case True:
-                wax_relabd = closure(multiplicative_replacement(self.data))
-                wax_clr = clr(wax_relabd)
-                wax_data = pd.DataFrame(data=wax_clr, columns=chain_lengths)
+        elif use_clr is False:
+            wax_data = pd.DataFrame(data=self.relative_abd(), columns=chain_lengths)
 
-            case False:
-                wax_data = pd.DataFrame(data=self.relative_abd(), columns=chain_lengths)
-                
-            case _:
-                raise ValueError("'use_clr' must be True or False (default)")
+        else:
+             raise ValueError("'use_clr' must be True or False (default)")
 
         wax_scaler = StandardScaler()
         wax_scaler.fit(wax_data)
