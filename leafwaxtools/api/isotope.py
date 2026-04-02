@@ -155,8 +155,18 @@ class Isotope:
         epsilon = (((1000+epsilon_numerator)/(1000+epsilon_denominator))-1)*1000
 
         return epsilon
-    
 
+    
+    def wax_to_water(self, epsilon, epsilon_numerator=None):
+        
+        if epsilon_numerator is None:
+            epsilon_numerator = self.data
+            
+        water_iso = ((1000+epsilon_numerator)/((epsilon/1000)+1))-1000
+        
+        return water_iso
+
+    
     def corr_rvals(self, minimum_obs=2):
         """
         Calculates the Pearson correlation r-values between each leaf wax 
