@@ -6,7 +6,7 @@ A Python package for calculating common indicies from plant leaf wax carbon chai
 
 ## Versions
 
-See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v2.0.0).
+See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v2.1.1).
 
 ## Documentation
 
