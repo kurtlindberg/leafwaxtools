@@ -46,7 +46,7 @@ class Isotope:
 
     def value_range(self):
         """
-        Calculates the maximum isotope value range (max. - min.) between all 
+        Calculates the maximum isotope value range (max - min) between all 
         chain-lengths (columns) of each sample (rows).
 
         Returns
@@ -162,7 +162,7 @@ class Isotope:
         Calculates the isotopic value of a source material to a leaf wax using 
         an isotopic fractionation factor (epsilon). A common application is the
         calculation of source water (e.g., precipitation, lake water) stable
-        hydrogen isotope ratios using leaf wax stable hydrogen isotopes and an
+        hydrogen isotope (d2H) values using leaf wax d2H values and an
         associated epsilon value between the source water and leaf wax (e.g., 
         Feakins, 2013; Holtzman et al., 2025).
         
