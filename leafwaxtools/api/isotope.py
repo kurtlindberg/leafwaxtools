@@ -46,7 +46,7 @@ class Isotope:
 
     def value_range(self):
         """
-        Calculates the maximum isotope value range (max. - min.) between all 
+        Calculates the maximum isotope value range (max - min) between all 
         chain-lengths (columns) of each sample (rows).
 
         Returns
@@ -115,7 +115,7 @@ class Isotope:
         """
         Calculates the isotopic fractionation factor (epsilon) between stable 
         isotope values/arrays (permil units) in the numerator and denominator 
-        of the following equation (e.g. Diefendorf & Freimuth, 2017):
+        of the following equation (e.g., Diefendorf & Freimuth, 2017):
             
         epsilon = (((1000 + numerator) / (1000 + denominator)) - 1) * 1000
         
@@ -156,6 +156,53 @@ class Isotope:
 
         return epsilon
     
+    
+    def wax_to_source(self, epsilon, epsilon_numerator=None):
+        """
+        Calculates the isotopic value of a source material to a leaf wax using 
+        an isotopic fractionation factor (epsilon). A common application is the
+        calculation of source water (e.g., precipitation, lake water) stable
+        hydrogen isotope (d2H) values using leaf wax d2H values and an
+        associated epsilon value between the source water and leaf wax (e.g., 
+        Feakins, 2013; Holtzman et al., 2025).
+        
+        References:
+            
+        Feakins, S. J. (2013). Pollen-corrected leaf wax D/H reconstructions of
+        northeast African hydrological changes during the late Miocene. 
+        Palaeogeography, Palaeoclimatology, Palaeoecology, 374, 62-71.
+        https://doi.org/10.1016/j.palaeo.2013.01.004
+        
+        Holtzman, H., Thomas, E. K., Erb, M., Marshall, L., Castañeda, I. S., 
+        Kaufman, D., ... & Melles, M. (2025). Early Holocene atmospheric 
+        circulation changes over northern Europe based on isotopic and 
+        biomarker evidence from Kola Peninsula. Paleoceanography and 
+        Paleoclimatology, 40(3), e2024PA005076. 
+        https://doi.org/10.1029/2024PA005076
+
+        Parameters
+        ----------
+        epsilon : 1-D or 2-D array-like
+            Isotopic fractionation factor (epsilon) value/array.
+        epsilon_numerator : 1-D or 2-D array-like, optional
+            Numerator stable isotope value/array. Uses Isotope.data by default 
+            if no argument is passed. The default is None.
+
+        Returns
+        -------
+        source_isotope : 1-D or 2-D array-like
+            1-D or 2-D array-like of source isotope values for each sample 
+            (row) and chain-length (column; if applicable).
+
+        """        
+        
+        if epsilon_numerator is None:
+            epsilon_numerator = self.data
+            
+        source_isotope = ((1000+epsilon_numerator)/((epsilon/1000)+1))-1000
+        
+        return source_isotope
+
 
     def corr_rvals(self, minimum_obs=2):
         """
