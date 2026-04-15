@@ -18,9 +18,6 @@ dependencies:
   - sphinx-rtd-theme>=1.0.0
   - jupyter-sphinx
   - sphinx-copybutton
-  - numpy
-  - pandas
-  - openpyxl
   - pip:
     - git+https://github.com/kurtlindberg/leafwaxtools.git@main
     - readthedocs-sphinx-search>=0.3.2
