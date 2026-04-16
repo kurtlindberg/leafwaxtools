@@ -4,19 +4,20 @@ version: 2
 sphinx:
   configuration: docs/source/conf.py
 channels:
+  - conda-forge
   - defaults
 dependencies:
-  - python=3.12
+  - python=3.12.*
   - pip
-  - pytest
   - ipykernel
-  - sphinx
-  - numpydoc>=1.1.0
-  - ipython
-  - sphinx-rtd-theme>=1.0.0
   - pip:
-    - git+https://github.com/kurtlindberg/leafwaxtools.git@main
-    - readthedocs-sphinx-search>=0.3.2
-    - jupyter-sphinx
+    - sphinx
+    - pytest
+    - numpydoc>=1.1.0
     - nbsphinx
+    - ipython
+    - readthedocs-sphinx-search>=0.3.2
+    - sphinx-rtd-theme>=1.0.0
+    - jupyter-sphinx
     - sphinx-copybutton
+    - git+https://github.com/kurtlindberg/leafwaxtools.git@main
