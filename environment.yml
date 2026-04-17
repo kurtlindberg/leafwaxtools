@@ -12,6 +12,6 @@ dependencies:
   - openpyxl
   - scikit-learn
   - scipy
+  - scikit-bio
   - pip:
     - '-e .'
-    - composition_stats
