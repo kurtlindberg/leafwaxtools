@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from composition_stats import clr, closure, multiplicative_replacement
+from skbio.stats.composition import clr, closure, multi_replace
 import scipy.stats
 # import warnings
 # from ..utils import validate_data
@@ -92,6 +92,7 @@ class Chain:
         else:
              raise ValueError("'calculate_log' must either be True or False (default)")
 
+         
         return total_conc
 
 
@@ -137,6 +138,7 @@ class Chain:
         else:
             raise ValueError("'calculate_percent' must either be True or False (default)")
 
+        
         return rel_abd
 
 
@@ -198,6 +200,7 @@ class Chain:
 
             acl[row] = acl_numer[row]/np.sum(self.data[row,:])
 
+            
         return acl
 
 
@@ -271,6 +274,7 @@ class Chain:
         else:
              raise ValueError("'even_over_odd' must be True (default) or False")
 
+         
         return cpi
 
 
@@ -308,6 +312,7 @@ class Chain:
                 else:
                     r_vals[row,col] = np.nan
 
+                    
         return r_vals
 
 
@@ -344,6 +349,7 @@ class Chain:
                 else:
                     p_vals[row,col] = np.nan
 
+                    
         return p_vals
 
 
@@ -404,20 +410,13 @@ class Chain:
             raise ValueError(
                 "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
-
-        '''
-        # deal with missing data
-        for row in range(0, len(self.data[:,0]):
-            for col i range(0, len(self.data[0,:]):
-
-                if self.data[row,col] == np.nan:
-                    self.data[row,col] = 0
-
+        
+        for row in range(0, len(self.data[:,0])):
             if np.sum(self.data[row,:]) == 0:
-        '''
-
+                raise ValueError("Sample in row i does not contain any leaf wax chain-length data (concentration or abundances == NaN or 0). Please remove these samples from the input data array before performing PCA.")
+        
         if use_clr is True:
-            wax_relabd = closure(multiplicative_replacement(self.data))
+            wax_relabd = multi_replace(self.data)
             wax_clr = clr(wax_relabd)
             wax_data = pd.DataFrame(data=wax_clr, columns=chain_lengths)
 
@@ -465,5 +464,5 @@ class Chain:
             # pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
             pca_dict.update({f"wax_pc{i+1}_score": wax_pc_score})
 
-
+            
         return pca_dict
