@@ -6,7 +6,7 @@ readme = "README.md"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Kurt Lindberg", email = "kurtrlindberg@gmail.com" }]
 requires-python = ">=3.12"
-dependencies = ["pandas", "numpy", "scikit-learn", "scipy", "composition_stats"]
+dependencies = ["pandas", "numpy", "scikit-learn", "scipy", "scikit-bio"]
 
 [tool.setuptools]
 license-files = []
