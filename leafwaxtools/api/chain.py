@@ -433,16 +433,6 @@ class Chain:
         wax_pca = PCA(n_components=len(chain_lengths))
         wax_pca.fit_transform(wax_data_scaled)
 
-        # wax_PC_scores = pd.DataFrame(
-        #     wax_pca.fit_transform(wax_data_scaled),
-        #     columns=chain_lengths
-        # )
-        # wax_loadings = pd.DataFrame(
-        #     wax_pca.components_.T,
-        #     columns=chain_lengths,
-        #     index=wax_data.columns
-        # )
-
         wax_ldings = wax_pca.components_
         wax_features = wax_data.columns
         wax_pc_values = np.arange(wax_pca.n_components_) + 1
@@ -462,7 +452,7 @@ class Chain:
 
             # pca_dict.update({f"wax_pc{i+1}": wax_pc})
             # pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
-            pca_dict.update({f"wax_pc{i+1}_score": wax_pc_score})
+            pca_dict.update({f"pc{i+1}_scores": wax_pc_score})
 
             
         return pca_dict
