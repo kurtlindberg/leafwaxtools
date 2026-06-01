@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from skbio.stats.composition import clr, closure, multi_replace
 import scipy.stats
-# import warnings
+import warnings
 # from ..utils import validate_data
 
 
@@ -364,7 +364,7 @@ class Chain:
             #     data_df_scaled = pd.DataFrame(data=data_ilr_transform, columns=chain_lengths)
 
             case None:
-                warnings.warn("It is recommended that the user apply a scaling method to their data for Principal Component Analysis.", UserWarning)
+                warnings.warn("It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
                 data_df_scaled = pd.DataFrame(data=self.data, columns=chain_lengths)
 
             case _:
