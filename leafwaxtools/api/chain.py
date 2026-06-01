@@ -164,8 +164,6 @@ class Chain:
 
         Raises
         ------
-        TypeError
-            Raises an error if 'chain_lengths' is not a list.
         ValueError
             Raises an error if 'chain_lengths' is an empty list.
 
@@ -175,11 +173,6 @@ class Chain:
             1-D Numpy array of ACL values for each sample (row).
 
         """
-
-        if type(chain_lengths) is not list:
-            raise TypeError(
-                "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 24, 26, 28]"
-            )
 
         if len(chain_lengths) < 1:
             raise ValueError(
@@ -225,8 +218,6 @@ class Chain:
 
         Raises
         ------
-        TypeError
-            Raises an error if 'chain_lengths' is not a list.
         ValueError
             Raises an error if 'chain_lengths' is an empty list or if 
             'even_over_odd' is neither True nor False.
@@ -237,11 +228,6 @@ class Chain:
             1-D Numpy array of CPI values for each sample (row).
 
         """
-
-        if type(chain_lengths) is not list:
-            raise TypeError(
-                "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 23, 24, 25, 26]"
-            )
 
         if len(chain_lengths) < 1:
             raise ValueError(
