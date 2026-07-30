@@ -1,15 +1,11 @@
 # This environment includes all the required packages for this repo including running the test suite.
 name: leafwax_rtd
-version: 2
-sphinx:
-  configuration: docs/source/conf.py
 channels:
   - conda-forge
   - defaults
 dependencies:
   - python==3.12.13
   - pip==26.2
-  - ipykernel==7.3.0
   - pip:
     - sphinx==9.1.0
     - pytest==9.1.1
