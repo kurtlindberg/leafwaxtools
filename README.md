@@ -2,11 +2,11 @@
 
 # leafwaxtools
 
-A Python package for calculating common indicies from plant leaf wax carbon chain-length distribution and isotopic data.
+A Python package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data.
 
 ## Versions
 
-See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v2.1.2).
+See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v2.2.0).
 
 ## Documentation
 
