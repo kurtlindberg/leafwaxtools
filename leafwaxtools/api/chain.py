@@ -92,7 +92,6 @@ class Chain:
         else:
              raise ValueError("'calculate_log' must either be True or False (default)")
 
-         
         return total_conc
 
 
@@ -124,7 +123,6 @@ class Chain:
 
         for row in range(0, len(self.data[:,0])):
             for col in range(0, len(self.data[0,:])):
-
                 rel_abd[row,col] = self.data[row,col]/np.sum(self.data[row,:])
                 
         if calculate_percent is True:
@@ -138,7 +136,6 @@ class Chain:
         else:
             raise ValueError("'calculate_percent' must either be True or False (default)")
 
-        
         return rel_abd
 
 
@@ -160,16 +157,14 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : list
-            List of integers or floats representing the carbon chain-length 
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon chain-length 
             number of each column.
 
         Raises
         ------
-        TypeError
-            Raises an error if 'chain_lengths' is not a list.
         ValueError
-            Raises an error if 'chain_lengths' is an empty list.
+            Raises an error if 'chain_lengths' is empty.
 
         Returns
         -------
@@ -178,14 +173,9 @@ class Chain:
 
         """
 
-        if type(chain_lengths) is not list:
-            raise TypeError(
-                "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 24, 26, 28]"
-            )
-
         if len(chain_lengths) < 1:
             raise ValueError(
-                "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
 
         # Add check if len(chain_lengths) != # of data columns
@@ -195,12 +185,10 @@ class Chain:
 
         for row in range(0, len(self.data[:,0])):
             for col in range(0, len(self.data[0,:])):
-
                 acl_numer[row] += self.data[row,col] * chain_lengths[col]
 
             acl[row] = acl_numer[row]/np.sum(self.data[row,:])
 
-            
         return acl
 
 
@@ -217,8 +205,8 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : list
-            List of integers or floats representing the carbon chain-length 
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon chain-length 
             number of each column.
         even_over_odd : bool, optional
             Calculates the CPI of even-chain over odd-chain leaf waxes (use 
@@ -228,10 +216,8 @@ class Chain:
 
         Raises
         ------
-        TypeError
-            Raises an error if 'chain_lengths' is not a list.
         ValueError
-            Raises an error if 'chain_lengths' is an empty list or if 
+            Raises an error if 'chain_lengths' is empty or if 
             'even_over_odd' is neither True nor False.
 
         Returns
@@ -241,14 +227,9 @@ class Chain:
 
         """
 
-        if type(chain_lengths) is not list:
-            raise TypeError(
-                "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 23, 24, 25, 26]"
-            )
-
         if len(chain_lengths) < 1:
             raise ValueError(
-                "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
 
         '''
@@ -274,7 +255,6 @@ class Chain:
         else:
              raise ValueError("'even_over_odd' must be True (default) or False")
 
-         
         return cpi
 
 
@@ -303,7 +283,6 @@ class Chain:
 
         for row in range(0, len(r_vals[:,0])):
             for col in range(0, len(r_vals[0,:])):
-
                 x_corr = np.array(self.data[:,row])
                 y_corr = np.array(self.data[:,col])
 
@@ -311,8 +290,7 @@ class Chain:
                     r_vals[row,col] = scipy.stats.pearsonr(x_corr, y_corr)[0]
                 else:
                     r_vals[row,col] = np.nan
-
-                    
+       
         return r_vals
 
 
@@ -348,10 +326,8 @@ class Chain:
                     p_vals[row,col] = scipy.stats.pearsonr(x_corr, y_corr)[1]
                 else:
                     p_vals[row,col] = np.nan
-
-                    
+ 
         return p_vals
-
 
 
     def pca(self, chain_lengths, use_clr=True):
@@ -374,8 +350,8 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : list
-            List of integers or floats representing the carbon chain-length 
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon chain-length 
             number of each column..
         use_clr : bool, optional
             Calculates the clr of the leaf wax chain-length abundance data, 
@@ -384,10 +360,8 @@ class Chain:
 
         Raises
         ------
-        TypeError
-            Raises an error if 'chain_lengths' is not a list.
         ValueError
-            Raises an error if 'chain_lengths' is an empty list or if 
+            Raises an error if 'chain_lengths' is empty or if 
             'use_clr' is neither True nor False.
 
         Returns
@@ -401,14 +375,9 @@ class Chain:
 
         """
 
-        if type(chain_lengths) is not list:
-            raise TypeError(
-                "'chain_lengths' must be a list() type containing integers or floats; Example: [22, 23, 24, 25, 26]"
-            )
-
         if len(chain_lengths) < 1:
             raise ValueError(
-                "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
         
         for row in range(0, len(self.data[:,0])):
@@ -464,5 +433,4 @@ class Chain:
             # pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
             pca_dict.update({f"wax_pc{i+1}_score": wax_pc_score})
 
-            
         return pca_dict
