@@ -157,14 +157,14 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : list
-            List of integers or floats representing the carbon chain-length 
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon chain-length 
             number of each column.
 
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is an empty list.
+            Raises an error if 'chain_lengths' is empty.
 
         Returns
         -------
@@ -175,7 +175,7 @@ class Chain:
 
         if len(chain_lengths) < 1:
             raise ValueError(
-                "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
 
         # Add check if len(chain_lengths) != # of data columns
@@ -205,8 +205,8 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : list
-            List of integers or floats representing the carbon chain-length 
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon chain-length 
             number of each column.
         even_over_odd : bool, optional
             Calculates the CPI of even-chain over odd-chain leaf waxes (use 
@@ -217,7 +217,7 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is an empty list or if 
+            Raises an error if 'chain_lengths' is empty or if 
             'even_over_odd' is neither True nor False.
 
         Returns
@@ -229,7 +229,7 @@ class Chain:
 
         if len(chain_lengths) < 1:
             raise ValueError(
-                "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
 
         '''
@@ -350,8 +350,8 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : list
-            List of integers or floats representing the carbon chain-length 
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon chain-length 
             number of each column..
         use_clr : bool, optional
             Calculates the clr of the leaf wax chain-length abundance data, 
@@ -361,7 +361,7 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is an empty list or if 
+            Raises an error if 'chain_lengths' is empty or if 
             'use_clr' is neither True nor False.
 
         Returns
@@ -377,7 +377,7 @@ class Chain:
 
         if len(chain_lengths) < 1:
             raise ValueError(
-                "'chain_lengths' is currently an empty list. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
             )
         
         for row in range(0, len(self.data[:,0])):
