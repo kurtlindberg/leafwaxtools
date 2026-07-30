@@ -11,7 +11,6 @@ from sklearn.decomposition import PCA
 from skbio.stats.composition import clr, closure, multi_replace
 import scipy.stats
 # import warnings
-# from ..utils import validate_data
 
 
 class Chain:
