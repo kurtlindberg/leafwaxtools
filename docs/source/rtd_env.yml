@@ -2,7 +2,7 @@
 name: leafwax_rtd
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - python=3.12.*
   - pip
