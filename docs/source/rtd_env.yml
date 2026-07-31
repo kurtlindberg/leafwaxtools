@@ -2,17 +2,18 @@
 name: leafwax_rtd
 channels:
   - conda-forge
-  - nodefaults
+  - defaults
 dependencies:
   - python=3.12.*
   - pip
+  - ipykernel
   - pip:
-    - sphinx
+    - Sphinx<6.0
     - pytest
     - numpydoc>=1.1.0
     - nbsphinx
     - IPython
-    - readthedocs-sphinx-search>=0.1.0
+    - readthedocs-sphinx-search>=0.3.2
     - sphinx-rtd-theme>=1.0.0
     - jupyter-sphinx
     - sphinx-copybutton
