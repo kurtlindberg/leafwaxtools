@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21712061.svg)](https://doi.org/10.5281/zenodo.21712061)
+[![DOI](https://zenodo.org/badge/986685242.svg)](https://zenodo.org/badge/latestdoi/986685242)
 
 # leafwaxtools
 
