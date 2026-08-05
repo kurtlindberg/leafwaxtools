@@ -1,3 +1,4 @@
+[![PyPI version](https://badge.fury.io/py/leafwaxtools.svg)](https://badge.fury.io/py/leafwaxtools)
 [![DOI](https://zenodo.org/badge/986685242.svg)](https://zenodo.org/badge/latestdoi/986685242)
 
 # leafwaxtools
