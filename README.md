@@ -1,4 +1,5 @@
 [![PyPI version](https://badge.fury.io/py/leafwaxtools.svg)](https://badge.fury.io/py/leafwaxtools)
+[![PyPI](https://img.shields.io/badge/python-3.12-yellow.svg)]()
 [![DOI](https://zenodo.org/badge/986685242.svg)](https://zenodo.org/badge/latestdoi/986685242)
 [![Documentation Status](https://app.readthedocs.org/projects/leafwax-tools/badge/?version=latest)](https://leafwax-tools.readthedocs.io/en/latest/)
 
