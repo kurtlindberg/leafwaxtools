@@ -1,5 +1,5 @@
 # This environment includes all the required packages for this repo including running the test suite.
-name: leafwax_rtd
+name: leafwaxtools_rtd
 channels:
   - defaults
 dependencies:
