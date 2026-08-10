@@ -119,12 +119,12 @@ class Chain:
         for row in range(0, len(self.data[:,0])):
             for col in range(0, len(self.data[0,:])):
                 rel_abd[row,col] = self.data[row,col]/np.sum(self.data[row,:])
-                
+                    
         if calculate_percent is True:
             for row in range(0, len(self.data[:,0])):
-                    for col in range(0, len(self.data[0,:])):
-                        rel_abd[row,col] = rel_abd[row,col]*100
-
+                for col in range(0, len(self.data[0,:])):
+                    rel_abd[row,col] = rel_abd[row,col]*100
+                
         elif calculate_percent is False:
             rel_abd = rel_abd
 
@@ -153,13 +153,14 @@ class Chain:
         Parameters
         ----------
         chain_lengths : array-like
-            Array-like of integers or floats representing the carbon chain-length 
-            number of each column.
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column.
 
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is empty.
+            Raises an error if 'chain_lengths' is not the same length as the
+            number of chain-lengths (columns).
 
         Returns
         -------
@@ -168,12 +169,10 @@ class Chain:
 
         """
 
-        if len(chain_lengths) < 1:
+        if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
-                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' must be the same length as the number of data columns"    
             )
-
-        # Add check if len(chain_lengths) != # of data columns
 
         acl_numer = np.zeros(len(self.data[:,0]))
         acl = np.zeros(len(self.data[:,0]))
@@ -201,8 +200,8 @@ class Chain:
         Parameters
         ----------
         chain_lengths : array-like
-            Array-like of integers or floats representing the carbon chain-length 
-            number of each column.
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column.
         even_over_odd : bool, optional
             Calculates the CPI of even-chain over odd-chain leaf waxes (use 
             case for n-alkanoic acids). Change to False to calculate the CPI 
@@ -212,8 +211,9 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is empty or if 
-            'even_over_odd' is neither True nor False.
+            Raises an error if 'chain_lengths' is not the same length as the
+            number of chain-lengths (columns) or if 'even_over_odd' is neither 
+            True nor False.
 
         Returns
         -------
@@ -222,9 +222,9 @@ class Chain:
 
         """
 
-        if len(chain_lengths) < 1:
+        if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
-                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' must be the same length as the number of data columns"    
             )
 
         '''
@@ -346,8 +346,8 @@ class Chain:
         Parameters
         ----------
         chain_lengths : array-like
-            Array-like of integers or floats representing the carbon chain-length 
-            number of each column..
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column..
         use_clr : bool, optional
             Calculates the clr of the leaf wax chain-length abundance data, 
             replacing 0 values with 1/N where N is the number of chain-lengths 
