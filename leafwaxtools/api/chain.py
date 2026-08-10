@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from skbio.stats.composition import clr, closure, multi_replace
 import scipy.stats
-# import warnings
+import warnings
 
 
 class Chain:
@@ -227,9 +227,15 @@ class Chain:
                 "'chain_lengths' must be the same length as the number of data columns"    
             )
 
-        '''
-        EKT: use warnings to flag if even over odd order is wrong
-        '''
+        if chain_lengths[0] % 2 != 0 and even_over_odd is True:
+            warnings.warn(
+                f"The first chain-length '{chain_lengths[0]}' is an odd number, but this cpi function will be dividing even number chain-lengths over odd number ones"
+            )
+        
+        if chain_lengths[0] % 2 == 0 and even_over_odd is False:
+            warnings.warn(
+                f"The first chain-length '{chain_lengths[0]}' is an even number, but this cpi function will be dividing odd number chain-lengths over even number ones"
+            )
 
         chain_lengths_even = [num for num in chain_lengths if num % 2 == 0]
         chain_lengths_odd = [num for num in chain_lengths if num % 2 == 1]
@@ -241,12 +247,12 @@ class Chain:
 
         if even_over_odd is True:
             for row in range(0, len(self.data[:,0])):
-                    cpi[row] = (np.nansum(data_even[row,0:-1]) + np.nansum(data_even[row,1:])) / (2 * np.nansum(data_odd[row,:]))
+                cpi[row] = (np.nansum(data_even[row,0:-1]) + np.nansum(data_even[row,1:])) / (2 * np.nansum(data_odd[row,:]))
 
         elif even_over_odd is False:
              for row in range(0, len(self.data[:,0])):
-                    cpi[row] = (np.nansum(data_odd[row,0:-1]) + np.nansum(data_odd[row,1:])) / (2 * np.nansum(data_even[row,:]))
-
+                 cpi[row] = (np.nansum(data_odd[row,0:-1]) + np.nansum(data_odd[row,1:])) / (2 * np.nansum(data_even[row,:]))
+                 
         else:
              raise ValueError("'even_over_odd' must be True (default) or False")
 
