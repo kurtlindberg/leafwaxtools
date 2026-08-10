@@ -48,15 +48,14 @@ class Chain:
             raise TypeError("'input_data' must be 2-dimensional")
 
 
-    def total_conc(self, zero_total=0, calculate_log=False):
+    def total_conc(self, calculate_log=False):
         """
-        Calculates the total concentration of each sample (rows).
+        Calculates the total concentration of each sample (rows). This function
+        utilizes numpy.nansum(), which ignores all NaN values in each sample
+        and returns 0 for a row of all NaNs.
 
         Parameters
         ----------
-        zero_total : int, optional
-            Return value if the sum of all columns in a row = 0. The default 
-            is 0.
         calculate_log : bool, optional
             Returns log (base e) of the sum of each row instead of just the 
             sum. The default is False.
@@ -79,9 +78,6 @@ class Chain:
         for row in range(0, len(self.data[:,0])):
             total_conc[row] = np.nansum(self.data[row,:])
 
-            if total_conc[row] == 0:
-                total_conc[row] = zero_total
-
         if calculate_log is True:
             total_conc = np.log(total_conc)
 
@@ -89,7 +85,7 @@ class Chain:
             total_conc = total_conc
 
         else:
-             raise ValueError("'calculate_log' must either be True or False (default)")
+            raise ValueError("'calculate_log' must either be True or False (default)")
 
         return total_conc
 
