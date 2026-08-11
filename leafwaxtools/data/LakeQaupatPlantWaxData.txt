@@ -1,0 +1,202 @@
+# Lake Qaupat, Baffin Island 5,800 Year Plant Wax and Geochemical Data
+#----------------------------------------------------------------------- 
+#                World Data Service for Paleoclimatology, Boulder 
+#                                  and 
+#                     NOAA Paleoclimatology Program 
+#             National Centers for Environmental Information (NCEI)
+#----------------------------------------------------------------------- 
+# Template Version 3.0
+# Encoding: UTF-8
+# NOTE: Please cite Publication, and Online_Resource and date accessed when using these data. 
+# If there is no publication information, please cite Investigators, Title, and Online_Resource and date accessed. 
+#
+# Online_Resource: https://www.ncdc.noaa.gov/paleo/study/34352 
+#       Description: NOAA Landing Page
+# Online_Resource: https://www.ncei.noaa.gov/pub/data/paleo/paleolimnology/northamerica/canada/nu/quapat2021wax.txt
+#       Description: NOAA location of the template
+#
+# Original_Source_URL:  
+#       Description:
+# 
+# Description/Documentation lines begin with #
+# Data lines have no #
+#
+# Data Type: Paleolimnology
+#
+# Dataset DOI: 
+#
+#------------------
+# Contribution_Date
+#     Date: 2021-10-06
+#------------------
+# File_Last_Modified_Date
+#     Date: 2021-10-06
+#------------------
+# Title
+#     Study_Name: Lake Qaupat, Baffin Island 5,800 Year Plant Wax and Geochemical Data
+#------------------
+# Investigators
+#     Investigators: Gorbey, D.B.; Thomas, E.K.; Hollister, K.; De Wet, G.; Crump, S.E.; Raberg, J.; Miller, G.; Sepulveda, J.
+#------------------
+# Description_Notes_and_Keywords
+#     Description: Geochemical data from sediments collected in Lake Qaupat, Baffin Island, Nunavut, Canada for the past 5,800 years.
+#------------------
+# Publication
+#     Authors: Gorbey, Devon B.; Thomas, Elizabeth K.; Crump, Sarah E.; Hollister, Kayla; Raynolds, Martha K.; de Wet, Gregory; Sepulveda, Julio; Miller, Gifford H.
+#     Published_Date_or_Year: 2021
+#     Published_Title: Southern Baffin Island mean annual precipitation isotopes modulated by summer and fall moisture source changes during the past 5,800 years
+#     Journal_Name: Journal of Quaternary Sciences
+#     Volume: 
+#     Edition: 
+#     Issue: 
+#     Pages: 
+#     Report: 
+#     DOI: 
+#     Online_Resource: 
+#     Full_Citation: 
+#     Abstract: 
+#------------------
+# Funding_Agency
+#     Funding_Agency_Name: US National Science Foundation
+#     Grant: 1737716, 1652274, 1737712, 1657743
+#------------------
+# Site_Information
+#     Site_Name: Lake Qaupat
+#     Location: North America>Canada>Nunavut
+#     Country: Canada
+#     Northernmost_Latitude: 63.677
+#     Southernmost_Latitude: 63.677
+#     Easternmost_Longitude: -68.2009
+#     Westernmost_Longitude: -68.2009
+#     Elevation: 35
+#------------------
+# Data_Collection
+#     Collection_Name: Quapat2021wax
+#     Earliest_Year: 5800
+#     Most_Recent_Year: 0
+#     Time_Unit: Cal. year BP
+#     Core_Length: 1.4
+#     Notes: 
+#------------------
+# Chronology:
+# coreid	sampledepth	compositedepth	materialtype	uncalibratedage	error	calibratedage	twosigmauncminus	twosigmauncplus	cc	
+# QPT16-3A	0	0	nan	-56	20	0	0	0	0	
+# QPT16-2A	5.5	5.5	aquatic moss	580	15	595	-54	41	1	
+# QPT16-3A	17.3	6.3	aquatic moss	945	20	855	-59	67	1	
+# QPT16-3A	28	14	aquatic moss	1375	15	1295	-12	12	1	
+# QPT16-2A	17.5	17.5	terrestrial macrofossil	31890	320	35764	-712	640	1	
+# QPT16-2A	28.5	28.5	aquatic moss	2150	15	2168	-102	131	1	
+# QPT16-3A	41.5	28.5	aquatic moss	2085	20	2056	-59	61	1	
+# QPT16-2A	36	36	aquatic moss	2930	15	3085	-81	71	1	
+# QPT16-3A	49	36	aquatic moss	2915	15	3054	-74	89	1	
+# QPT16-3A	60.5	47.5	aquatic moss	1935	20	1882	-56	45	1	
+# QPT16-3A	64	51	aquatic moss	3885	15	4336	-87	73	1	
+# QPT16-2A	65	65	aquatic moss	4575	15	5291	-203	28	1	
+# QPT16-3A	83.8	70.8	aquatic moss	4695	20	5404	-81	168	1	
+# QPT16-2A	81	81	aquatic moss	5045	20	5821	-86	72	1	
+# QPT16-3A	98	85	aquatic moss	6590	25	7487	-54	74	1	
+# QPT16-2A	97.5	97.5	aquatic moss	5400	20	6232	-45	46	1	
+# 
+#------------------
+# Variables        
+#
+# Data variables follow that are preceded by "##" in columns one and two.        
+# Data line variables format:  Variables list, one per line, shortname-tab-longname-tab-longname components  (10 components: what, material, error, units, seasonality, data type, detail, method, C or N for Character or         Numeric data, additional_information)
+#
+## depth	depth,,,centimeter, , paleolimnology; climate reconstructions, ,,N, midpoint depth  
+## thickness	sample thickness,,,centimeter, , paleolimnology; climate reconstructions, ,,N, thickness of sample  
+## c20concentration	C20 n-alkanoic acid,sediment,,microgram per gram, , paleolimnology, ,,N, concentration of C20 fatty acids  
+## c20n	number of samples,,,count, , paleolimnology, ,,N, number of replicate measurements of C20 fatty acid d2H  
+## c20d2h	delta 2H,C20 n-alkanoic acid,,per mil VSMOW, , paleolimnology, ,,N, delta D  C20 fatty acid   
+## c20sem	delta 2H,C20 n-alkanoic acid,one standard error,per mil VSMOW, , paleolimnology, ,,N, standard error of the mean of replicate measurements of C20 fatty acid d2H   
+## c20totalunc	delta 2H,C20 n-alkanoic acid,variance,per mil VSMOW, , paleolimnology, ,,N, total analytical uncertainty   
+## c22concentration	C22 n-alkanoic acid,sediment,,microgram per gram, , paleolimnology, ,,N, concentration of C22 fatty acids   
+## c22n	number of samples,,,count, , paleolimnology, ,,N, number of replicate measurements of C22 fatty acid d2H   
+## c22d2h	delta 2H,C22 n-alkanoic acid,,per mil VSMOW, , paleolimnology, ,,N, delta D C22 fatty acid   
+## c22sem	delta 2H,C22 n-alkanoic acid,one standard error,per mil VSMOW, , paleolimnology, ,,N, standard error of the mean of replicate measurements of C22 fatty acid d2H   
+## c22totalunc	delta 2H,C22 n-alkanoic acid,variance,per mil VSMOW, , paleolimnology, ,,N, total analytical uncertainty   
+## c24concentration	C24 n-alkanoic acid,sediment,,microgram per gram, , paleolimnology, ,,N, concentration of C24 fatty acids   
+## c24n	number of samples,,,count, , paleolimnology, ,,N, number of replicate measurements of C24 fatty acid d2H   
+## c24d2h	delta 2H,C24 n-alkanoic acid,,per mil VSMOW, , paleolimnology, ,,N, delta D C24 fatty acid   
+## c24sem	delta 2H,C24 n-alkanoic acid,one standard error,per mil VSMOW, , paleolimnology, ,,N, standard error of the mean of replicate measurements of C24 fatty acid d2H   
+## c24totalunc	delta 2H,C24 n-alkanoic acid,variance,per mil VSMOW, , paleolimnology, ,,N, total analytical uncertainty   
+## c26concentration	C26 n-alkanoic acid,sediment,,microgram per gram, , paleolimnology, ,,N, concentration of C26 fatty acids   
+## c26n	number of samples,,,count, , paleolimnology, ,,N, number of replicate measurements of C26 fatty acid d2H   
+## c26d2h	delta 2H,C26 n-alkanoic acid,,per mil VSMOW, , paleolimnology, ,,N, delta D C26 fatty acid   
+## c26sem	delta 2H,C26 n-alkanoic acid,one standard error,per mil VSMOW, , paleolimnology, ,,N, standard error of the mean of replicate measurements of C26 fatty acid d2H   
+## c26totalunc	delta 2H,C26 n-alkanoic acid,variance,per mil VSMOW, , paleolimnology, ,,N, total analytical uncertainty   
+## c28concentration	C28 n-alkanoic acid,sediment,,per mil VSMOW, , paleolimnology, ,,N, concentration of C28 fatty acids   
+## c28n	number of samples,,,count, , paleolimnology, ,,N, number of replicate measurements of C28 fatty acid d2H   
+## c28d2h	delta 2H,C28 n-alkanoic acid,,per mil VSMOW, , paleolimnology, ,,N, delta D C28 fatty acid   
+## c28sem	delta 2H,C28 n-alkanoic acid,one standard error,per mil VSMOW, , paleolimnology, ,,N, standard error of the mean of replicate measurements of C28 fatty acid d2H   
+## c28totalunc	delta 2H,C28 n-alkanoic acid,variance,per mil VSMOW,, paleolimnology, ,,N, total analytical uncertainty   
+## c30concentration	C30 n-alkanoic acid,sediment,,microgram per gram, , paleolimnology, ,,N, concentration of C30 fatty acids   
+## c30n	number of samples,,,count, , paleolimnology, ,,N, number of replicate measurements of C30 fatty acid d2H   
+## c30d2h	delta 2H,C30 n-alkanoic acid,,per mil VSMOW, , paleolimnology, ,,N, delta D C30 fatty acid   
+## c30sem	delta 2H,C30 n-alkanoic acid,one standard error,per mil VSMOW, , paleolimnology, ,,N, standard error of the mean of replicate measurements of C30 fatty acid d2H   
+## c30totalunc	delta 2H,C30 n-alkanoic acid,variance,per mil VSMOW, , paleolimnology, ,,N, total analytical uncertainty   
+## epsilon28-22	delta 2H enrichment factor,,,per mil VSMOW, , paleolimnology, ,,N, Epsilon between C28 fatty acid d2H and C22 fatty acid d2H   
+## epsilon28-22uncertainty	delta 2H enrichment factor,,one standard error,per mil VSMOW, , paleolimnology, ,,N, uncertainty of C28-C22 enrichment propagated through epsilon calculation   
+## epsilon28-24	delta 2H enrichment factor,,,per mil VSMOW, , paleolimnology, ,,N, Epsilon between C28 fatty acid d2H and C24 fatty acid d2H   
+## epsilon28-24uncertainty	delta 2H enrichment factor,,one standard error,per mil VSMOW, , paleolimnology, ,,N, uncertainty of C28-C24 enrichment propagated through epsilon calculation   
+## epsilon28-26	delta 2H enrichment factor,,,per mil VSMOW, , paleolimnology, ,,N, Epsilon between C28 fatty acid d2H and C26 fatty acid d2H   
+## epsilon28-26uncertainty	delta 2H enrichment factor,,one standard error,per mil VSMOW, , paleolimnology, ,,N, uncertainty of C28-C26 enrichment propagated through epsilon calculation   
+## epsilon26-24	delta 2H enrichment factor,,,per mil VSMOW, , paleolimnology, ,,N, Epsilon between C26 fatty acid d2H and C24 fatty acid d2H   
+## epsilon26-24uncertainty	delta 2H enrichment factor,,one standard error,per mil VSMOW, , paleolimnology, ,,N, uncertainty of C26-C24 enrichment propagated through epsilon calculation   
+## epsilon24-22	delta 2H enrichment factor,,,per mil VSMOW, , paleolimnology, ,,N, Epsilon between C24 fatty acid d2H and C22 fatty acid d2H   
+## epsilon24-22uncertainty	delta 2H enrichment factor,,one standard error,per mil VSMOW, , paleolimnology, ,,N, uncertainty of C24-C22 enrichment propagated through epsilon calculation   
+## aclc22-30	average chain length,,,dimensionless, , paleolimnology, ,,N, average chain length; aclc22-30
+## cpi22-30	carbon preference index,,,dimensionless, , paleolimnology, ,,N, carbon preference index; cpi22-30   
+## brgdgtconctle	branched glycerol dialkyl glycerol tetraether,,,nanogram, , paleolimnology, ,,N, Concentration of Total brGDGTs in TLE   
+## brgdgtconcsed	branched glycerol dialkyl glycerol tetraether,sediment,,nanogram per gram, , paleolimnology, ,,N, Concentration of Total brGDGTs in sediment   
+## mbt5me_russel	temperature,glycerol dialkyl glycerol tetraether,,degree celsius, , paleolimnology; climate reconstructions,,,N, MBT5'ME Russel et al. 2014 Calibration   
+## gdgt0	glycerol dialkyl glycerol tetraether,,,nanogram, , paleolimnology, ,,N, Concentration of GDGT0   
+## gdgt0conctle	glycerol dialkyl glycerol tetraether,,,nanogram per gram, , paleolimnology, ,,N, Concentration of GDGT0 in TLE   
+## c20relativeabundance	C20 n-alkanoic acid,sediment,,percent, , paleolimnology, ,,N, Relative abundance of C20 in sediment   
+## c22relativeabundance	C22 n-alkanoic acid,sediment,,percent, , paleolimnology, ,,N, Relative abundance of C22 in sediment   
+## c24relativeabundance	C24 n-alkanoic acid,sediment,,percent, , paleolimnology, ,,N, Relative abundance of C24 in sediment   
+## c26relativeabundance	C26 n-alkanoic acid,sediment,,percent, , paleolimnology, ,,N, Relative abundance of C26 in sediment   
+## c28relativeabundance	C28 n-alkanoic acid,sediment,,percent, , paleolimnology, ,,N, Relative abundance of C28 in sediment   
+## c30relativeabundance	C30 n-alkanoic acid,sediment,,percent, , paleolimnology, ,,N, Relative abundance of C30 in sediment 
+#
+#------------------
+# Data:        
+# Data lines follow (have no #)        
+# Data line format - tab-delimited text, variable short name as header)        
+# Missing_Values: nan
+#
+depth	thickness	c20concentration	c20n	c20d2h	c20sem	c20totalunc	c22concentration	c22n	c22d2h	c22sem	c22totalunc	c24concentration	c24n	c24d2h	c24sem	c24totalunc	c26concentration	c26n	c26d2h	c26sem	c26totalunc	c28concentration	c28n	c28d2h	c28sem	c28totalunc	c30concentration	c30n	c30d2h	c30sem	c30totalunc	epsilon28-22	epsilon28-22uncertainty	epsilon28-24	epsilon28-24uncertainty	epsilon28-26	epsilon28-26uncertainty	epsilon26-24	epsilon26-24uncertainty	epsilon24-22	epsilon24-22uncertainty	aclc22-30	cpi22-30	brgdgtconctle	brgdgtconcsed	mbt5me_russel	gdgt0	gdgt0conctle	c20relativeabundance	c22relativeabundance	c24relativeabundance	c26relativeabundance	c28relativeabundance	c30relativeabundance	
+0	1	7.818	3	-252.005	2.771	4.073	33.971	3	-251.214	2.093	3.512	84.001	3	-250.33	2.064	3.546	64.899	3	-247.072	2.086	3.505	39.201	3	-241.581	2.053	3.507	7.136	nan	nan	nan	nan	12.865	0.001	11.671	0.001	7.293	0.001	4.346	0	1.18	8.112e-05	25.141	4.893	36265.911	24158.913	4.293	925.487	0.617	3.298	14.332	35.44	27.38	16.539	3.011	
+2	1	12.402	3	-240.716	3.78	4.198	53.669	3	-244.594	2.729	3.821	135.632	3	-241.187	2.044	3.524	108.992	3	-228.622	2.043	3.53	67.316	3	-228.286	2.043	3.53	12.974	3	-219.462	2.615	3.799	21.589	0.002	17.002	0.001	0.436	3.485e-05	16.559	0.001	4.51	0	25.209	5.029	74356.818	49495.978	4.033	3204.996	3.205	3.172	13.727	34.69	27.876	17.217	3.318	
+4	1	6.708	3	-248.661	2.992	4.38	27.858	3	-244.995	2.119	3.628	83.265	3	-246.29	2.047	3.498	76.449	3	-243.633	2.062	3.5	53.027	3	-237.567	2.118	3.522	11.427	nan	nan	nan	nan	9.838	0.001	11.574	0.001	8.021	0.001	3.525	0	-1.716	0	25.499	5.084	12192.787	9763.212	3.914	756.275	0.756	2.593	10.767	32.182	29.547	20.495	4.417	
+7	1	6.267	3	-246.81	3.069	4.128	18.532	3	-250.635	2.306	3.514	43.381	3	-250.007	2.099	3.543	37.302	3	-247.828	2.036	3.513	25.038	3	-240.737	2.148	3.502	6.694	nan	nan	nan	2.379	13.208	0.001	12.359	0.001	9.427	0.001	2.905	0	0.839	6.502e-05	25.358	3.948	27172.113	18085.804	4.147	701.824	0.702	4.568	13.506	31.616	27.185	18.247	4.878	
+12	1	6.35	3	-247.138	2.918	3.779	20.478	3	-249.514	2.119	3.512	49.793	3	-249.02	2.027	3.5	43.506	3	-246.309	2.026	3.488	29.623	3	-244.791	2.299	3.952	7.167	3	-232.695	2.573	3.794	6.294	0.001	5.631	0	2.015	0	3.609	0	0.659	4.557e-05	25.378	4.249	19526.343	12988.64	6.138	1290.845	1.291	4.047	13.05	31.732	27.725	18.878	4.567	
+14	1	7.368	3	-238.998	3.019	4.563	29.197	3	-237.359	2.97	5.11	94.197	3	-246.107	2.024	3.5	94.197	3	-243.229	2.049	3.501	65.578	3	-236.223	2.259	3.522	14.887	nan	nan	nan	nan	1.49	0	13.111	0.001	9.259	0.001	3.817	0	-11.47	0.001	25.616	5.511	35226.509	23400.099	3.97	2168.223	2.168	2.412	9.559	30.842	30.842	21.471	4.874	
+20	1	5.973	9	-246.56	2.917	7.656	25.01	3	-245.069	2.423	3.636	76.599	3	-246.301	2.031	3.498	74.695	3	-243.337	2.119	3.499	52.042	3	-235.739	2.044	3.518	11.113	nan	nan	nan	nan	12.359	0.001	14.013	0.001	10.042	0.001	3.932	0	-1.632	0	25.563	5.347	15309.093	12102.05	5.992	818.148	0.818	2.434	10.19	31.21	30.434	21.204	4.528	
+25	1	4.707	3	-240.782	2.869	4.093	19.205	3	-245.343	2.514	3.892	71.759	3	-247.017	2.063	3.567	79.41	3	-240.514	2.028	3.501	56.657	3	-239.894	2.086	3.602	12.56	3	-229.542	2.342	3.845	7.221	0.001	9.46	0.001	0.816	5.986e-05	8.636	0.001	-2.218	0	25.763	5.486	29744.277	19825.685	5.936	861.107	0.861	1.927	7.861	29.373	32.505	23.192	5.141	
+30	1	4.046	3	-250.608	2.4	3.992	11.064	3	-238.23	2.619	4.178	33.448	3	-242.429	2.023	3.494	37.289	3	-238.535	2.02	3.489	25.395	3	-237.563	2.147	3.711	6.484	3	-231.48	2.992	3.815	0.875	8.867e-05	6.422	0	1.276	9.791e-05	5.139	0	-5.512	0.001	25.697	4.493	29842.637	20057.827	4.577	2066.561	2.067	3.437	9.398	28.412	31.675	21.572	5.507	
+35	1	3.418	3	-248.284	2.667	4.198	7.778	3	-241.446	2.149	3.61	21.192	3	-245.364	2.027	3.5	21.527	3	-237.699	2.032	3.5	14.569	3	-228.291	2.036	3.51	4.843	nan	nan	nan	nan	17.342	0.001	22.623	0.002	12.342	0.001	10.156	0.001	-5.164	0	25.643	3.811	32757.739	21848.689	6.06	1575.213	1.575	4.661	10.607	28.901	29.358	19.868	6.605	
+40	1	2.977	3	-249.083	2.855	4.577	9.619	3	-241.544	2.641	4.204	35.376	3	-244.031	2.04	3.511	38.292	3	-239.634	2.075	3.507	27.924	3	-231.711	2.326	3.528	6.865	nan	nan	nan	nan	12.963	0.001	16.297	0.001	10.42	0.001	5.816	0	-3.28	0	25.78	5.317	31327.679	20665.65	4.111	401.412	0.401	2.459	7.946	29.223	31.632	23.068	5.671	
+45	1	3.042	3	-247.089	3.556	4.111	6.368	3	-241.802	2.311	3.779	21.507	3	-240.098	2.06	3.538	24.92	3	-236.131	2.028	3.499	20.37	3	-235.544	2.082	3.593	6.018	3	-226.205	4.335	3.786	8.254	0.001	5.993	0	0.768	5.833e-05	5.221	0	2.247	0	25.954	3.756	24982.683	16559.519	5.611	300.505	0.301	3.7	7.744	26.157	30.307	24.773	7.319	
+50	1	0.848	3	-257.939	2.539	4.102	3.156	3	-245.581	2.382	3.785	12.065	3	-240.576	2.046	3.526	14.373	3	-231.93	2.076	3.508	11.28	3	-231.482	2.11	3.569	2.741	3	-221.706	2.777	3.789	18.688	0.002	11.975	0.001	0.583	4.76e-05	11.385	0.001	6.633	0.001	25.926	5.421	22908.342	15182.449	4.019	590.899	0.591	1.908	7.099	27.134	32.325	25.37	6.164	
+55	1	2.729	3	-247.122	3.349	4.672	4.533	3	-237.781	2.929	4.108	13.554	3	-232.843	2.247	3.521	16.561	3	-231.014	2.111	3.509	13.898	3	-221.364	2.082	3.523	4.877	nan	nan	nan	nan	21.539	0.003	14.963	0.001	12.55	0.001	2.383	0	6.479	0.001	26.039	3.115	18122.04	12089.419	5.681	294.037	0.294	4.86	8.073	24.138	29.493	24.75	8.685	
+60	1	3.517	3	-247.516	2.381	3.866	6.718	3	-252.898	2.067	3.515	22.724	3	-252.446	2.046	3.492	26.611	3	-250.204	2.062	3.49	23.295	3	-249.122	2.205	3.744	8.776	3	-238.942	2.319	3.925	5.055	0	4.447	0	1.443	0	3	0	0.605	4.004e-05	26.106	3.642	9862.096	6565.976	7.54	585.113	0.585	3.838	7.331	24.796	29.038	25.42	9.577	
+65	1	2.924	3	-242.361	2.506	4.104	6.106	3	-246.431	2.242	3.784	21.378	3	-243.468	2.066	3.539	24.321	3	-234.878	2.113	3.51	18.674	3	-234.419	2.151	3.573	5.629	3	-223.209	2.503	3.851	15.941	0.001	11.961	0.001	0.6	4.955e-05	11.354	0.001	3.933	0	25.904	3.906	22248.007	14752.147	5.258	633.493	0.633	3.7	7.726	27.05	30.774	23.628	7.122	
+70	1	2.259	3	-243.396	2.603	4.012	8.188	3	-235.698	2.268	3.906	23.081	3	-232.346	2.033	3.516	29.562	3	-220.826	2.024	3.506	25.287	3	-220.426	2.058	3.563	7.774	3	-218.887	2.934	3.792	19.982	0.002	15.528	0.001	0.513	4.395e-05	15.007	0.001	4.386	0	26.029	5.637	30125.263	20081.232	5.185	1388.175	1.388	2.349	8.516	24.005	30.745	26.299	8.086	
+75	1	0.323	3	-253.647	3.22	5.04	1.061	3	-231.937	3.631	4.62	7.187	3	-231.887	2.163	3.546	12.797	2	-213.624	2.111	2.87	12.944	3	-204.354	2.091	3.517	3.792	nan	nan	nan	nan	35.914	0.006	35.845	0.003	11.789	0.001	23.776	0.002	0.066	1.094e-05	26.594	4.766	18392.485	12250.713	3.858	173.228	0.173	0.848	2.785	18.862	33.583	33.97	9.952	
+80	1	0.444	3	-248.5	3.312	4.173	1.361	3	-256	4.081	3.92	6.732	3	-250.03	2.15	3.543	9.049	3	-217.866	2.245	3.524	6.659	3	-217.558	2.244	3.524	1.87	3	-216.57	2.254	3.851	51.67	0.009	43.298	0.004	0.393	4.181e-05	42.888	0.004	8.024	0.001	26.074	6.861	18234.35	12154.937	4.692	688.645	0.689	1.701	5.21	25.779	34.65	25.5	7.16	
+85	1	1.65	3	-256.375	4.746	4.704	2.961	3	-250.746	2.494	4.082	8.761	3	-252.255	2.036	3.519	12.297	3	-222.231	2.031	3.5	11.166	3	-213.52	2.034	3.507	4.316	nan	nan	nan	3.673	49.684	0.005	51.803	0.004	11.201	0.001	40.153	0.003	-2.014	0	26.259	4.258	26388.123	21067.016	3.677	4485.771	4.486	4.01	7.195	21.29	29.882	27.135	10.488	
+90	1	1.199	3	-241.795	5.177	4.944	3.269	3	-246.066	3.264	4.239	11.283	3	-247.887	2.273	3.543	20.772	2	-219.666	2.029	2.869	21.168	3	-211.759	2.094	3.516	7.906	nan	nan	nan	3.575	45.504	0.006	48.036	0.004	10.133	0.001	37.522	0.003	-2.416	0	26.595	6.577	36906.008	24552.119	3.949	1718.166	1.718	1.827	4.983	17.2	31.667	32.27	12.053	
+90	1	2.469	3	-215.811	7.47	5.44	13.159	3	-217.499	2.599	4.291	39.258	3	-227.923	2.33	3.607	73.848	3	-222.361	2.186	3.521	72.762	3	-209.203	2.169	3.733	23.332	nan	nan	nan	nan	10.602	0.001	24.245	0.003	16.92	0.002	7.203	0.001	-13.321	0.002	26.484	13.877	23419.311	15574.975	4.918	2538.381	2.538	1.098	5.853	17.461	32.847	32.364	10.378	
+95	1	0.781	3	-231.758	2.839	4.098	1.945	3	-217.075	2.302	3.828	7.043	3	-226.813	2.277	3.54	8.739	3	-209.741	2.093	3.527	5.344	3	-209.454	2.093	3.527	1.415	3	-225.856	4.154	3.97	9.734	0.001	22.451	0.002	0.362	3.611e-05	22.081	0.002	-12.438	0.001	25.775	9.308	2134.096	1706.225	5.864	415.62	0.416	3.09	7.698	27.876	34.588	21.15	5.598	
+95	1	0.227	3	-260.243	3.511	5.329	0.725	3	-199.504	3.13	4.523	3.49	3	-206.577	2.271	3.73	4.14	3	-219.019	2.066	3.514	3.036	3	-218.794	2.108	3.625	0.895	nan	nan	nan	nan	-24.097	0.004	-15.398	0.002	0.287	2.612e-05	-15.681	0.002	-8.835	0.002	25.981	6.657	2184.612	1451.878	9.185	580.274	0.58	1.817	5.795	27.89	33.087	24.262	7.149	
+99	1	0.071	3	-316.178	4.887	6.131	0.429	3	-178.799	3.347	5.502	2.322	3	-198.916	2.22	3.653	3.756	3	-219.045	2.056	3.551	3.397	3	-220.459	2.236	3.613	1.043	nan	nan	nan	nan	-50.731	0.012	-26.893	0.003	-1.811	0	-25.127	0.003	-24.497	0.006	26.421	5.18	905.382	603.524	8.917	728.672	0.729	0.641	3.892	21.08	34.086	30.835	9.467	
+100	1	0.024	3	-243.89	5.34	5.94	0.551	3	-226.562	5.213	5.281	3.673	3	-225.051	3.687	3.638	7.22	3	-228.622	3.789	3.535	6.196	3	-226.825	2.308	3.624	1.715	nan	nan	nan	nan	-0.34	0	-2.29	0	2.329	0	-4.608	0.001	1.954	0.001	26.501	5.243	1133.701	755.881	6.94	354.751	0.355	0.124	2.844	18.951	37.259	31.973	8.849	
+105	1	2.912	2	-215.966	8.253	4.598	3.246	2	-197.981	3.783	4.085	5.296	2	-206.687	4.038	2.976	6.702	2	-220.842	2.837	2.899	5.81	2	-216.288	3.112	2.962	3.371	nan	nan	nan	nan	-22.826	0.007	-12.102	0.004	5.845	0.001	-17.843	0.005	-10.855	0.004	26.063	1.68	817.3	543.176	8.517	476.417	0.476	10.654	11.874	19.374	24.515	21.252	12.332	
+110	1	1.546	2	-270.561	5.579	4.294	1.745	2	-199.017	6.113	3.866	2.866	2	-198.939	2.089	2.948	3.928	2	-224.326	2.065	2.879	3.455	2	-216.437	2.203	2.95	1.924	nan	nan	nan	nan	-21.749	0.011	-21.844	0.002	10.171	0.001	-31.693	0.003	0.098	5.145e-05	26.136	1.728	1014.068	673.477	6.995	459.52	0.46	9.998	11.287	18.534	25.398	22.342	12.441	
+90	1	11.383	3	-185.051	3.747	6.017	18.612	3	-187.784	10.521	5.465	55.552	3	-231.791	3.83	5.071	74.733	3	-217.197	2.032	3.513	64.861	3	-207.133	2.596	3.557	20.132	3	-186.784	5.465	5.465	-23.823	0.039	32.099	0.007	12.856	0.002	18.998	0.003	-54.182	0.092	26.106	2931.268	nan	nan	nan	nan	nan	4.641	7.588	22.649	30.469	26.444	8.208	
+95	1	31.066	3	-190.843	4.428	6.143	57.825	3	-186.859	6.7	5.548	191.059	3	-234.495	4.203	6.426	244.653	3	-210.13	5.042	3.548	224.835	3	-199.589	3.331	3.581	76.36	3	-185.869	5.548	5.548	-15.656	0.012	45.599	0.014	13.346	0.006	31.829	0.014	-58.583	0.047	26.178	4227.978	nan	nan	nan	nan	nan	3.762	7.002	23.136	29.626	27.226	9.247	
+120	1	8.994	3	-215.909	3.547	4.827	12.436	3	-210.195	3.908	6.582	27.348	3	-241.104	2.152	3.518	39.789	3	-226.103	2.058	3.483	38.358	3	-212.263	2.032	3.507	18.747	3	-208.935	6.582	6.582	-2.619	0.001	38.003	0.003	17.884	0.002	19.766	0.002	-39.135	0.008	26.346	3828.505	nan	nan	nan	nan	nan	6.174	8.537	18.774	27.314	26.332	12.869	
+125	1	40.269	3	-182.736	4.419	5.615	70.149	3	-200.387	5.305	5.179	206.452	3	-217.265	4.347	5.446	297.069	3	-213.9	2.141	3.514	229.054	3	-205.768	2.205	3.565	77.346	3	-199.241	5.179	5.179	-6.73	0.003	14.688	0.004	10.344	0.001	4.3	0.001	-21.109	0.012	26.084	3118.126	nan	nan	nan	nan	nan	4.375	7.622	22.432	32.278	24.888	8.404	
+135	1	6.332	2	-172.728	6.396	4.989	6.332	2	-199.788	3.767	4.374	8.578	2	-193.942	4.069	4.174	19.421	2	-206.366	2.051	2.901	27.356	2	-207.573	2.197	2.928	24.204	2	-198.649	4.374	4.374	-9.729	0.002	-16.91	0.005	-1.521	0	-15.413	0.004	7.305	0.003	27.27	5345.812	nan	nan	nan	nan	nan	6.866	6.866	9.302	21.059	29.663	26.245	
+140	1	5.634	1	-147.917	nan	3.916	6.882	1	-170.983	nan	3.789	13.241	2	-197.996	7.486	4.877	16.952	nan	nan	nan	nan	16.12	nan	nan	nan	nan	8.021	1	-170.178	3.789	3.789	nan	nan	246.877	nan	nan	nan	246.877	nan	-32.584	nan	26.168	1934.517	nan	nan	nan	nan	nan	8.428	10.295	19.806	25.358	24.113	11.999	
