@@ -253,14 +253,56 @@ class TestChainChainCorr_rvals:
         
         qpt_acid_rvals = qpt_acid_chain_obj.corr_rvals(minimum_obs=2)
         
+        assert np.round(qpt_acid_rvals[1,0], decimals=5) == 0.89322
+            
+
+    def test_corr_rvals_t1(self):
+        
+        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
+        
+        qpt_acid_rvals = qpt_acid_chain_obj.corr_rvals(minimum_obs=2)
+        
         for col in range(len(qpt_acid_rvals[0,:])):
             assert np.round(qpt_acid_rvals[col,col], decimals=5) == 1
 
 
-# class TestChainChainCorr_pvals:
-#     Test Chain.corr_pvals()
+    def test_corr_rvals_t2(self):
+        
+        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
+        
+        qpt_acid_rvals = qpt_acid_chain_obj.corr_rvals(minimum_obs=2)
+        
+        for row in range(len(qpt_acid_rvals[:,0])):
+            for col in range(len(qpt_acid_rvals[0,:])):
+                assert qpt_acid_rvals[row,col] == qpt_acid_rvals[col,row]
+                
 
-#     # def test_corr_pvals_t0(self):
+class TestChainChainCorr_pvals:
+    ''' Test Chain.corr_pvals() '''
+    
+    def test_corr_pvals_t0(self):
+        
+        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
+        
+        qpt_acid_pvals = qpt_acid_chain_obj.corr_pvals(minimum_obs=2)
+        
+        for col in range(len(qpt_acid_pvals[0,:])):
+            assert np.round(qpt_acid_pvals[col,col], decimals=5) == 0
+            
+            
+    def test_corr_pvals_t1(self):
+        
+        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
+        
+        qpt_acid_pvals = qpt_acid_chain_obj.corr_pvals(minimum_obs=2)
+        
+        for row in range(len(qpt_acid_pvals[:,0])):
+            for col in range(len(qpt_acid_pvals[0,:])):
+                assert qpt_acid_pvals[row,col] == qpt_acid_pvals[col,row]
 
 
 # class TestChainChainPca:
