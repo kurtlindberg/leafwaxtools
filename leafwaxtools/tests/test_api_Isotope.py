@@ -53,7 +53,7 @@ qpt_acid_iso_df = qpt_data_df[
     ]
 ]
 
-class TestIsotopeIsotopeInit:
+class TestisotopeIsotopeInit:
     ''' Test Isotope instantiation '''
 
     def test_init_t0(self):
@@ -80,87 +80,95 @@ class TestIsotopeIsotopeInit:
             arctic_c22_obj = Isotope(arctic_c22_arr)
 
 
-# class TestIsotopeIsotopeValue_range:
-#     Test Isotope.value_range()
+class TestisotopeIsotopeValue_range:
+    ''' Test Isotope.value_range() '''
 
-#     # def test_value_range_t0(self):
+    def test_value_range_t0(self):
+        
+        arctic_acid_iso_arr = np.array(arctic_acid_iso_df)
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_arr)
+        
+        arctic_acid_iso_range = arctic_acid_iso_obj.value_range()
+        
+        assert arctic_acid_iso_range[6] == 15
+        assert arctic_acid_iso_range[-2] == 14
 
 
-# class TestIsotopeIsotopeConcentration_avg:
+# class TestisotopeIsotopeConcentration_avg:
 #     Test Isotope.concentration_avg()
 
 #     # def test_concentration_avg_t0(self):
 
 
-# class TestIsotopeIsotopeEpsilon:
+# class TestisotopeIsotopeEpsilon:
 #     Test Isotope.epsilon()
 
 #     # def test_epsilon_t0(self):
 
     
-# class TestIsotopeIsotopeWax_to_source:
+# class TestisotopeIsotopeWax_to_source:
 #     Test Isotope.wax_to_source()
 
 #     # def test_wax_to_source_t0(self):
     
 
-# class TestIsotopeIsotopeCorr_rvals:
-#     Test Isotope.corr_rvals()
+class TestisotopeIsotopeCorr_rvals:
+    ''' Test Isotope.corr_rvals() '''
 
-    # def test_corr_rvals_t0(self):
+    def test_corr_rvals_t0(self):
         
-    #     qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
-    #     qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+        qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
         
-    #     qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
         
-    #     assert np.round(qpt_acid_rvals[1,0], decimals=5) == 0
+        assert np.round(qpt_acid_rvals[1,0], decimals=5) == 0.46539
             
 
-    # def test_corr_rvals_t1(self):
+    def test_corr_rvals_t1(self):
         
-    #     qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
-    #     qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+        qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
         
-    #     qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
         
-    #     for col in range(len(qpt_acid_rvals[0,:])):
-    #         assert np.round(qpt_acid_rvals[col,col], decimals=5) == 1
+        for col in range(len(qpt_acid_rvals[0,:])):
+            assert np.round(qpt_acid_rvals[col,col], decimals=5) == 1
 
 
-    # def test_corr_rvals_t2(self):
+    def test_corr_rvals_t2(self):
         
-    #     qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
-    #     qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+        qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
         
-    #     qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
         
-    #     for row in range(len(qpt_acid_rvals[:,0])):
-    #         for col in range(len(qpt_acid_rvals[0,:])):
-    #             assert qpt_acid_rvals[row,col] == qpt_acid_rvals[col,row]
+        for row in range(len(qpt_acid_rvals[:,0])):
+            for col in range(len(qpt_acid_rvals[0,:])):
+                assert qpt_acid_rvals[row,col] == qpt_acid_rvals[col,row]
     
     
-# class TestIsotopeIsotopeCorr_pvals:
-#     Test Chain.corr_pvals()
+class TestisotopeIsotopeCorr_pvals:
+    ''' Test Chain.corr_pvals() '''
     
-#     def test_corr_pvals_t0(self):
+    def test_corr_pvals_t0(self):
         
-#         qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
-#         qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+        qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
         
-#         qpt_acid_pvals = qpt_acid_iso_obj.corr_pvals(minimum_obs=2)
+        qpt_acid_pvals = qpt_acid_iso_obj.corr_pvals(minimum_obs=2)
         
-#         for col in range(len(qpt_acid_pvals[0,:])):
-#             assert np.round(qpt_acid_pvals[col,col], decimals=5) == 0
+        for col in range(len(qpt_acid_pvals[0,:])):
+            assert np.round(qpt_acid_pvals[col,col], decimals=5) == 0
             
             
-#     def test_corr_pvals_t1(self):
+    def test_corr_pvals_t1(self):
         
-#         qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
-#         qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+        qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
         
-#         qpt_acid_pvals = qpt_acid_iso_obj.corr_pvals(minimum_obs=2)
+        qpt_acid_pvals = qpt_acid_iso_obj.corr_pvals(minimum_obs=2)
         
-#         for row in range(len(qpt_acid_pvals[:,0])):
-#             for col in range(len(qpt_acid_pvals[0,:])):
-#                 assert qpt_acid_pvals[row,col] == qpt_acid_pvals[col,row]
+        for row in range(len(qpt_acid_pvals[:,0])):
+            for col in range(len(qpt_acid_pvals[0,:])):
+                assert qpt_acid_pvals[row,col] == qpt_acid_pvals[col,row]
