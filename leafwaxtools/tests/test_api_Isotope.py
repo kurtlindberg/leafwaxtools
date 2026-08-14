@@ -25,72 +25,142 @@ from leafwaxtools import Isotope
 
 # Path to test data
 DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
-data_path = os.path.join(DATA_DIR, "gorbey2021qpt.csv")
+arctic_data_path = os.path.join(DATA_DIR, "Lindberg_Arctic_terrestrial_plantwaxes.csv")
+qpt_data_path = os.path.join(DATA_DIR, "LakeQaupatPlantWaxData.csv")
 
+arctic_data_df = pd.read_csv(arctic_data_path)
+arctic_acid_iso_df = arctic_data_df[
+    [
+        'c20_fd2h',
+        'c22_fd2h',
+        'c24_fd2h',
+        'c26_fd2h',
+        'c28_fd2h',
+        'c30_fd2h',
+        'c32_fd2h',
+    ]
+]
+
+qpt_data_df = pd.read_csv(qpt_data_path)
+qpt_acid_iso_df = qpt_data_df[
+    [
+         'c20d2h',
+         'c22d2h',
+         'c24d2h',
+         'c26d2h',
+         'c28d2h',
+         'c30d2h',
+    ]
+]
 
 class TestIsotopeIsotopeInit:
-    ''' Test for Isotope instantiation '''
+    ''' Test Isotope instantiation '''
 
     def test_init_t0(self):
         
-        qpt_df = pd.read_csv(data_path)
-        qpt_isotope_df = qpt_df[
-            [
-                'c22d2h',
-                'c24d2h',
-                'c26d2h',
-                'c28d2h'
-            ]
-        ]
-        qpt_isotope_arr = np.array(qpt_isotope_df)
-        qpt_isotope_obj = Isotope(qpt_isotope_arr)
+        arctic_acid_iso_arr = np.array(arctic_acid_iso_df)
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_arr)
         
-        assert qpt_isotope_obj.data.all() == qpt_isotope_arr.all()
-        
+        assert arctic_acid_iso_obj.data.all() == arctic_acid_iso_arr.all()
+    
     
     def test_init_t1(self):
         
-        qpt_df = pd.read_csv(data_path)
-        qpt_isotope_df = qpt_df[
-            [
-                'c22d2h',
-                'c24d2h',
-                'c26d2h',
-                'c28d2h'
-            ]
-        ]
-        qpt_isotope_arr = np.array(qpt_isotope_df)
-        qpt_isotope_obj = Isotope(qpt_isotope_arr)
+        arctic_acid_iso_arr = np.array(arctic_acid_iso_df)
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_arr)
         
-        assert qpt_isotope_obj.data.ndim == 2
-    
-        
-    @pytest.mark.xfail    
+        assert arctic_acid_iso_obj.data.ndim == 2
+
+
     def test_init_t2(self):
         
-        qpt_df = pd.read_csv(data_path)
-        qpt_isotope_df = qpt_df[
-            [
-                'c22d2h',
-            ]
-        ]
-        qpt_isotope_arr = np.array(qpt_isotope_df)
-        qpt_isotope_obj = Isotope(qpt_isotope_arr)
+        with pytest.raises(TypeError):
+            arctic_c22_ser = pd.Series(data=arctic_acid_iso_df.c22_fd2h)
+            arctic_c22_arr = np.array(arctic_c22_ser)
+            arctic_c22_obj = Isotope(arctic_c22_arr)
 
 
-# class TestIsotopeIsotopeIso_range:
-#     Test for Isotope.iso_range()
+# class TestIsotopeIsotopeValue_range:
+#     Test Isotope.value_range()
 
-#     # def test_iso_range_t0(self):
+#     # def test_value_range_t0(self):
 
 
-# class TestIsotopeIsotopeIso_avg:
-#     Test for Isootpe.iso_avg()
+# class TestIsotopeIsotopeConcentration_avg:
+#     Test Isotope.concentration_avg()
 
-#     # def test_iso_avg_t0(self):
+#     # def test_concentration_avg_t0(self):
 
 
 # class TestIsotopeIsotopeEpsilon:
-#     Test for Isotope.epsilon()
+#     Test Isotope.epsilon()
 
 #     # def test_epsilon_t0(self):
+
+    
+# class TestIsotopeIsotopeWax_to_source:
+#     Test Isotope.wax_to_source()
+
+#     # def test_wax_to_source_t0(self):
+    
+
+# class TestIsotopeIsotopeCorr_rvals:
+#     Test Isotope.corr_rvals()
+
+    # def test_corr_rvals_t0(self):
+        
+    #     qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+    #     qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        
+    #     qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
+        
+    #     assert np.round(qpt_acid_rvals[1,0], decimals=5) == 0
+            
+
+    # def test_corr_rvals_t1(self):
+        
+    #     qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+    #     qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        
+    #     qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
+        
+    #     for col in range(len(qpt_acid_rvals[0,:])):
+    #         assert np.round(qpt_acid_rvals[col,col], decimals=5) == 1
+
+
+    # def test_corr_rvals_t2(self):
+        
+    #     qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+    #     qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        
+    #     qpt_acid_rvals = qpt_acid_iso_obj.corr_rvals(minimum_obs=2)
+        
+    #     for row in range(len(qpt_acid_rvals[:,0])):
+    #         for col in range(len(qpt_acid_rvals[0,:])):
+    #             assert qpt_acid_rvals[row,col] == qpt_acid_rvals[col,row]
+    
+    
+# class TestIsotopeIsotopeCorr_pvals:
+#     Test Chain.corr_pvals()
+    
+#     def test_corr_pvals_t0(self):
+        
+#         qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+#         qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        
+#         qpt_acid_pvals = qpt_acid_iso_obj.corr_pvals(minimum_obs=2)
+        
+#         for col in range(len(qpt_acid_pvals[0,:])):
+#             assert np.round(qpt_acid_pvals[col,col], decimals=5) == 0
+            
+            
+#     def test_corr_pvals_t1(self):
+        
+#         qpt_acid_iso_arr = np.array(qpt_acid_iso_df)
+#         qpt_acid_iso_obj = Isotope(qpt_acid_iso_arr)
+        
+#         qpt_acid_pvals = qpt_acid_iso_obj.corr_pvals(minimum_obs=2)
+        
+#         for row in range(len(qpt_acid_pvals[:,0])):
+#             for col in range(len(qpt_acid_pvals[0,:])):
+#                 assert qpt_acid_pvals[row,col] == qpt_acid_pvals[col,row]
