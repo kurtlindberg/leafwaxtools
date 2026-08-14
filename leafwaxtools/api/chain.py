@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from skbio.stats.composition import clr, closure, multi_replace
 import scipy.stats
-# import warnings
+import warnings
 
 
 class Chain:
@@ -48,15 +48,14 @@ class Chain:
             raise TypeError("'input_data' must be 2-dimensional")
 
 
-    def total_conc(self, zero_total=0, calculate_log=False):
+    def total_conc(self, calculate_log=False):
         """
-        Calculates the total concentration of each sample (rows).
+        Calculates the total concentration of each sample (rows). This function
+        utilizes numpy.nansum(), which ignores all NaN values in each sample
+        and returns 0 for a row of all NaNs.
 
         Parameters
         ----------
-        zero_total : int, optional
-            Return value if the sum of all columns in a row = 0. The default 
-            is 0.
         calculate_log : bool, optional
             Returns log (base e) of the sum of each row instead of just the 
             sum. The default is False.
@@ -79,9 +78,6 @@ class Chain:
         for row in range(0, len(self.data[:,0])):
             total_conc[row] = np.nansum(self.data[row,:])
 
-            if total_conc[row] == 0:
-                total_conc[row] = zero_total
-
         if calculate_log is True:
             total_conc = np.log(total_conc)
 
@@ -89,7 +85,7 @@ class Chain:
             total_conc = total_conc
 
         else:
-             raise ValueError("'calculate_log' must either be True or False (default)")
+            raise ValueError("'calculate_log' must either be True or False (default)")
 
         return total_conc
 
@@ -123,12 +119,12 @@ class Chain:
         for row in range(0, len(self.data[:,0])):
             for col in range(0, len(self.data[0,:])):
                 rel_abd[row,col] = self.data[row,col]/np.sum(self.data[row,:])
-                
+                    
         if calculate_percent is True:
             for row in range(0, len(self.data[:,0])):
-                    for col in range(0, len(self.data[0,:])):
-                        rel_abd[row,col] = rel_abd[row,col]*100
-
+                for col in range(0, len(self.data[0,:])):
+                    rel_abd[row,col] = rel_abd[row,col]*100
+                
         elif calculate_percent is False:
             rel_abd = rel_abd
 
@@ -157,13 +153,14 @@ class Chain:
         Parameters
         ----------
         chain_lengths : array-like
-            Array-like of integers or floats representing the carbon chain-length 
-            number of each column.
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column.
 
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is empty.
+            Raises an error if 'chain_lengths' is not the same length as the
+            number of chain-lengths (columns).
 
         Returns
         -------
@@ -172,12 +169,10 @@ class Chain:
 
         """
 
-        if len(chain_lengths) < 1:
+        if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
-                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' must be the same length as the number of data columns"    
             )
-
-        # Add check if len(chain_lengths) != # of data columns
 
         acl_numer = np.zeros(len(self.data[:,0]))
         acl = np.zeros(len(self.data[:,0]))
@@ -205,8 +200,8 @@ class Chain:
         Parameters
         ----------
         chain_lengths : array-like
-            Array-like of integers or floats representing the carbon chain-length 
-            number of each column.
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column.
         even_over_odd : bool, optional
             Calculates the CPI of even-chain over odd-chain leaf waxes (use 
             case for n-alkanoic acids). Change to False to calculate the CPI 
@@ -216,8 +211,9 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is empty or if 
-            'even_over_odd' is neither True nor False.
+            Raises an error if 'chain_lengths' is not the same length as the
+            number of chain-lengths (columns) or if 'even_over_odd' is neither 
+            True nor False.
 
         Returns
         -------
@@ -226,14 +222,20 @@ class Chain:
 
         """
 
-        if len(chain_lengths) < 1:
+        if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
-                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' must be the same length as the number of data columns"    
             )
 
-        '''
-        EKT: use warnings to flag if even over odd order is wrong
-        '''
+        if chain_lengths[0] % 2 != 0 and even_over_odd is True:
+            warnings.warn(
+                f"The first chain-length '{chain_lengths[0]}' is an odd number, but this cpi function will be dividing even number chain-lengths over odd number ones"
+            )
+        
+        if chain_lengths[0] % 2 == 0 and even_over_odd is False:
+            warnings.warn(
+                f"The first chain-length '{chain_lengths[0]}' is an even number, but this cpi function will be dividing odd number chain-lengths over even number ones"
+            )
 
         chain_lengths_even = [num for num in chain_lengths if num % 2 == 0]
         chain_lengths_odd = [num for num in chain_lengths if num % 2 == 1]
@@ -245,12 +247,12 @@ class Chain:
 
         if even_over_odd is True:
             for row in range(0, len(self.data[:,0])):
-                    cpi[row] = (np.nansum(data_even[row,0:-1]) + np.nansum(data_even[row,1:])) / (2 * np.nansum(data_odd[row,:]))
+                cpi[row] = (np.nansum(data_even[row,0:-1]) + np.nansum(data_even[row,1:])) / (2 * np.nansum(data_odd[row,:]))
 
         elif even_over_odd is False:
              for row in range(0, len(self.data[:,0])):
-                    cpi[row] = (np.nansum(data_odd[row,0:-1]) + np.nansum(data_odd[row,1:])) / (2 * np.nansum(data_even[row,:]))
-
+                 cpi[row] = (np.nansum(data_odd[row,0:-1]) + np.nansum(data_odd[row,1:])) / (2 * np.nansum(data_even[row,:]))
+                 
         else:
              raise ValueError("'even_over_odd' must be True (default) or False")
 
@@ -350,8 +352,8 @@ class Chain:
         Parameters
         ----------
         chain_lengths : array-like
-            Array-like of integers or floats representing the carbon chain-length 
-            number of each column..
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column..
         use_clr : bool, optional
             Calculates the clr of the leaf wax chain-length abundance data, 
             replacing 0 values with 1/N where N is the number of chain-lengths 
