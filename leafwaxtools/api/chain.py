@@ -280,18 +280,21 @@ class Chain:
 
         """
 
+        data_df = pd.DataFrame(data=self.data)
         r_vals = np.zeros((len(self.data[0,:]), len(self.data[0,:])))
-
-        for row in range(0, len(r_vals[:,0])):
-            for col in range(0, len(r_vals[0,:])):
-                x_corr = np.array(self.data[:,row])
-                y_corr = np.array(self.data[:,col])
-
-                if (len(x_corr) >= minimum_obs) and (len(y_corr) >= minimum_obs):
-                    r_vals[row,col] = scipy.stats.pearsonr(x_corr, y_corr)[0]
+    
+        for row in data_df.columns:
+            for col in data_df.columns:
+                if col == row:
+                    data_df_corr = data_df[[row]].dropna()
+                else:
+                    data_df_corr = data_df[[row, col]].dropna()
+                
+                if (len(data_df_corr[row]) >= minimum_obs) and (len(data_df_corr[col]) >= minimum_obs):
+                    r_vals[row,col] = scipy.stats.pearsonr(data_df_corr[row], data_df_corr[col])[0]
                 else:
                     r_vals[row,col] = np.nan
-       
+                
         return r_vals
 
 
@@ -314,20 +317,22 @@ class Chain:
             wax chain-length (column).
 
         """
-
+        
+        data_df = pd.DataFrame(data=self.data)
         p_vals = np.zeros((len(self.data[0,:]), len(self.data[0,:])))
-
-        for row in range(0, len(p_vals[:,0])):
-            for col in range(0, len(p_vals[0,:])):
-
-                x_corr = np.array(self.data[:,row])
-                y_corr = np.array(self.data[:,col])
-
-                if (len(x_corr) >= minimum_obs) and (len(y_corr) >= minimum_obs):
-                    p_vals[row,col] = scipy.stats.pearsonr(x_corr, y_corr)[1]
+    
+        for row in data_df.columns:
+            for col in data_df.columns:
+                if col == row:
+                    data_df_corr = data_df[[row]].dropna()
+                else:
+                    data_df_corr = data_df[[row, col]].dropna()
+                
+                if (len(data_df_corr[row]) >= minimum_obs) and (len(data_df_corr[col]) >= minimum_obs):
+                    p_vals[row,col] = scipy.stats.pearsonr(data_df_corr[row], data_df_corr[col])[1]
                 else:
                     p_vals[row,col] = np.nan
- 
+                
         return p_vals
 
 
