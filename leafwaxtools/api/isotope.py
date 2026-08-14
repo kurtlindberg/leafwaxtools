@@ -59,8 +59,8 @@ class Isotope:
         value_range = np.zeros(len(self.data[:,0]))
 
         for row in range(0, len(self.data[:,0])):
-            value_range[row] = np.max(self.data[row,:]) - np.min(self.data[row,:])
-
+            value_range[row] = np.nanmax(self.data[row,:]) - np.nanmin(self.data[row,:])
+        
         return value_range
 
 
