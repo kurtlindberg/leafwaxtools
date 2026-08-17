@@ -8,9 +8,10 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from skbio.stats.composition import clr, closure, multi_replace
-import scipy.stats
+from skbio.stats.composition import clr, multi_replace
 import warnings
+from ..utils import validate_init
+from ..utils import correlation
 
 
 class Chain:
@@ -44,8 +45,7 @@ class Chain:
 
         self.data = input_data
         
-        if self.data.ndim != 2:
-            raise TypeError("'input_data' must be 2-dimensional")
+        validate_init.validate_data_dimensions(self.data)
 
 
     def total_conc(self, calculate_log=False):
@@ -259,11 +259,12 @@ class Chain:
         return cpi
 
 
-    def corr_rvals(self, minimum_obs=2):
+    def correlation_rvals(self, minimum_obs=2):
         """
         Calculates the Pearson correlation r-values between each leaf wax 
         chain-length (columns). To be extended with other correlation methods 
-        (Spearman, Kendall Tau) in a future version.
+        (Spearman, Kendall Tau) in a future version. This functionality is 
+        identical between the Chain and Isotope API classes.
 
         Parameters
         ----------
@@ -280,29 +281,17 @@ class Chain:
 
         """
 
-        data_df = pd.DataFrame(data=self.data)
-        r_vals = np.zeros((len(self.data[0,:]), len(self.data[0,:])))
-    
-        for row in data_df.columns:
-            for col in data_df.columns:
-                if col == row:
-                    data_df_corr = data_df[[row]].dropna()
-                else:
-                    data_df_corr = data_df[[row, col]].dropna()
-                
-                if (len(data_df_corr[row]) >= minimum_obs) and (len(data_df_corr[col]) >= minimum_obs):
-                    r_vals[row,col] = scipy.stats.pearsonr(data_df_corr[row], data_df_corr[col])[0]
-                else:
-                    r_vals[row,col] = np.nan
+        r_vals = correlation.corr_r(data=self.data, min_obs=minimum_obs)        
                 
         return r_vals
 
 
-    def corr_pvals(self, minimum_obs=2):
+    def correlation_pvals(self, minimum_obs=2):
         """
         Calculates the Pearson correlation p-values between each leaf wax 
         chain-length (columns). To be extended with other correlation methods 
-        (Spearman, Kendall Tau) in a future version.
+        (Spearman, Kendall Tau) in a future version. This functionality is 
+        identical between the Chain and Isotope API classes.
 
         Parameters
         ----------
@@ -318,20 +307,7 @@ class Chain:
 
         """
         
-        data_df = pd.DataFrame(data=self.data)
-        p_vals = np.zeros((len(self.data[0,:]), len(self.data[0,:])))
-    
-        for row in data_df.columns:
-            for col in data_df.columns:
-                if col == row:
-                    data_df_corr = data_df[[row]].dropna()
-                else:
-                    data_df_corr = data_df[[row, col]].dropna()
-                
-                if (len(data_df_corr[row]) >= minimum_obs) and (len(data_df_corr[col]) >= minimum_obs):
-                    p_vals[row,col] = scipy.stats.pearsonr(data_df_corr[row], data_df_corr[col])[1]
-                else:
-                    p_vals[row,col] = np.nan
+        p_vals = correlation.corr_p(data=self.data, min_obs=minimum_obs)
                 
         return p_vals
 
