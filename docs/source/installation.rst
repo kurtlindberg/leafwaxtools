@@ -25,7 +25,7 @@ As of June 2025, we recommend Python 3.12. Create an environment via the command
 
 .. code-block:: bash
 
-    conda create -n leafwax python=3.12
+    conda create -n leafwaxtools python=3.12
 
 To view a list of available environments:
 
@@ -37,7 +37,7 @@ To activate the new environment:
 
 .. code-block:: bash
 
-   conda activate leafwax
+   conda activate leafwaxtools
 
 To view the list of packages in your environment:
 
@@ -49,7 +49,7 @@ To remove the environment:
 
 .. code-block:: bash
 
-   conda remove --name leafwax --all
+   conda remove --name leafwaxtools --all
 
 More information about managing conda environments can be found `here <https://docs.conda.io/projects/conda/en/latest/user-guide/tasts/manage-environments.html#>`_.
 
@@ -80,6 +80,6 @@ If you intent on using leafwaxtools within a Jupyter Notebook, we recommend usin
 .. code-block:: bash
 
     conda install ipykernel
-    python -m ipykernel install --user --name=leafwax
+    python -m ipykernel install --user --name=leafwaxtools
 
 The first line will install ipykernel and its dependencies, including IPython, Jupyter, etc. The second line will make sure the leafwax environment is visible to Jupyter (see `this page for context <https://quierozf.com/entries/jupyter-kernels-how-to-add-change-remove>`_).

@@ -38,9 +38,13 @@ class Isotope:
 
     def __init__(self, input_data):
 
-        self.data = input_data
+        validate_init.validate_data_dimensions(input_data)
         
-        validate_init.validate_data_dimensions(self.data)
+        input_data_df = pd.DataFrame(data=input_data)
+        input_data_dfnan = input_data_df.apply(pd.to_numeric, errors='coerce')
+        input_data_arr = np.array(input_data_dfnan)
+
+        self.data = input_data_arr
 
 
     def value_range(self):
@@ -94,19 +98,24 @@ class Isotope:
         if np.shape(self.data) != np.shape(chain_data):
             raise ValueError("Input isotope and chain-length distribution data must have the same number of rows and columns")
 
+        chain_data_df = pd.DataFrame(data=chain_data)
+        chain_data_dfnan = chain_data_df.apply(pd.to_numeric, errors='coerce')
+        chain_data_arr = np.array(chain_data_dfnan)
+
         concentration_avg = np.zeros(len(self.data[:,0]))
 
         for row in range(0, len(self.data[:,0])):
             for col in range(0, len(self.data[0,:])):
-                if self.data[row,col] == np.nan:
-                    chain_data[row,col] = 0
+                if np.isnan(self.data[row,col]) == True:
+                    chain_data_arr[row,col] = 0
 
         for row in range(0, len(self.data[:,0])):
             for col in range(0, len(self.data[0,:])):
-                concentration_avg[row] += self.data[row,col] * chain_data[row,col]
+                if (np.isnan(self.data[row,col]) == False):
+                    concentration_avg[row] += self.data[row,col] * chain_data_arr[row,col]
 
-            concentration_avg[row] = concentration_avg[row]/np.sum(chain_data[row,:])
-
+            concentration_avg[row] = concentration_avg[row]/np.nansum(chain_data_arr[row,:])
+        
         return concentration_avg
 
     
@@ -152,11 +161,11 @@ class Isotope:
             epsilon_denominator = self.data
 
         epsilon = (((1000+epsilon_numerator)/(1000+epsilon_denominator))-1)*1000
-
+        
         return epsilon
     
     
-    def wax_to_source(self, epsilon, epsilon_numerator=None):
+    def wax_to_source(self, epsilon=None, epsilon_numerator=None):
         """
         Calculates the isotopic value of a source material to a leaf wax using 
         an isotopic fractionation factor (epsilon). A common application is the
@@ -182,7 +191,9 @@ class Isotope:
         Parameters
         ----------
         epsilon : 1-D or 2-D array-like
-            Isotopic fractionation factor (epsilon) value/array.
+            Isotopic fractionation factor (epsilon) value/array. Uses 
+            Isotope.data by default if no argument is passed. The default is 
+            None.
         epsilon_numerator : 1-D or 2-D array-like, optional
             Numerator stable isotope value/array. Uses Isotope.data by default 
             if no argument is passed. The default is None.
@@ -194,6 +205,9 @@ class Isotope:
             (row) and chain-length (column; if applicable).
 
         """        
+        
+        if epsilon is None:
+            epsilon = self.data
         
         if epsilon_numerator is None:
             epsilon_numerator = self.data
