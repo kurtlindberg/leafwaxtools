@@ -161,11 +161,11 @@ class Isotope:
             epsilon_denominator = self.data
 
         epsilon = (((1000+epsilon_numerator)/(1000+epsilon_denominator))-1)*1000
-
+        
         return epsilon
     
     
-    def wax_to_source(self, epsilon, epsilon_numerator=None):
+    def wax_to_source(self, epsilon=None, epsilon_numerator=None):
         """
         Calculates the isotopic value of a source material to a leaf wax using 
         an isotopic fractionation factor (epsilon). A common application is the
@@ -191,7 +191,9 @@ class Isotope:
         Parameters
         ----------
         epsilon : 1-D or 2-D array-like
-            Isotopic fractionation factor (epsilon) value/array.
+            Isotopic fractionation factor (epsilon) value/array. Uses 
+            Isotope.data by default if no argument is passed. The default is 
+            None.
         epsilon_numerator : 1-D or 2-D array-like, optional
             Numerator stable isotope value/array. Uses Isotope.data by default 
             if no argument is passed. The default is None.
@@ -203,6 +205,9 @@ class Isotope:
             (row) and chain-length (column; if applicable).
 
         """        
+        
+        if epsilon is None:
+            epsilon = self.data
         
         if epsilon_numerator is None:
             epsilon_numerator = self.data
