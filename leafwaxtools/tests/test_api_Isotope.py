@@ -123,7 +123,6 @@ class TestisotopeIsotopeConcentration_avg:
         assert np.isnan(arctic_acid_conc_avg[-1]) == True
         
         
-
     def test_concentration_avg_t1(self):
         
         with pytest.raises(ValueError):
@@ -139,16 +138,112 @@ class TestisotopeIsotopeConcentration_avg:
             arctic_acid_conc_avg = arctic_acid_iso_obj.concentration_avg(chain_data=arctic_acid_somechain_df)
         
 
-# class TestisotopeIsotopeEpsilon:
-#     Test Isotope.epsilon()
+class TestisotopeIsotopeEpsilon:
+    ''' Test Isotope.epsilon() '''
 
-#     # def test_epsilon_t0(self):
-
+    def test_epsilon_t0(self):
+        
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        arctic_acid_epsilon = arctic_acid_iso_obj.epsilon()
+        
+        assert np.isnan(arctic_acid_epsilon[0,0]) == True
+        assert arctic_acid_epsilon[23,0] == 0
+        assert np.isnan(arctic_acid_epsilon[-1,-1]) == True
+        
     
-# class TestisotopeIsotopeWax_to_source:
-#     Test Isotope.wax_to_source()
+    def test_epsilon_t1(self):
 
-#     # def test_wax_to_source_t0(self):
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        epsilon_denom_test = 0
+        arctic_acid_epsilon = arctic_acid_iso_obj.epsilon(epsilon_denominator=epsilon_denom_test)
+        
+        assert np.isnan(arctic_acid_epsilon[0,0]) == True
+        assert np.round(arctic_acid_epsilon[23,0], decimals=5) == -225
+        assert np.isnan(arctic_acid_epsilon[-1,-1]) == True
+        
+    
+    def test_epsilon_t2(self):
+
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        epsilon_denom_test = np.zeros(shape=np.shape(arctic_acid_iso_df))
+        arctic_acid_epsilon = arctic_acid_iso_obj.epsilon(epsilon_denominator=epsilon_denom_test)
+        
+        assert np.isnan(arctic_acid_epsilon[0,0]) == True
+        assert np.round(arctic_acid_epsilon[23,0], decimals=5) == -225
+        assert np.isnan(arctic_acid_epsilon[-1,-1]) == True
+        
+    
+    def test_epsilon_t3(self):
+
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        epsilon_denom_test = np.zeros(shape=np.shape(arctic_acid_iso_df)[1])
+        arctic_acid_epsilon = arctic_acid_iso_obj.epsilon(epsilon_denominator=epsilon_denom_test)
+        
+        assert np.isnan(arctic_acid_epsilon[0,0]) == True
+        assert np.round(arctic_acid_epsilon[23,0], decimals=5) == -225
+        assert np.isnan(arctic_acid_epsilon[-1,-1]) == True
+        
+    
+    def test_epsilon_t4(self):
+
+        with pytest.raises(ValueError):
+            arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+            epsilon_denom_test = np.zeros(shape=np.shape(arctic_acid_iso_df)[0])
+            arctic_acid_epsilon = arctic_acid_iso_obj.epsilon(epsilon_denominator=epsilon_denom_test)
+        
+    
+class TestisotopeIsotopeWax_to_source:
+    ''' Test Isotope.wax_to_source() '''
+
+    def test_wax_to_source_t0(self):
+        
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        arctic_acid_iso_source = arctic_acid_iso_obj.wax_to_source()
+        
+        assert np.isnan(arctic_acid_iso_source[0,0]) == True
+        assert arctic_acid_iso_source[23,0] == 0
+        assert np.isnan(arctic_acid_iso_source[-1,-1]) == True
+        
+
+    def test_wax_to_source_t1(self):
+        
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        epsilon_test = 0
+        arctic_acid_iso_source = arctic_acid_iso_obj.wax_to_source(epsilon=epsilon_test)
+        
+        assert np.isnan(arctic_acid_iso_source[0,0]) == True
+        assert arctic_acid_iso_source[23,0] == -225
+        assert np.isnan(arctic_acid_iso_source[-1,-1]) == True
+        
+    
+    def test_wax_to_source_t2(self):
+        
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        epsilon_test = np.zeros(shape=np.shape(arctic_acid_iso_df))
+        arctic_acid_iso_source = arctic_acid_iso_obj.wax_to_source(epsilon=epsilon_test)
+        
+        assert np.isnan(arctic_acid_iso_source[0,0]) == True
+        assert arctic_acid_iso_source[23,0] == -225
+        assert np.isnan(arctic_acid_iso_source[-1,-1]) == True
+        
+    
+    def test_wax_to_source_t3(self):
+        
+        arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+        epsilon_test = np.zeros(shape=np.shape(arctic_acid_iso_df)[1])
+        arctic_acid_iso_source = arctic_acid_iso_obj.wax_to_source(epsilon=epsilon_test)
+        
+        assert np.isnan(arctic_acid_iso_source[0,0]) == True
+        assert arctic_acid_iso_source[23,0] == -225
+        assert np.isnan(arctic_acid_iso_source[-1,-1]) == True
+        
+    
+    def test_wax_to_source_t4(self):
+        
+        with pytest.raises(ValueError):
+            arctic_acid_iso_obj = Isotope(arctic_acid_iso_df)
+            epsilon_test = np.zeros(shape=np.shape(arctic_acid_iso_df)[0])
+            arctic_acid_iso_source = arctic_acid_iso_obj.wax_to_source(epsilon=epsilon_test)
     
 
 class TestisotopeIsotopeCorrelation_rvals:
