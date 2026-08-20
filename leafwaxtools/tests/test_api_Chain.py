@@ -262,7 +262,25 @@ class TestchainChainCorrelation_pvals:
                 assert qpt_acid_pvals[row,col] == qpt_acid_pvals[col,row]
 
 
-# class TestchainChainPca:
-#     Test Chain.pca()
+class TestchainChainPca:
+    ''' Test Chain.pca() '''
 
-#     # def test_pca_t0(self):
+    def test_pca_ta(self):
+        
+        with pytest.raises(ValueError):
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
+            arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=np.arange(arctic_chain_lengths[0], arctic_chain_lengths[-1]))
+
+
+    def test_pca_tb(self):
+        
+        with pytest.raises(ValueError):
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
+            arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=arctic_chain_lengths, scaling_method="True")
+        
+            
+    @pytest.mark.filterwarnings("ignore:It is")
+    def test_pca_tc(self):
+        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
+        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=arctic_chain_lengths, scaling_method=None)
