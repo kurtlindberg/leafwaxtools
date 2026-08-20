@@ -265,22 +265,43 @@ class TestchainChainCorrelation_pvals:
 class TestchainChainPca:
     ''' Test Chain.pca() '''
 
-    def test_pca_ta(self):
+    def test_pca_t0(self):
         
-        with pytest.raises(ValueError):
-            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
-            arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=np.arange(arctic_chain_lengths[0], arctic_chain_lengths[-1]))
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='z-score')
 
 
-    def test_pca_tb(self):
+    def test_pca_t1(self):
         
-        with pytest.raises(ValueError):
-            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
-            arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=arctic_chain_lengths, scaling_method="True")
-        
-            
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='clr')
+
+
     @pytest.mark.filterwarnings("ignore:It is")
-    def test_pca_tc(self):
+    def test_pca_t2(self):
         
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
-        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=arctic_chain_lengths, scaling_method=None)
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method=None)
+
+
+    def test_pca_t3(self):
+        
+        with pytest.raises(ValueError):
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=np.arange(qpt_chain_lengths[0], qpt_chain_lengths[-1]))
+
+
+    def test_pca_t4(self):
+        
+        with pytest.raises(ValueError):
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="True")
+            
+            
+    def test_pca_t5(self):
+        
+        with pytest.raises(ValueError):
+            qpt_acid_chain_df.iloc[0,0] = np.nan
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="z-score")
+            
