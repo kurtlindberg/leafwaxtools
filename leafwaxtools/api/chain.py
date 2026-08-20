@@ -322,10 +322,6 @@ class Chain:
             raise ValueError(
                 "'chain_lengths' must be the same length as the number of data columns"    
             )
-        
-        for row in range(0, len(self.data[:,0])):
-            if np.sum(self.data[row,:]) == 0:
-                raise ValueError(f"Sample in row {row} does not contain any leaf wax chain-length data (concentration or abundances == NaN or 0). Please remove these samples from the input data array before performing PCA.")
 
         # Apply data scaling before PCA
         match scaling_method:
