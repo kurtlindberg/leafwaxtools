@@ -43,9 +43,13 @@ class Chain:
    
     def __init__(self, input_data):
 
-        self.data = input_data
+        validate_init.validate_data_dimensions(input_data)
         
-        validate_init.validate_data_dimensions(self.data)
+        input_data_df = pd.DataFrame(data=input_data)
+        input_data_dfnan = input_data_df.apply(pd.to_numeric, errors='coerce')
+        input_data_arr = np.array(input_data_dfnan)
+
+        self.data = input_data_arr
 
 
     def total_conc(self, calculate_log=False):
@@ -118,7 +122,7 @@ class Chain:
 
         for row in range(0, len(self.data[:,0])):
             for col in range(0, len(self.data[0,:])):
-                rel_abd[row,col] = self.data[row,col]/np.sum(self.data[row,:])
+                rel_abd[row,col] = self.data[row,col]/np.nansum(self.data[row,:])
                     
         if calculate_percent is True:
             for row in range(0, len(self.data[:,0])):
@@ -181,7 +185,7 @@ class Chain:
             for col in range(0, len(self.data[0,:])):
                 acl_numer[row] += self.data[row,col] * chain_lengths[col]
 
-            acl[row] = acl_numer[row]/np.sum(self.data[row,:])
+            acl[row] = acl_numer[row]/np.nansum(self.data[row,:])
 
         return acl
 
