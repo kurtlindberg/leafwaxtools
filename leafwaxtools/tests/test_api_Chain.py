@@ -29,8 +29,8 @@ DATA_DIR = Path(__file__).parents[1].joinpath("data").resolve()
 arctic_data_path = os.path.join(DATA_DIR, "Lindberg_Arctic_terrestrial_plantwaxes.csv")
 qpt_data_path = os.path.join(DATA_DIR, "LakeQaupatPlantWaxData.csv")
 
-arctic_df = pd.read_csv(arctic_data_path)
-arctic_acid_chain_df = arctic_df[
+arctic_data_df = pd.read_csv(arctic_data_path)
+arctic_acid_chain_df = arctic_data_df[
     [
         'c20_fconc',
         'c21_fconc',
@@ -48,8 +48,8 @@ arctic_acid_chain_df = arctic_df[
     ]
 ]
 
-qpt_df = pd.read_csv(qpt_data_path)
-qpt_acid_chain_df = qpt_df[
+qpt_data_df = pd.read_csv(qpt_data_path)
+qpt_acid_chain_df = qpt_data_df[
     [
         'c20concentration',
         'c22concentration',
@@ -74,24 +74,15 @@ for col in range(len(qpt_acid_chain_df.columns)):
 
 class TestChainChainInit:
     ''' Test for Chain instantiation '''
-
+    
     def test_init_t0(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
-        assert arctic_acid_chain_obj.data.all() == arctic_acid_chain_arr.all()
-    
-    
-    def test_init_t1(self):
-        
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         
         assert arctic_acid_chain_obj.data.ndim == 2
 
 
-    def test_init_t2(self):
+    def test_init_t1(self):
         
         with pytest.raises(TypeError):
             arctic_c22_ser = pd.Series(data=arctic_acid_chain_df.c22_fconc)
@@ -104,9 +95,7 @@ class TestchainChainTotal_conc:
 
     def test_total_conc_t0(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         arctic_acid_total_conc = arctic_acid_chain_obj.total_conc(calculate_log=False)
         
         assert np.round(arctic_acid_total_conc[0], decimals=3) == 41.6
@@ -116,9 +105,7 @@ class TestchainChainTotal_conc:
     
     def test_total_conc_t1(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         arctic_acid_total_conc = arctic_acid_chain_obj.total_conc(calculate_log=True)
         
         assert np.round(arctic_acid_total_conc[0], decimals=3) == np.round(np.log(41.6), decimals=3)
@@ -129,9 +116,7 @@ class TestchainChainTotal_conc:
     def test_total_conc_t2(self):
         
         with pytest.raises(ValueError):
-            arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-            arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
             arctic_acid_total_conc = arctic_acid_chain_obj.total_conc(calculate_log="False")
 
 
@@ -140,9 +125,7 @@ class TestchainChainRelative_abd:
 
     def test_relative_abd_t0(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         arctic_acid_relative_abd = arctic_acid_chain_obj.relative_abd(calculate_percent=False)
         
         assert np.round(np.sum(arctic_acid_relative_abd[0,:]), decimals=5) == 1
@@ -152,9 +135,7 @@ class TestchainChainRelative_abd:
         
     def test_relative_abd_t1(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         arctic_acid_relative_abd = arctic_acid_chain_obj.relative_abd(calculate_percent=True)
         
         assert np.round(np.sum(arctic_acid_relative_abd[0,:]), decimals=5) == 100
@@ -165,9 +146,7 @@ class TestchainChainRelative_abd:
     def test_relative_abd_t2(self):
         
         with pytest.raises(ValueError):
-            arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-            arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
             arctic_acid_relative_abd = arctic_acid_chain_obj.relative_abd(calculate_percent="False")
 
 
@@ -176,9 +155,7 @@ class TestchainChainAcl:
     
     def test_acl_t0(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         arctic_acid_acl = arctic_acid_chain_obj.acl(chain_lengths=arctic_chain_lengths)
         
         assert np.round(arctic_acid_acl[0], decimals=2) == 24.55
@@ -189,9 +166,7 @@ class TestchainChainAcl:
     def test_acl_t1(self):
         
         with pytest.raises(ValueError):
-            arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-            arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
             arctic_acid_acl = arctic_acid_chain_obj.acl(chain_lengths=np.arange(arctic_chain_lengths[0], arctic_chain_lengths[-1]))
 
 
@@ -200,9 +175,7 @@ class TestchainChainCpi:
 
     def test_cpi_t0(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths, even_over_odd=True)
         
         assert np.round(arctic_acid_cpi[0], decimals=2) == 2.09
@@ -214,9 +187,7 @@ class TestchainChainCpi:
     @pytest.mark.filterwarnings("ignore:The first")
     def test_cpi_t1(self):
         
-        arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-        arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
         arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths, even_over_odd=False)
         
         assert np.round(arctic_acid_cpi[0], decimals=2) == 0.36
@@ -228,18 +199,14 @@ class TestchainChainCpi:
     def test_cpi_t2(self):
         
         with pytest.raises(ValueError):
-            arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-            arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
             arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=np.arange(arctic_chain_lengths[0], arctic_chain_lengths[-1]), even_over_odd=True)
 
 
     def test_cpi_t3(self):
     
         with pytest.raises(ValueError):        
-            arctic_acid_chain_arr = np.array(arctic_acid_chain_df)
-            arctic_acid_chain_obj = Chain(arctic_acid_chain_arr)
-        
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
             arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths, even_over_odd="True")
         
 
@@ -248,9 +215,7 @@ class TestchainChainCorrelation_rvals:
 
     def test_correlation_rvals_t0(self):
         
-        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
-        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
-        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
         qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals(minimum_obs=2)
         
         assert np.round(qpt_acid_rvals[1,0], decimals=5) == 0.89322
@@ -258,9 +223,7 @@ class TestchainChainCorrelation_rvals:
 
     def test_correlation_rvals_t1(self):
         
-        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
-        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
-        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
         qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals(minimum_obs=2)
         
         for col in range(len(qpt_acid_rvals[0,:])):
@@ -269,9 +232,7 @@ class TestchainChainCorrelation_rvals:
 
     def test_correlation_rvals_t2(self):
         
-        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
-        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
-        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
         qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals(minimum_obs=2)
         
         for row in range(len(qpt_acid_rvals[:,0])):
@@ -284,9 +245,7 @@ class TestchainChainCorrelation_pvals:
     
     def test_correlation_pvals_t0(self):
         
-        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
-        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
-        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
         qpt_acid_pvals = qpt_acid_chain_obj.correlation_pvals(minimum_obs=2)
         
         for col in range(len(qpt_acid_pvals[0,:])):
@@ -295,9 +254,7 @@ class TestchainChainCorrelation_pvals:
             
     def test_correlation_pvals_t1(self):
         
-        qpt_acid_chain_arr = np.array(qpt_acid_chain_df)
-        qpt_acid_chain_obj = Chain(qpt_acid_chain_arr)
-        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
         qpt_acid_pvals = qpt_acid_chain_obj.correlation_pvals(minimum_obs=2)
         
         for row in range(len(qpt_acid_pvals[:,0])):
