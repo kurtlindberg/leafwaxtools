@@ -23,7 +23,7 @@ class Isotope:
         
     Attributes
     ----------
-    input_data : 2-D array-like
+    data : 2-D array-like
         User leaf wax isotope data.
         
     See also
