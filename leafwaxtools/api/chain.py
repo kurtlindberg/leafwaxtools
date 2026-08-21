@@ -34,8 +34,7 @@ class Chain:
     See also
     --------
     
-    leafwaxtools.utils.validate_init.validate_data_dimensions: Checks to make 
-    sure input user data is 2-dimensional.
+    leafwaxtools.utils.validate_init.validate_data_dimensions: Checks to make sure input user data is 2-dimensional.
     
     Examples
     --------
@@ -291,8 +290,7 @@ class Chain:
         See also
         --------
         
-        leafwaxtools.utils.correlation.corr_r: Calculates the correlation 
-        r-values for both the Chain and Isotope API classes.
+        leafwaxtools.utils.correlation.corr_r: Calculates the correlation r-values for both the Chain and Isotope API classes.
 
         """
 
@@ -323,8 +321,7 @@ class Chain:
         See also
         --------
         
-        leafwaxtools.utils.correlation.corr_p: Calculates the correlation 
-        p-values for both the Chain and Isotope API classes.
+        leafwaxtools.utils.correlation.corr_p: Calculates the correlation p-values for both the Chain and Isotope API classes.
 
         """
         
