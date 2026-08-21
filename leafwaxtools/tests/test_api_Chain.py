@@ -195,15 +195,29 @@ class TestchainChainCpi:
         assert np.isnan(np.sum(arctic_acid_cpi[14])) == True
         assert np.round(arctic_acid_cpi[-1], decimals=2) == 0.07
         
-    
+        
+    @pytest.mark.filterwarnings("ignore:The first")
     def test_cpi_t2(self):
+        
+        arctic_acid_chain_df_test = arctic_acid_chain_df.drop(["c20_fconc"], axis=1)
+        arctic_chain_lengths_test = arctic_chain_lengths[1:]
+        arctic_acid_chain_obj = Chain(arctic_acid_chain_df_test)
+        arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths_test, even_over_odd=True)
+        print(arctic_acid_cpi)
+        assert np.round(arctic_acid_cpi[0], decimals=2) == 1.59
+        assert np.isinf(arctic_acid_cpi[6]) == True
+        assert np.isnan(np.sum(arctic_acid_cpi[14])) == True
+        assert np.round(arctic_acid_cpi[-1], decimals=2) == 11.58    
+    
+    
+    def test_cpi_t3(self):
         
         with pytest.raises(ValueError):
             arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
             arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=np.arange(arctic_chain_lengths[0], arctic_chain_lengths[-1]), even_over_odd=True)
 
 
-    def test_cpi_t3(self):
+    def test_cpi_t4(self):
     
         with pytest.raises(ValueError):        
             arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
