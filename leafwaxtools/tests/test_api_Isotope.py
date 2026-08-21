@@ -274,6 +274,17 @@ class TestisotopeIsotopeCorrelation_rvals:
         for row in range(len(qpt_acid_rvals[:,0])):
             for col in range(len(qpt_acid_rvals[0,:])):
                 assert qpt_acid_rvals[row,col] == qpt_acid_rvals[col,row]
+                
+    
+    def test_correlation_rvals_t3(self):
+        
+        qpt_acid_iso_obj = Isotope(qpt_acid_iso_df)
+        obs_test = len(qpt_acid_chain_df.iloc[:,0]) + 1
+        qpt_acid_rvals = qpt_acid_iso_obj.correlation_rvals(minimum_obs=obs_test)
+        
+        for row in range(len(qpt_acid_rvals[:,0])):
+            for col in range(len(qpt_acid_rvals[0,:])):
+                assert np.isnan(qpt_acid_rvals[row,col]) == True
     
     
 class TestisotopeIsotopeCorrelation_pvals:
@@ -296,3 +307,14 @@ class TestisotopeIsotopeCorrelation_pvals:
         for row in range(len(qpt_acid_pvals[:,0])):
             for col in range(len(qpt_acid_pvals[0,:])):
                 assert qpt_acid_pvals[row,col] == qpt_acid_pvals[col,row]
+                
+    
+    def test_correlation_pvals_t2(self):
+        
+        qpt_acid_iso_obj = Isotope(qpt_acid_iso_df)
+        obs_test = len(qpt_acid_chain_df.iloc[:,0]) + 1
+        qpt_acid_pvals = qpt_acid_iso_obj.correlation_pvals(minimum_obs=obs_test)
+        
+        for row in range(len(qpt_acid_pvals[:,0])):
+            for col in range(len(qpt_acid_pvals[0,:])):
+                assert np.isnan(qpt_acid_pvals[row,col]) == True
