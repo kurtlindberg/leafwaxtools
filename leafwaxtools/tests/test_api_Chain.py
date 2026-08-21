@@ -239,6 +239,16 @@ class TestchainChainCorrelation_rvals:
             for col in range(len(qpt_acid_rvals[0,:])):
                 assert qpt_acid_rvals[row,col] == qpt_acid_rvals[col,row]
                 
+    def test_correlation_rvals_t3(self):
+        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        obs_test = len(qpt_acid_chain_df.iloc[:,0]) + 1
+        qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals(minimum_obs=obs_test)
+        
+        for row in range(len(qpt_acid_rvals[:,0])):
+            for col in range(len(qpt_acid_rvals[0,:])):
+                assert np.isnan(qpt_acid_rvals[row,col]) == True
+                
 
 class TestchainChainCorrelation_pvals:
     ''' Test Chain.corr_pvals() '''
@@ -260,9 +270,59 @@ class TestchainChainCorrelation_pvals:
         for row in range(len(qpt_acid_pvals[:,0])):
             for col in range(len(qpt_acid_pvals[0,:])):
                 assert qpt_acid_pvals[row,col] == qpt_acid_pvals[col,row]
+                
+                
+    def test_correlation_pvals_t2(self):
+        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        obs_test = len(qpt_acid_chain_df.iloc[:,0]) + 1
+        qpt_acid_pvals = qpt_acid_chain_obj.correlation_pvals(minimum_obs=obs_test)
+        
+        for row in range(len(qpt_acid_pvals[:,0])):
+            for col in range(len(qpt_acid_pvals[0,:])):
+                assert np.isnan(qpt_acid_pvals[row,col]) == True
 
 
-# class TestchainChainPca:
-#     Test Chain.pca()
+class TestchainChainPca:
+    ''' Test Chain.pca() '''
 
-#     # def test_pca_t0(self):
+    def test_pca_t0(self):
+        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='z-score')
+
+
+    def test_pca_t1(self):
+        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='clr')
+
+
+    @pytest.mark.filterwarnings("ignore:It is")
+    def test_pca_t2(self):
+        
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method=None)
+
+
+    def test_pca_t3(self):
+        
+        with pytest.raises(ValueError):
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=np.arange(qpt_chain_lengths[0], qpt_chain_lengths[-1]))
+
+
+    def test_pca_t4(self):
+        
+        with pytest.raises(ValueError):
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="True")
+            
+            
+    def test_pca_t5(self):
+        
+        with pytest.raises(ValueError):
+            qpt_acid_chain_df.iloc[0,0] = np.nan
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="z-score")
+            

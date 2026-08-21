@@ -7,7 +7,16 @@ def corr_r(data, min_obs):
     """
     Calculates the Pearson correlation r-values between each leaf wax 
     chain-length (columns). To be extended with other correlation methods 
-    (Spearman, Kendall Tau) in a future version.
+    (Spearman, Kendall Tau) in a future version. This function utilises the 
+    correlation features from SciPy (Virtanen et al., 2020). Additionally, this 
+    function drops all NaN values from the two data columns used in each 
+    correlation, similar to the implementation of pandas.DataFrame.corr().
+    
+    Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., 
+    Cournapeau, D., ... & Van Mulbregt, P. (2020). SciPy 1.0: fundamental 
+    algorithms for scientific computing in Python. Nature methods, 17(3), 
+    261-272.
+    https://doi.org/10.1038/s41592-019-0686-2
 
     Parameters
     ----------
@@ -48,7 +57,16 @@ def corr_p(data, min_obs):
     """
     Calculates the Pearson correlation p-values between each leaf wax 
     chain-length (columns). To be extended with other correlation methods 
-    (Spearman, Kendall Tau) in a future version.
+    (Spearman, Kendall Tau) in a future version. This function utilises the 
+    correlation features from SciPy (Virtanen et al., 2020). Additionally, this 
+    function drops all NaN values from the two data columns used in each 
+    correlation, similar to the implementation of pandas.DataFrame.corr().
+    
+    Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., 
+    Cournapeau, D., ... & Van Mulbregt, P. (2020). SciPy 1.0: fundamental 
+    algorithms for scientific computing in Python. Nature methods, 17(3), 
+    261-272.
+    https://doi.org/10.1038/s41592-019-0686-2
 
     Parameters
     ----------
@@ -56,7 +74,7 @@ def corr_p(data, min_obs):
         Uses the self.data (input_data) variable from the API class' __init__.
     min_obs : int
         Minimum number of observations (samples/rows) required to return a
-        Pearson r-value.
+        Pearson p-value.
 
     Returns
     -------

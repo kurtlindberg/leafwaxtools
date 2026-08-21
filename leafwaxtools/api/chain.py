@@ -28,9 +28,14 @@ class Chain:
         
     Attributes
     ----------
-    input_data : 2-D array-like
+    data : 2-D array-like
         User leaf wax chain-length concentration/abundance data.
         
+    See also
+    --------
+    
+    leafwaxtools.utils.validate_init.validate_data_dimensions: Checks to make 
+    sure input user data is 2-dimensional.
     
     Examples
     --------
@@ -282,11 +287,17 @@ class Chain:
             2-D Numpy array of Pearson correlation r-values between each leaf 
             wax chain-length (column) with all values in the major diagonal 
             equal to 1.
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.correlation.corr_r: Calculates the correlation 
+        r-values for both the Chain and Isotope API classes.
 
         """
 
         r_vals = correlation.corr_r(data=self.data, min_obs=minimum_obs)        
-                
+        
         return r_vals
 
 
@@ -308,20 +319,24 @@ class Chain:
         p_vals : numpy.ndarray
             2-D Numpy array of Pearson correlation p-values between each leaf 
             wax chain-length (column).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.correlation.corr_p: Calculates the correlation 
+        p-values for both the Chain and Isotope API classes.
 
         """
         
         p_vals = correlation.corr_p(data=self.data, min_obs=minimum_obs)
-                
+        
         return p_vals
 
 
-    def pca(self, chain_lengths, use_clr=True):
+    def pca(self, chain_lengths, scaling_method='z-score'):
         """
         Performs a Principal Component Analysis (PCA) on the leaf wax 
-        chain-length data with the centered log-ratio transform (clr; 
-        Aitchison, 1982) applied to the input compositional data (Gloor et al. 
-        2017).
+        chain-length data.
                                                                   
         References:
             
@@ -329,94 +344,107 @@ class Chain:
         Journal of the Royal Statistical Society: Series B (Methodological), 
         44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
         
+        Aton, M., McDonald, D., Cañardo Alastuey, J., Azom, R., Batra, P., 
+        Bezshapkin, V., ... & Zhu, Q. (2026). Scikit-bio: a fundamental Python 
+        library for biological omic data analysis. Nature Methods, 23(2), 
+        274-276. https://doi.org/10.1038/s41592-025-02981-z
+        
         Gloor, G. B., Macklaim, J. M., Pawlowsky-Glahn, V., & Egozcue, J. J. 
         (2017). Microbiome datasets are compositional: and this is not 
         optional. Frontiers in microbiology, 8, 2224.
         https://doi.org/10.3389/fmicb.2017.02224
+        
+        Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., 
+        Grisel, O., ... & Duchesnay, É. (2011). Scikit-learn: Machine learning 
+        in Python. the Journal of machine Learning research, 12, 2825-2830.
 
         Parameters
         ----------
         chain_lengths : array-like
             Array-like of integers or floats representing the carbon 
-            chain-length number of each column..
-        use_clr : bool, optional
-            Calculates the clr of the leaf wax chain-length abundance data, 
-            replacing 0 values with 1/N where N is the number of chain-lengths 
-            (columns). The default is True.
+            chain-length number of each column.
+        scaling_method : str or None, optional
+            Scaling method applied to user data prior to PCA. Available 
+            methods include 'z-score' using 
+            sklearn.preprocessing.StandardScaler (Pedregosa et al., 2011), 
+            'clr' (centered log-ratio transformation; Aitchison, 1982) using 
+            skbio.stats.composition.clr (Aton et al., 2026), and None. The 
+            default is 'z-score'.
 
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is empty or if 
-            'use_clr' is neither True nor False.
+            Raises an error if 'chain_lengths' is not the same length as the
+            number of chain-lengths (columns).
 
         Returns
         -------
         pca_dict : dict
-            Dictionary of PCA results including the PC scores for each factor 
-            loading (chain-lengths/columns) and sample (rows). For more 
-            details on all of the returns in pca_dict['pca'], please see the 
-            documentation for the scikit-learn PCA function (sklearn.PCA()) 
-            https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
+            A dictionary containing "pca" (the full set of parameters and 
+            returns from the sklearn.decomposition.PCA class), "pc_values" 
+            (numeric list of principal components; i.e., 4 components = 
+            [1,2,3,4]), "features" (names of each loading provided by 
+            'chain_lengths'), "loadings" (the vector/principal component 
+            scores of each loading organized by decreasing explained variance),
+            "pc_scores" (principal component scores in each component for 
+            every input data sample).
 
         """
-
-        if len(chain_lengths) < 1:
+        
+        if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
-                "'chain_lengths' is currently empty. Please make sure 'chain_lengths' contains at least 1 integer or float."
+                "'chain_lengths' must be the same length as the number of data columns"    
             )
-        
-        for row in range(0, len(self.data[:,0])):
-            if np.sum(self.data[row,:]) == 0:
-                raise ValueError("Sample in row i does not contain any leaf wax chain-length data (concentration or abundances == NaN or 0). Please remove these samples from the input data array before performing PCA.")
-        
-        if use_clr is True:
-            wax_relabd = multi_replace(self.data)
-            wax_clr = clr(wax_relabd)
-            wax_data = pd.DataFrame(data=wax_clr, columns=chain_lengths)
 
-        elif use_clr is False:
-            wax_data = pd.DataFrame(data=self.relative_abd(), columns=chain_lengths)
+        # Apply data scaling before PCA
+        match scaling_method:
+            case 'z-score':
+                data_scaler = StandardScaler()
+                data_scaler.fit(self.data)
+                data_scaled = data_scaler.transform(self.data)
+                data_df_scaled = pd.DataFrame(data=data_scaled, columns=chain_lengths)
 
-        else:
-             raise ValueError("'use_clr' must be True or False (default)")
+            case 'clr':
+                data_multi_replace = multi_replace(self.data)
+                data_clr = clr(data_multi_replace)
+                data_df_scaled = pd.DataFrame(data=data_clr, columns=chain_lengths)
 
-        wax_scaler = StandardScaler()
-        wax_scaler.fit(wax_data)
-        wax_data_scaled = wax_scaler.transform(wax_data)
+            # case 'ilr':
+            #     data_multi_replace = multi_replace(self.data)
+            #     data_ilr = ilr(data_multi_replaced)
+            #     Figure out how to back-transform ilr matrix for PCA per Filzmoser et al. (2009)
+            #     data_df_scaled = pd.DataFrame(data=data_ilr_transform, columns=chain_lengths)
 
-        wax_pca = PCA(n_components=len(chain_lengths))
-        wax_pca.fit_transform(wax_data_scaled)
+            case None:
+                warnings.warn("It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
+                data_df_scaled = pd.DataFrame(data=self.data, columns=chain_lengths)
 
-        # wax_PC_scores = pd.DataFrame(
-        #     wax_pca.fit_transform(wax_data_scaled),
-        #     columns=chain_lengths
-        # )
-        # wax_loadings = pd.DataFrame(
-        #     wax_pca.components_.T,
-        #     columns=chain_lengths,
-        #     index=wax_data.columns
-        # )
+            case _:
+                raise ValueError("'scaling_method' must be set to 'z-score' (default), 'clr', or None")
 
-        wax_ldings = wax_pca.components_
-        wax_features = wax_data.columns
-        wax_pc_values = np.arange(wax_pca.n_components_) + 1
+        # PCA procedure regardless of data scaling method
+        data_pca = PCA(n_components=len(chain_lengths))
+        data_pca.fit_transform(data_df_scaled)
+            
+        data_pca_loadings = data_pca.components_
+        data_pca_features = data_df_scaled.columns
+        data_pca_values = np.arange(data_pca.n_components_) + 1
 
         pca_dict = {
-            "pca": wax_pca,
-            "pc_values": wax_pc_values,
-            "features": wax_features,
-            "loadings": wax_ldings
+            "pca": data_pca,
+            "pc_values": data_pca_values,
+            "features": data_pca_features,
+            "loadings": data_pca_loadings
         }
 
         for i in range(0, len(chain_lengths)):
 
-            wax_pc = wax_pca.fit_transform(wax_data_scaled)[:,i]
-            wax_scale_pc = 1.0 / (wax_pc.max() - wax_pc.min())
-            wax_pc_score = wax_pc * wax_scale_pc
+            data_pc = data_pca.fit_transform(data_df_scaled)[:,i]
+            data_scale_pc = 1.0 / (data_pc.max() - data_pc.min())
+            data_pc_scores = data_pc * data_scale_pc
 
             # pca_dict.update({f"wax_pc{i+1}": wax_pc})
             # pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
-            pca_dict.update({f"wax_pc{i+1}_score": wax_pc_score})
+            pca_dict.update({f"pc{i+1}_scores": data_pc_scores})
 
         return pca_dict

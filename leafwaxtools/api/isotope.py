@@ -23,9 +23,14 @@ class Isotope:
         
     Attributes
     ----------
-    input_data : 2-D array-like
+    data : 2-D array-like
         User leaf wax isotope data.
         
+    See also
+    --------
+    
+    leafwaxtools.utils.validate_init.validate_data_dimensions: Checks to make 
+    sure input user data is 2-dimensional.
     
     Examples
     --------
@@ -236,6 +241,12 @@ class Isotope:
             2-D Numpy array of Pearson correlation r-values between each leaf 
             wax chain-length (column) with all values in the major diagonal 
             equal to 1.
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.correlation.corr_r: Calculates the correlation 
+        r-values for both the Chain and Isotope API classes.
 
         """
 
@@ -254,14 +265,20 @@ class Isotope:
         Parameters
         ----------
         minimum_obs : int, optional
-           Minimum number of observations (samples/rows) required to return a
-           Pearson r-value. The default is 2.
+            Minimum number of observations (samples/rows) required to return a
+            Pearson r-value. The default is 2.
 
         Returns
         -------
         p_vals : numpy.ndarray
             2-D Numpy array of Pearson correlation p-values between each leaf 
             wax chain-length (column).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.correlation.corr_p: Calculates the correlation 
+        p-values for both the Chain and Isotope API classes.
 
         """
 
