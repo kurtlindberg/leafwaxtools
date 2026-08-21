@@ -14,7 +14,7 @@ For example (please check for version updates on Zenodo)
 author = {Lindberg, Kurt},
 month = august,
 title = {{leafwaxtools: A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data}},
-url = {https://github.com/kurtlindberg/leafwaxtools},
+url = {https://doi.org/10.5281/zenodo.15558247},
 version = {v3.0.0},
 year = {2026}
 }
@@ -24,4 +24,4 @@ year = {2026}
 APA style entry
 """""""""""""""
 
-Lindberg, K. (2026). leafwaxtools: A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data (Version v3.0.0) [Computer software]. https://github.com/kurtlindberg/leafwaxtools
+Lindberg, K. (2026). leafwaxtools: A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data (Version v3.0.0) [Computer software]. https://doi.org/10.5281/zenodo.15558247
