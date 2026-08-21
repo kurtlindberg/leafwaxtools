@@ -28,9 +28,14 @@ class Chain:
         
     Attributes
     ----------
-    input_data : 2-D array-like
+    data : 2-D array-like
         User leaf wax chain-length concentration/abundance data.
         
+    See also
+    --------
+    
+    leafwaxtools.utils.validate_init.validate_data_dimensions: Checks to make 
+    sure input user data is 2-dimensional.
     
     Examples
     --------
@@ -282,11 +287,17 @@ class Chain:
             2-D Numpy array of Pearson correlation r-values between each leaf 
             wax chain-length (column) with all values in the major diagonal 
             equal to 1.
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.correlation.corr_r: Calculates the correlation 
+        r-values for both the Chain and Isotope API classes.
 
         """
 
         r_vals = correlation.corr_r(data=self.data, min_obs=minimum_obs)        
-                
+        
         return r_vals
 
 
@@ -308,16 +319,78 @@ class Chain:
         p_vals : numpy.ndarray
             2-D Numpy array of Pearson correlation p-values between each leaf 
             wax chain-length (column).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.correlation.corr_p: Calculates the correlation 
+        p-values for both the Chain and Isotope API classes.
 
         """
         
         p_vals = correlation.corr_p(data=self.data, min_obs=minimum_obs)
-                
+        
         return p_vals
 
 
     def pca(self, chain_lengths, scaling_method='z-score'):
+        """
+        Performs a Principal Component Analysis (PCA) on the leaf wax 
+        chain-length data.
+                                                                  
+        References:
+            
+        Aitchison, J. (1982). The statistical analysis of compositional data. 
+        Journal of the Royal Statistical Society: Series B (Methodological), 
+        44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
+        
+        Aton, M., McDonald, D., Cañardo Alastuey, J., Azom, R., Batra, P., 
+        Bezshapkin, V., ... & Zhu, Q. (2026). Scikit-bio: a fundamental Python 
+        library for biological omic data analysis. Nature Methods, 23(2), 
+        274-276. https://doi.org/10.1038/s41592-025-02981-z
+        
+        Gloor, G. B., Macklaim, J. M., Pawlowsky-Glahn, V., & Egozcue, J. J. 
+        (2017). Microbiome datasets are compositional: and this is not 
+        optional. Frontiers in microbiology, 8, 2224.
+        https://doi.org/10.3389/fmicb.2017.02224
+        
+        Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., 
+        Grisel, O., ... & Duchesnay, É. (2011). Scikit-learn: Machine learning 
+        in Python. the Journal of machine Learning research, 12, 2825-2830.
 
+        Parameters
+        ----------
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column.
+        scaling_method : str or None, optional
+            Scaling method applied to user data prior to PCA. Available 
+            methods include 'z-score' using 
+            sklearn.preprocessing.StandardScaler (Pedregosa et al., 2011), 
+            'clr' (centered log-ratio transformation; Aitchison, 1982) using 
+            skbio.stats.composition.clr (Aton et al., 2026), and None. The 
+            default is 'z-score'.
+
+        Raises
+        ------
+        ValueError
+            Raises an error if 'chain_lengths' is not the same length as the
+            number of chain-lengths (columns).
+
+        Returns
+        -------
+        pca_dict : dict
+            A dictionary containing "pca" (the full set of parameters and 
+            returns from the sklearn.decomposition.PCA class), "pc_values" 
+            (numeric list of principal components; i.e., 4 components = 
+            [1,2,3,4]), "features" (names of each loading provided by 
+            'chain_lengths'), "loadings" (the vector/principal component 
+            scores of each loading organized by decreasing explained variance),
+            "pc_scores" (principal component scores in each component for 
+            every input data sample).
+
+        """
+        
         if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
                 "'chain_lengths' must be the same length as the number of data columns"    
