@@ -96,7 +96,7 @@ class TestchainChainTotal_conc:
     def test_total_conc_t0(self):
         
         arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
-        arctic_acid_total_conc = arctic_acid_chain_obj.total_conc(calculate_log=False)
+        arctic_acid_total_conc = arctic_acid_chain_obj.total_conc()
         
         assert np.round(arctic_acid_total_conc[0], decimals=3) == 41.6
         assert np.round(arctic_acid_total_conc[14], decimals=3) == 0
@@ -126,7 +126,7 @@ class TestchainChainRelative_abd:
     def test_relative_abd_t0(self):
         
         arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
-        arctic_acid_relative_abd = arctic_acid_chain_obj.relative_abd(calculate_percent=False)
+        arctic_acid_relative_abd = arctic_acid_chain_obj.relative_abd()
         
         assert np.round(np.sum(arctic_acid_relative_abd[0,:]), decimals=5) == 1
         assert np.isnan(np.sum(arctic_acid_relative_abd[14,:])) == True
@@ -176,7 +176,7 @@ class TestchainChainCpi:
     def test_cpi_t0(self):
         
         arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
-        arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths, even_over_odd=True)
+        arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths)
         
         assert np.round(arctic_acid_cpi[0], decimals=2) == 2.09
         assert arctic_acid_cpi[6] == np.inf
@@ -184,7 +184,7 @@ class TestchainChainCpi:
         assert np.round(arctic_acid_cpi[-1], decimals=2) == 13.72
         
     
-    @pytest.mark.filterwarnings("ignore:The first")
+    @pytest.mark.filterwarnings("ignore:even_over_odd")
     def test_cpi_t1(self):
         
         arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
@@ -196,14 +196,14 @@ class TestchainChainCpi:
         assert np.round(arctic_acid_cpi[-1], decimals=2) == 0.07
         
         
-    @pytest.mark.filterwarnings("ignore:The first")
+    @pytest.mark.filterwarnings("ignore:even_over_odd")
     def test_cpi_t2(self):
         
         arctic_acid_chain_df_test = arctic_acid_chain_df.drop(["c20_fconc"], axis=1)
         arctic_chain_lengths_test = arctic_chain_lengths[1:]
         arctic_acid_chain_obj = Chain(arctic_acid_chain_df_test)
-        arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths_test, even_over_odd=True)
-        print(arctic_acid_cpi)
+        arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths_test)
+        
         assert np.round(arctic_acid_cpi[0], decimals=2) == 1.59
         assert np.isinf(arctic_acid_cpi[6]) == True
         assert np.isnan(np.sum(arctic_acid_cpi[14])) == True
@@ -214,7 +214,7 @@ class TestchainChainCpi:
         
         with pytest.raises(ValueError):
             arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
-            arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=np.arange(arctic_chain_lengths[0], arctic_chain_lengths[-1]), even_over_odd=True)
+            arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=np.arange(arctic_chain_lengths[0], arctic_chain_lengths[-1]))
 
 
     def test_cpi_t4(self):
@@ -230,7 +230,7 @@ class TestchainChainCorrelation_rvals:
     def test_correlation_rvals_t0(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-        qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals()
         
         assert np.round(qpt_acid_rvals[1,0], decimals=5) == 0.89322
             
@@ -238,7 +238,7 @@ class TestchainChainCorrelation_rvals:
     def test_correlation_rvals_t1(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-        qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals()
         
         for col in range(len(qpt_acid_rvals[0,:])):
             assert np.round(qpt_acid_rvals[col,col], decimals=5) == 1
@@ -247,7 +247,7 @@ class TestchainChainCorrelation_rvals:
     def test_correlation_rvals_t2(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-        qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_chain_obj.correlation_rvals()
         
         for row in range(len(qpt_acid_rvals[:,0])):
             for col in range(len(qpt_acid_rvals[0,:])):
@@ -270,7 +270,7 @@ class TestchainChainCorrelation_pvals:
     def test_correlation_pvals_t0(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-        qpt_acid_pvals = qpt_acid_chain_obj.correlation_pvals(minimum_obs=2)
+        qpt_acid_pvals = qpt_acid_chain_obj.correlation_pvals()
         
         for col in range(len(qpt_acid_pvals[0,:])):
             assert np.round(qpt_acid_pvals[col,col], decimals=5) == 0
@@ -279,7 +279,7 @@ class TestchainChainCorrelation_pvals:
     def test_correlation_pvals_t1(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-        qpt_acid_pvals = qpt_acid_chain_obj.correlation_pvals(minimum_obs=2)
+        qpt_acid_pvals = qpt_acid_chain_obj.correlation_pvals()
         
         for row in range(len(qpt_acid_pvals[:,0])):
             for col in range(len(qpt_acid_pvals[0,:])):
@@ -303,7 +303,7 @@ class TestchainChainPca:
     def test_pca_t0(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='z-score')
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths)
 
 
     def test_pca_t1(self):
@@ -312,31 +312,47 @@ class TestchainChainPca:
         qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='clr')
 
 
-    @pytest.mark.filterwarnings("ignore:It is")
+    @pytest.mark.filterwarnings("ignore:scaling_method")
     def test_pca_t2(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
         qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method=None)
 
 
+    @pytest.mark.filterwarnings("ignore:drop_nans")
     def test_pca_t3(self):
+        
+        qpt_acid_chain_df.iloc[0,0] = np.nan
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, drop_nans=True)
+        
+
+    def test_pca_t4(self):
         
         with pytest.raises(ValueError):
             qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
             qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=np.arange(qpt_chain_lengths[0], qpt_chain_lengths[-1]))
 
 
-    def test_pca_t4(self):
+    def test_pca_t5(self):
         
         with pytest.raises(ValueError):
             qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
             qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="True")
             
             
-    def test_pca_t5(self):
+    def test_pca_t6(self):
         
         with pytest.raises(ValueError):
             qpt_acid_chain_df.iloc[0,0] = np.nan
             qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="z-score")
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths)
+            
+    
+    def test_pca_t7(self):
+        
+        with pytest.raises(ValueError):
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="z-score", drop_nans="False")
+            
             
