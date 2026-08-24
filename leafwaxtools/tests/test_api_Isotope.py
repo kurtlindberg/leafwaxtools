@@ -252,7 +252,7 @@ class TestisotopeIsotopeCorrelation_rvals:
     def test_correlation_rvals_t0(self):
         
         qpt_acid_iso_obj = Isotope(qpt_acid_iso_df)
-        qpt_acid_rvals = qpt_acid_iso_obj.correlation_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_iso_obj.correlation_rvals()
         
         assert np.round(qpt_acid_rvals[1,0], decimals=5) == 0.46539
             
@@ -260,7 +260,7 @@ class TestisotopeIsotopeCorrelation_rvals:
     def test_correlation_rvals_t1(self):
         
         qpt_acid_iso_obj = Isotope(qpt_acid_iso_df)
-        qpt_acid_rvals = qpt_acid_iso_obj.correlation_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_iso_obj.correlation_rvals()
         
         for col in range(len(qpt_acid_rvals[0,:])):
             assert np.round(qpt_acid_rvals[col,col], decimals=5) == 1
@@ -269,7 +269,7 @@ class TestisotopeIsotopeCorrelation_rvals:
     def test_correlation_rvals_t2(self):
         
         qpt_acid_iso_obj = Isotope(qpt_acid_iso_df)
-        qpt_acid_rvals = qpt_acid_iso_obj.correlation_rvals(minimum_obs=2)
+        qpt_acid_rvals = qpt_acid_iso_obj.correlation_rvals()
         
         for row in range(len(qpt_acid_rvals[:,0])):
             for col in range(len(qpt_acid_rvals[0,:])):
@@ -293,7 +293,7 @@ class TestisotopeIsotopeCorrelation_pvals:
     def test_correlation_pvals_t0(self):
         
         qpt_acid_iso_obj = Isotope(qpt_acid_iso_df)
-        qpt_acid_pvals = qpt_acid_iso_obj.correlation_pvals(minimum_obs=2)
+        qpt_acid_pvals = qpt_acid_iso_obj.correlation_pvals()
         
         for col in range(len(qpt_acid_pvals[0,:])):
             assert np.round(qpt_acid_pvals[col,col], decimals=5) == 0
@@ -302,7 +302,7 @@ class TestisotopeIsotopeCorrelation_pvals:
     def test_correlation_pvals_t1(self):
         
         qpt_acid_iso_obj = Isotope(qpt_acid_iso_df)
-        qpt_acid_pvals = qpt_acid_iso_obj.correlation_pvals(minimum_obs=2)
+        qpt_acid_pvals = qpt_acid_iso_obj.correlation_pvals()
         
         for row in range(len(qpt_acid_pvals[:,0])):
             for col in range(len(qpt_acid_pvals[0,:])):
