@@ -203,7 +203,7 @@ class TestchainChainCpi:
         arctic_chain_lengths_test = arctic_chain_lengths[1:]
         arctic_acid_chain_obj = Chain(arctic_acid_chain_df_test)
         arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths_test)
-        print(arctic_acid_cpi)
+        
         assert np.round(arctic_acid_cpi[0], decimals=2) == 1.59
         assert np.isinf(arctic_acid_cpi[6]) == True
         assert np.isnan(np.sum(arctic_acid_cpi[14])) == True
