@@ -237,12 +237,12 @@ class Chain:
 
         if chain_lengths[0] % 2 != 0 and even_over_odd is True:
             warnings.warn(
-                f"The first chain-length '{chain_lengths[0]}' is an odd number, but this cpi function will be dividing even number chain-lengths over odd number ones"
+                f"even_over_odd: The first chain-length '{chain_lengths[0]}' is an odd number, but this cpi function will be dividing even number chain-lengths over odd number ones"
             )
         
         if chain_lengths[0] % 2 == 0 and even_over_odd is False:
             warnings.warn(
-                f"The first chain-length '{chain_lengths[0]}' is an even number, but this cpi function will be dividing odd number chain-lengths over even number ones"
+                f"even_over_odd: The first chain-length '{chain_lengths[0]}' is an even number, but this cpi function will be dividing odd number chain-lengths over even number ones"
             )
 
         chain_lengths_even = [num for num in chain_lengths if num % 2 == 0]
@@ -367,12 +367,17 @@ class Chain:
             'clr' (centered log-ratio transformation; Aitchison, 1982) using 
             skbio.stats.composition.clr (Aton et al., 2026), and None. The 
             default is 'z-score'.
+        drop_nans : bool, optional
+            Drops all rows of user input data (self.data) containing NaNs. If 
+            NaNs are not dropped from the data, sklearn.decomposition.PCA() 
+            raise a ValueError. The default is False.
 
         Raises
         ------
         ValueError
             Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns).
+            number of chain-lengths (columns) or if 'drop_nans' is neither 
+            True nor False.
 
         Returns
         -------
@@ -428,7 +433,7 @@ class Chain:
             #     data_df_scaled = pd.DataFrame(data=data_ilr_transform, columns=chain_lengths)
 
             case None:
-                warnings.warn("scaling_method: it is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
+                warnings.warn("scaling_method: It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
                 data_df_scaled = pd.DataFrame(data=data, columns=chain_lengths)
 
             case _:
