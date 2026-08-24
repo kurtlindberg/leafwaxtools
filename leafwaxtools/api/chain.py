@@ -330,7 +330,7 @@ class Chain:
         return p_vals
 
 
-    def pca(self, chain_lengths, scaling_method='z-score'):
+    def pca(self, chain_lengths, scaling_method='z-score', drop_nans=False):
         """
         Performs a Principal Component Analysis (PCA) on the leaf wax 
         chain-length data.
@@ -392,17 +392,32 @@ class Chain:
             raise ValueError(
                 "'chain_lengths' must be the same length as the number of data columns"    
             )
+            
+        if drop_nans is True:
+            data_df = pd.DataFrame(data=self.data)
+            data_df.dropna(inplace=True)
+            
+            data = np.array(data_df)
+            
+            rows_dropped = len(self.data[:,0]) - len(data[:,0])
+            warnings.warn(f"drop_nans: {rows_dropped} row(s)/sample(s) removed prior to performing PCA due to having NaN values")
+        
+        elif drop_nans is False:
+            data = self.data
+            
+        else:
+            raise ValueError("'drop_nans' must either be True or False (default)")
 
         # Apply data scaling before PCA
         match scaling_method:
             case 'z-score':
                 data_scaler = StandardScaler()
-                data_scaler.fit(self.data)
-                data_scaled = data_scaler.transform(self.data)
+                data_scaler.fit(data)
+                data_scaled = data_scaler.transform(data)
                 data_df_scaled = pd.DataFrame(data=data_scaled, columns=chain_lengths)
 
             case 'clr':
-                data_multi_replace = multi_replace(self.data)
+                data_multi_replace = multi_replace(data)
                 data_clr = clr(data_multi_replace)
                 data_df_scaled = pd.DataFrame(data=data_clr, columns=chain_lengths)
 
@@ -413,8 +428,8 @@ class Chain:
             #     data_df_scaled = pd.DataFrame(data=data_ilr_transform, columns=chain_lengths)
 
             case None:
-                warnings.warn("It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
-                data_df_scaled = pd.DataFrame(data=self.data, columns=chain_lengths)
+                warnings.warn("scaling_method: it is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
+                data_df_scaled = pd.DataFrame(data=data, columns=chain_lengths)
 
             case _:
                 raise ValueError("'scaling_method' must be set to 'z-score' (default), 'clr', or None")
