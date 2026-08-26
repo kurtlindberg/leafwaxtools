@@ -143,7 +143,6 @@ class Chain:
         McInerney, 2013) of each sample (rows).
         
         References:
-            
         Bray, E. E., & Evans, E. D. (1961). Distribution of n-paraffins as a 
         clue to recognition of source beds. Geochimica et Cosmochimica Acta, 
         22(1), 2-15. https://doi.org/10.1016/0016-7037(61)90069-2
@@ -195,7 +194,6 @@ class Chain:
         each sample (rows).
         
         References:
-            
         Marzi, R., Torkelson, B. E., & Olson, R. K. (1993). A revised carbon 
         preference index. Organic Geochemistry, 20(8), 1303-1306.
         https://doi.org/10.1016/0146-6380(93)90016-5
@@ -326,6 +324,70 @@ class Chain:
 
 
     def pca(self, chain_lengths, scaling_method='z-score', drop_nans=False):
+        """
+        Performs a Principal Component Analysis (PCA) on the leaf wax 
+        chain-length data.
+                                                                  
+        References:
+        Aitchison, J. (1982). The statistical analysis of compositional data. 
+        Journal of the Royal Statistical Society: Series B (Methodological), 
+        44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
+        
+        Aton, M., McDonald, D., Cañardo Alastuey, J., Azom, R., Batra, P., 
+        Bezshapkin, V., ... & Zhu, Q. (2026). Scikit-bio: a fundamental Python 
+        library for biological omic data analysis. Nature Methods, 23(2), 
+        274-276. https://doi.org/10.1038/s41592-025-02981-z
+        
+        Gloor, G. B., Macklaim, J. M., Pawlowsky-Glahn, V., & Egozcue, J. J. 
+        (2017). Microbiome datasets are compositional: and this is not 
+        optional. Frontiers in microbiology, 8, 2224.
+        https://doi.org/10.3389/fmicb.2017.02224
+        
+        Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., 
+        Grisel, O., ... & Duchesnay, É. (2011). Scikit-learn: Machine learning 
+        in Python. the Journal of machine Learning research, 12, 2825-2830.
+
+        Parameters
+        ----------
+        chain_lengths : array-like
+            Array-like of integers or floats representing the carbon 
+            chain-length number of each column.
+        scaling_method : str or None, optional
+            Scaling method applied to user data prior to PCA. Available 
+            methods include 'z-score' using 
+            sklearn.preprocessing.StandardScaler (Pedregosa et al., 2011), 
+            'clr' (centered log-ratio transformation; Aitchison, 1982) using 
+            skbio.stats.composition.clr (Aton et al., 2026), and None. The 
+            default is 'z-score'.
+        drop_nans : bool, optional
+            Drops all rows of user input data (self.data) containing NaNs. If 
+            NaNs are not dropped from the data, sklearn.decomposition.PCA() 
+            raise a ValueError. The default is False.
+
+        Raises
+        ------
+        ValueError
+            Raises an error if 'chain_lengths' is not the same length as the
+            number of chain-lengths (columns) or if 'drop_nans' is neither 
+            True nor False.
+
+        Returns
+        -------
+        pca_dict : dict
+            A dictionary containing the following keys: "pca" (the full set of
+            parameters and returns from the sklearn.decomposition.PCA class 
+            after fitting it to the user data), "features" (array of names of 
+            each loading provided by 'chain_lengths'), "loadings" (Pandas 
+            DataFrame of the vectors/principal component scores of each 
+            loading feature (rows) organized by decreasing explained variance 
+            (columns)),"scores" (Pandas DataFrame of scores in each principal 
+            component (columns) for every input data sample (rows)), 
+            "scores_scaled" (Pandas DataFrame of "scores" scaled by the 
+            minimum and maximum score of each principal component; useful for 
+            creating PCA biplots with loadings and scores set to the same 
+            scale).
+
+        """
         
         if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
