@@ -326,67 +326,6 @@ class Chain:
 
 
     def pca(self, chain_lengths, scaling_method='z-score', drop_nans=False):
-        """
-        Performs a Principal Component Analysis (PCA) on the leaf wax 
-        chain-length data.
-                                                                  
-        References:
-            
-        Aitchison, J. (1982). The statistical analysis of compositional data. 
-        Journal of the Royal Statistical Society: Series B (Methodological), 
-        44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
-        
-        Aton, M., McDonald, D., Cañardo Alastuey, J., Azom, R., Batra, P., 
-        Bezshapkin, V., ... & Zhu, Q. (2026). Scikit-bio: a fundamental Python 
-        library for biological omic data analysis. Nature Methods, 23(2), 
-        274-276. https://doi.org/10.1038/s41592-025-02981-z
-        
-        Gloor, G. B., Macklaim, J. M., Pawlowsky-Glahn, V., & Egozcue, J. J. 
-        (2017). Microbiome datasets are compositional: and this is not 
-        optional. Frontiers in microbiology, 8, 2224.
-        https://doi.org/10.3389/fmicb.2017.02224
-        
-        Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., 
-        Grisel, O., ... & Duchesnay, É. (2011). Scikit-learn: Machine learning 
-        in Python. the Journal of machine Learning research, 12, 2825-2830.
-
-        Parameters
-        ----------
-        chain_lengths : array-like
-            Array-like of integers or floats representing the carbon 
-            chain-length number of each column.
-        scaling_method : str or None, optional
-            Scaling method applied to user data prior to PCA. Available 
-            methods include 'z-score' using 
-            sklearn.preprocessing.StandardScaler (Pedregosa et al., 2011), 
-            'clr' (centered log-ratio transformation; Aitchison, 1982) using 
-            skbio.stats.composition.clr (Aton et al., 2026), and None. The 
-            default is 'z-score'.
-        drop_nans : bool, optional
-            Drops all rows of user input data (self.data) containing NaNs. If 
-            NaNs are not dropped from the data, sklearn.decomposition.PCA() 
-            raise a ValueError. The default is False.
-
-        Raises
-        ------
-        ValueError
-            Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns) or if 'drop_nans' is neither 
-            True nor False.
-
-        Returns
-        -------
-        pca_dict : dict
-            A dictionary containing "pca" (the full set of parameters and 
-            returns from the sklearn.decomposition.PCA class), "pc_values" 
-            (numeric list of principal components; i.e., 4 components = 
-            [1,2,3,4]), "features" (names of each loading provided by 
-            'chain_lengths'), "loadings" (the vector/principal component 
-            scores of each loading organized by decreasing explained variance),
-            "pc_scores" (principal component scores in each component for 
-            every input data sample).
-
-        """
         
         if len(chain_lengths) != len(self.data[0,:]):
             raise ValueError(
@@ -394,13 +333,7 @@ class Chain:
             )
             
         if drop_nans is True:
-            data_df = pd.DataFrame(data=self.data)
-            data_df.dropna(inplace=True)
-            
-            data = np.array(data_df)
-            
-            rows_dropped = len(self.data[:,0]) - len(data[:,0])
-            warnings.warn(f"drop_nans: {rows_dropped} row(s)/sample(s) removed prior to performing PCA due to having NaN values")
+            data = nan_handling.drop_nan(self.data)
         
         elif drop_nans is False:
             data = self.data
@@ -408,24 +341,15 @@ class Chain:
         else:
             raise ValueError("'drop_nans' must either be True or False (default)")
 
-        # Apply data scaling before PCA
         match scaling_method:
             case 'z-score':
                 data_scaler = StandardScaler()
-                data_scaler.fit(data)
-                data_scaled = data_scaler.transform(data)
+                data_scaled = data_scaler.fit_transform(data)
                 data_df_scaled = pd.DataFrame(data=data_scaled, columns=chain_lengths)
 
             case 'clr':
-                data_multi_replace = multi_replace(data)
-                data_clr = clr(data_multi_replace)
+                data_clr = clr(multi_replace(data))
                 data_df_scaled = pd.DataFrame(data=data_clr, columns=chain_lengths)
-
-            # case 'ilr':
-            #     data_multi_replace = multi_replace(self.data)
-            #     data_ilr = ilr(data_multi_replaced)
-            #     Figure out how to back-transform ilr matrix for PCA per Filzmoser et al. (2009)
-            #     data_df_scaled = pd.DataFrame(data=data_ilr_transform, columns=chain_lengths)
 
             case None:
                 warnings.warn("scaling_method: It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
@@ -434,29 +358,26 @@ class Chain:
             case _:
                 raise ValueError("'scaling_method' must be set to 'z-score' (default), 'clr', or None")
 
-        # PCA procedure regardless of data scaling method
-        data_pca = PCA(n_components=len(chain_lengths))
-        data_pca.fit_transform(data_df_scaled)
-            
-        data_pca_loadings = data_pca.components_
-        data_pca_features = data_df_scaled.columns
-        data_pca_values = np.arange(data_pca.n_components_) + 1
+        pca_model = PCA(n_components=len(chain_lengths))
+        pca_scores = pca_model.fit_transform(data_df_scaled)
+        
+        pc_columns = [None] * pca_model.n_components_
+        for i in range(pca_model.n_components_):
+            pc_columns[i] = "PC" + str(i+1)
 
         pca_dict = {
-            "pca": data_pca,
-            "pc_values": data_pca_values,
-            "features": data_pca_features,
-            "loadings": data_pca_loadings
+            "pca": pca_model,
+            "features": chain_lengths,
+            "loadings": pd.DataFrame(data=pca_model.components_.T, index=chain_lengths, columns=pc_columns),
+            "scores": pd.DataFrame(data=pca_scores, columns=pc_columns)
         }
 
-        for i in range(0, len(chain_lengths)):
-
-            data_pc = data_pca.fit_transform(data_df_scaled)[:,i]
-            data_scale_pc = 1.0 / (data_pc.max() - data_pc.min())
-            data_pc_scores = data_pc * data_scale_pc
-
-            # pca_dict.update({f"wax_pc{i+1}": wax_pc})
-            # pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
-            pca_dict.update({f"pc{i+1}_scores": data_pc_scores})
-
+        pca_scores_scaled = np.zeros(shape=np.shape(pca_scores))
+        for col in range(pca_model.n_components_):
+            pca_scores_col = pca_scores[:,col]
+            pca_scores_col_scale = 1.0 / (pca_scores_col.max() - pca_scores_col.min())
+            pca_scores_scaled[:,col] = pca_scores_col * pca_scores_col_scale            
+        
+        pca_dict.update({"scores_scaled": pd.DataFrame(data=pca_scores_scaled, columns=pc_columns)})
+            
         return pca_dict
