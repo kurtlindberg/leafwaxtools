@@ -10,8 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from skbio.stats.composition import clr, multi_replace
 import warnings
-from ..utils import validate_init
-from ..utils import correlation
+from ..utils import validate_init, correlation, nan_handling
 
 
 class Chain:
@@ -49,11 +48,7 @@ class Chain:
 
         validate_init.validate_data_dimensions(input_data)
         
-        input_data_df = pd.DataFrame(data=input_data)
-        input_data_dfnan = input_data_df.apply(pd.to_numeric, errors='coerce')
-        input_data_arr = np.array(input_data_dfnan)
-
-        self.data = input_data_arr
+        self.data = nan_handling.coerce_nan(input_data)
 
 
     def total_conc(self, calculate_log=False):
