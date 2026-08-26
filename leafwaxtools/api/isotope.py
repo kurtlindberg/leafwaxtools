@@ -5,8 +5,7 @@ isotope data imported as a 2D array-like object
 
 import pandas as pd
 import numpy as np
-from ..utils import validate_init
-from ..utils import correlation
+from ..utils import validate_init, correlation, nan_handling
 
 
 class Isotope:
@@ -44,11 +43,7 @@ class Isotope:
 
         validate_init.validate_data_dimensions(input_data)
         
-        input_data_df = pd.DataFrame(data=input_data)
-        input_data_dfnan = input_data_df.apply(pd.to_numeric, errors='coerce')
-        input_data_arr = np.array(input_data_dfnan)
-
-        self.data = input_data_arr
+        self.data = nan_handling.coerce_nan(input_data)
 
 
     def value_range(self):
