@@ -15,7 +15,7 @@ author = {Lindberg, Kurt},
 month = august,
 title = {{leafwaxtools: A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data}},
 url = {https://zenodo.org/badge/latestdoi/986685242},
-version = {v3.0.0},
+version = {v3.1.0},
 year = {2026}
 }
 
@@ -24,4 +24,4 @@ year = {2026}
 APA style entry
 """""""""""""""
 
-Lindberg, K. (2026). leafwaxtools: A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data (Version v3.0.0) [Computer software]. https://zenodo.org/badge/latestdoi/986685242
+Lindberg, K. (2026). leafwaxtools: A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data (Version v3.1.0) [Computer software]. https://zenodo.org/badge/latestdoi/986685242
