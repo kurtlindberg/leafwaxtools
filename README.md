@@ -9,7 +9,7 @@ A Python package for calculating common indices from plant leaf wax carbon chain
 
 ## Versions
 
-See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v3.0.0).
+See the [releases page](https://github.com/kurtlindberg/leafwaxtools/releases) for details on each version (latest = v3.1.0).
 
 ## Documentation
 
