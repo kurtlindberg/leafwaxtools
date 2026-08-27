@@ -365,7 +365,10 @@ class Chain:
             NaNs are not dropped from the data, sklearn.decomposition.PCA() 
             raise a ValueError. The default is False.
         supp_inds: 2-D array-like
-            2-D array-like of plant leaf wax carbon chain-length data
+            2-D array-like of plant leaf wax carbon chain-length data from 
+            "supplemental individuals/samples" which receive principal 
+            component scores based on the model fit to self.data but do not 
+            influence the analysis itself.
 
         Raises
         ------
