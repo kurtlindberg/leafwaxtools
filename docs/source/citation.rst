@@ -15,7 +15,7 @@ author = {Lindberg, Kurt},
 month = august,
 title = {{leafwaxtools: A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data}},
 url = {https://zenodo.org/badge/latestdoi/986685242},
-version = {v3.1.0},
+version = {v3.1.1},
 year = {2026}
 }
 
