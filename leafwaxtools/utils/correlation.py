@@ -11,6 +11,8 @@ def corr_r(data, min_obs):
     correlation features from SciPy (Virtanen et al., 2020). Additionally, this 
     function drops all NaN values from the two data columns used in each 
     correlation, similar to the implementation of pandas.DataFrame.corr().
+
+    References:
     
     Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., 
     Cournapeau, D., ... & Van Mulbregt, P. (2020). SciPy 1.0: fundamental 
@@ -61,6 +63,8 @@ def corr_p(data, min_obs):
     correlation features from SciPy (Virtanen et al., 2020). Additionally, this 
     function drops all NaN values from the two data columns used in each 
     correlation, similar to the implementation of pandas.DataFrame.corr().
+
+    References:
     
     Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., 
     Cournapeau, D., ... & Van Mulbregt, P. (2020). SciPy 1.0: fundamental 
