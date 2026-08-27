@@ -157,8 +157,8 @@ class Chain:
         Parameters
         ----------
         chain_lengths : 1-D array-like
-            Array-like of integers or floats representing the carbon 
-            chain-length number of each column.
+            1-D array-like of integers or floats representing the 
+            carbon chain-length number of each column.
 
         Returns
         -------
@@ -199,8 +199,8 @@ class Chain:
         Parameters
         ----------
         chain_lengths : 1-D array-like
-            Array-like of integers or floats representing the carbon 
-            chain-length number of each column.
+            1-D array-like of integers or floats representing the 
+            carbon chain-length number of each column.
         even_over_odd : bool, optional
             Calculates the CPI of even-chain over odd-chain leaf waxes (use 
             case for n-alkanoic acids). Change to False to calculate the CPI 
@@ -348,8 +348,8 @@ class Chain:
         Parameters
         ----------
         chain_lengths : 1-D array-like
-            Array-like of integers or floats representing the carbon 
-            chain-length number of each column.
+            1-D array-like of integers or floats representing the 
+            carbon chain-length number of each column.
         scaling_method : str or None, optional
             Scaling method applied to user data prior to PCA. Available 
             methods include 'z-score' using 
