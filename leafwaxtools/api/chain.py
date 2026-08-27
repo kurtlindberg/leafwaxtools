@@ -145,6 +145,7 @@ class Chain:
         McInerney, 2013) of each sample (rows).
         
         References:
+        
         Bray, E. E., & Evans, E. D. (1961). Distribution of n-paraffins as a 
         clue to recognition of source beds. Geochimica et Cosmochimica Acta, 
         22(1), 2-15. https://doi.org/10.1016/0016-7037(61)90069-2
@@ -192,6 +193,7 @@ class Chain:
         each sample (rows).
         
         References:
+        
         Marzi, R., Torkelson, B. E., & Olson, R. K. (1993). A revised carbon 
         preference index. Organic Geochemistry, 20(8), 1303-1306.
         https://doi.org/10.1016/0146-6380(93)90016-5
@@ -327,6 +329,7 @@ class Chain:
         chain-length data.
                                                                   
         References:
+        
         Aitchison, J. (1982). The statistical analysis of compositional data. 
         Journal of the Royal Statistical Society: Series B (Methodological), 
         44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
