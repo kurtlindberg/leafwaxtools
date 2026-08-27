@@ -323,7 +323,7 @@ class Chain:
         return p_vals
 
 
-    def pca(self, chain_lengths, scaling_method='z-score', drop_nans=False):
+    def pca(self, chain_lengths, scaling_method='z-score', drop_nans=False, supp_inds=None):
         """
         Performs a Principal Component Analysis (PCA) on the leaf wax 
         chain-length data.
@@ -396,12 +396,22 @@ class Chain:
         """
         
         preprocessing.validate_chain_lengths(self.data, chain_lengths)
+        
+        if supp_inds is not None:
+            supp_inds_arr = preprocessing.coerce_nan(supp_inds)
+            preprocessing.validate_chain_lengths(supp_inds_arr, chain_lengths)
             
         if drop_nans is True:
             data = preprocessing.drop_nan(self.data)
+            
+            if supp_inds is not None:
+                supp_inds_data = preprocessing.drop_nan(supp_inds_arr)
         
         elif drop_nans is False:
             data = self.data
+            
+            if supp_inds is not None:
+                supp_inds_data = supp_inds_arr
             
         else:
             raise ValueError("'drop_nans' must either be True or False (default)")
@@ -411,14 +421,25 @@ class Chain:
                 data_scaler = StandardScaler()
                 data_scaled = data_scaler.fit_transform(data)
                 data_df_scaled = pd.DataFrame(data=data_scaled, columns=chain_lengths)
+                
+                if supp_inds is not None:
+                    supp_inds_scaled = data_scaler.transform(supp_inds_data)
+                    supp_inds_df_scaled = pd.DataFrame(data=supp_inds_scaled, columns=chain_lengths)
 
             case 'clr':
                 data_clr = clr(multi_replace(data))
                 data_df_scaled = pd.DataFrame(data=data_clr, columns=chain_lengths)
+                
+                if supp_inds is not None:
+                    supp_inds_clr = clr(multi_replace(supp_inds_data))
+                    supp_inds_df_scaled = pd.DataFrame(data=supp_inds_clr, columns=chain_lengths)
 
             case None:
                 warnings.warn("scaling_method: It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
                 data_df_scaled = pd.DataFrame(data=data, columns=chain_lengths)
+                
+                if supp_inds is not None:
+                    supp_inds_df_scaled = pd.DataFrame(data=supp_inds_data, columns=chain_lengths)
 
             case _:
                 raise ValueError("'scaling_method' must be set to 'z-score' (default), 'clr', or None")
@@ -442,7 +463,19 @@ class Chain:
             pca_scores_col = pca_scores[:,col]
             pca_scores_col_scale = 1.0 / (pca_scores_col.max() - pca_scores_col.min())
             pca_scores_scaled[:,col] = pca_scores_col * pca_scores_col_scale            
-        
         pca_dict.update({"scores_scaled": pd.DataFrame(data=pca_scores_scaled, columns=pc_columns)})
+        
+        if supp_inds is not None:
+            supp_inds_pca_scores = pca_model.transform(supp_inds_df_scaled)
+            pca_dict.update({"supp_inds_scores": pd.DataFrame(data=supp_inds_pca_scores, columns=pc_columns)})
+            
+            supp_inds_pca_scores_scaled = np.zeros(shape=np.shape(supp_inds_pca_scores))
+            for col in range(pca_model.n_components_):
+                supp_inds_pca_scores_col = supp_inds_pca_scores[:,col]
+                pca_scores_col = pca_scores[:,col]
+                supp_inds_pca_scores_col_scale = 1.0 / (pca_scores_col.max() - pca_scores_col.min())  # scale to PCA "training" scores
+                # supp_inds_pca_scores_col_scale = 1.0 / (supp_inds_pca_scores_col.max() - supp_inds_pca_scores_col.min())  # or to the supplementary individuals themselves?
+                supp_inds_pca_scores_scaled[:,col] = supp_inds_pca_scores_col * supp_inds_pca_scores_col_scale
+            pca_dict.update({"supp_inds_scores_scaled": pd.DataFrame(data=supp_inds_pca_scores_scaled, columns=pc_columns)})
             
         return pca_dict
