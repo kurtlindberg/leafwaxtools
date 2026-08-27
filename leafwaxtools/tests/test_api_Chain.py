@@ -60,7 +60,7 @@ qpt_acid_chain_df = qpt_data_df[
     ]
 ]
 
-# Create array for chain_lengths arg in Chain.acl and Chain.cpi
+# Create array for chain_lengths arg in Chain.acl, Chain.cpi, and Chain.pca()
 arctic_chain_lengths = np.zeros(shape=len(arctic_acid_chain_df.columns))
 for col in range(len(arctic_acid_chain_df.columns)):
     col_name = arctic_acid_chain_df.columns[col]
@@ -203,7 +203,7 @@ class TestchainChainCpi:
         arctic_chain_lengths_test = arctic_chain_lengths[1:]
         arctic_acid_chain_obj = Chain(arctic_acid_chain_df_test)
         arctic_acid_cpi = arctic_acid_chain_obj.cpi(chain_lengths=arctic_chain_lengths_test)
-        
+
         assert np.round(arctic_acid_cpi[0], decimals=2) == 1.59
         assert np.isinf(arctic_acid_cpi[6]) == True
         assert np.isnan(np.sum(arctic_acid_cpi[14])) == True

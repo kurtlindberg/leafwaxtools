@@ -10,8 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from skbio.stats.composition import clr, multi_replace
 import warnings
-from ..utils import validate_init
-from ..utils import correlation
+from ..utils import preprocessing, correlation
 
 
 class Chain:
@@ -34,7 +33,9 @@ class Chain:
     See also
     --------
     
-    leafwaxtools.utils.validate_init.validate_data_dimensions: Checks to make sure input user data is 2-dimensional.
+    leafwaxtools.utils.preprocessing.validate_data_dimensions: Checks to make sure input user data is 2-dimensional.
+    
+    leafwaxtools.utils.preprocessing.coerce_nan: Converts all non-numeric values to NaNs.
     
     Examples
     --------
@@ -47,13 +48,9 @@ class Chain:
    
     def __init__(self, input_data):
 
-        validate_init.validate_data_dimensions(input_data)
+        preprocessing.validate_data_dimensions(input_data)
         
-        input_data_df = pd.DataFrame(data=input_data)
-        input_data_dfnan = input_data_df.apply(pd.to_numeric, errors='coerce')
-        input_data_arr = np.array(input_data_dfnan)
-
-        self.data = input_data_arr
+        self.data = preprocessing.coerce_nan(input_data)
 
 
     def total_conc(self, calculate_log=False):
@@ -148,7 +145,6 @@ class Chain:
         McInerney, 2013) of each sample (rows).
         
         References:
-            
         Bray, E. E., & Evans, E. D. (1961). Distribution of n-paraffins as a 
         clue to recognition of source beds. Geochimica et Cosmochimica Acta, 
         22(1), 2-15. https://doi.org/10.1016/0016-7037(61)90069-2
@@ -160,27 +156,23 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : array-like
-            Array-like of integers or floats representing the carbon 
-            chain-length number of each column.
-
-        Raises
-        ------
-        ValueError
-            Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns).
+        chain_lengths : 1-D array-like
+            1-D array-like of integers or floats representing the 
+            carbon chain-length number of each column.
 
         Returns
         -------
         acl : numpy.ndarray
             1-D Numpy array of ACL values for each sample (row).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.preprocessing.validate_chain_lengths: Checks to make sure 'chain_lengths' is the same length as the number of user data columns
 
         """
 
-        if len(chain_lengths) != len(self.data[0,:]):
-            raise ValueError(
-                "'chain_lengths' must be the same length as the number of data columns"    
-            )
+        preprocessing.validate_chain_lengths(self.data, chain_lengths)
 
         acl_numer = np.zeros(len(self.data[:,0]))
         acl = np.zeros(len(self.data[:,0]))
@@ -200,16 +192,15 @@ class Chain:
         each sample (rows).
         
         References:
-            
         Marzi, R., Torkelson, B. E., & Olson, R. K. (1993). A revised carbon 
         preference index. Organic Geochemistry, 20(8), 1303-1306.
         https://doi.org/10.1016/0146-6380(93)90016-5
 
         Parameters
         ----------
-        chain_lengths : array-like
-            Array-like of integers or floats representing the carbon 
-            chain-length number of each column.
+        chain_lengths : 1-D array-like
+            1-D array-like of integers or floats representing the 
+            carbon chain-length number of each column.
         even_over_odd : bool, optional
             Calculates the CPI of even-chain over odd-chain leaf waxes (use 
             case for n-alkanoic acids). Change to False to calculate the CPI 
@@ -219,21 +210,21 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns) or if 'even_over_odd' is neither 
-            True nor False.
+            Raises an error if 'even_over_odd' is neither True nor False.
 
         Returns
         -------
         cpi : numpy.ndarray
             1-D Numpy array of CPI values for each sample (row).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.preprocessing.validate_chain_lengths: Checks to make sure 'chain_lengths' is the same length as the number of user data columns
 
         """
 
-        if len(chain_lengths) != len(self.data[0,:]):
-            raise ValueError(
-                "'chain_lengths' must be the same length as the number of data columns"    
-            )
+        preprocessing.validate_chain_lengths(self.data, chain_lengths)
 
         if chain_lengths[0] % 2 != 0 and even_over_odd is True:
             warnings.warn(
@@ -336,7 +327,6 @@ class Chain:
         chain-length data.
                                                                   
         References:
-            
         Aitchison, J. (1982). The statistical analysis of compositional data. 
         Journal of the Royal Statistical Society: Series B (Methodological), 
         44(2), 139-160. https://doi.org/10.1111/j.2517-6161.1982.tb01195.x
@@ -357,9 +347,9 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : array-like
-            Array-like of integers or floats representing the carbon 
-            chain-length number of each column.
+        chain_lengths : 1-D array-like
+            1-D array-like of integers or floats representing the 
+            carbon chain-length number of each column.
         scaling_method : str or None, optional
             Scaling method applied to user data prior to PCA. Available 
             methods include 'z-score' using 
@@ -375,37 +365,37 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns) or if 'drop_nans' is neither 
-            True nor False.
+            Raises an error if 'drop_nans' is neither True nor False.
 
         Returns
         -------
         pca_dict : dict
-            A dictionary containing "pca" (the full set of parameters and 
-            returns from the sklearn.decomposition.PCA class), "pc_values" 
-            (numeric list of principal components; i.e., 4 components = 
-            [1,2,3,4]), "features" (names of each loading provided by 
-            'chain_lengths'), "loadings" (the vector/principal component 
-            scores of each loading organized by decreasing explained variance),
-            "pc_scores" (principal component scores in each component for 
-            every input data sample).
+            A dictionary containing the following keys: "pca" (the full set of
+            parameters and returns from the sklearn.decomposition.PCA class 
+            after fitting it to the user data), "features" (array of names of 
+            each loading provided by 'chain_lengths'), "loadings" (Pandas 
+            DataFrame of the vectors/principal component scores of each 
+            loading feature (rows) organized by decreasing explained variance 
+            (columns)),"scores" (Pandas DataFrame of scores in each principal 
+            component (columns) for every input data sample (rows)), 
+            "scores_scaled" (Pandas DataFrame of "scores" scaled by the 
+            minimum and maximum score of each principal component; useful for 
+            creating PCA biplots with loadings and scores set to the same 
+            scale).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.preprocessing.validate_chain_lengths: Checks to make sure 'chain_lengths' is the same length as the number of user data columns
+        
+        leafwaxtools.utils.preprocessing.drop_nan: Removes rows (samples) containing NaN values.
 
         """
         
-        if len(chain_lengths) != len(self.data[0,:]):
-            raise ValueError(
-                "'chain_lengths' must be the same length as the number of data columns"    
-            )
+        preprocessing.validate_chain_lengths(self.data, chain_lengths)
             
         if drop_nans is True:
-            data_df = pd.DataFrame(data=self.data)
-            data_df.dropna(inplace=True)
-            
-            data = np.array(data_df)
-            
-            rows_dropped = len(self.data[:,0]) - len(data[:,0])
-            warnings.warn(f"drop_nans: {rows_dropped} row(s)/sample(s) removed prior to performing PCA due to having NaN values")
+            data = preprocessing.drop_nan(self.data)
         
         elif drop_nans is False:
             data = self.data
@@ -413,24 +403,15 @@ class Chain:
         else:
             raise ValueError("'drop_nans' must either be True or False (default)")
 
-        # Apply data scaling before PCA
         match scaling_method:
             case 'z-score':
                 data_scaler = StandardScaler()
-                data_scaler.fit(data)
-                data_scaled = data_scaler.transform(data)
+                data_scaled = data_scaler.fit_transform(data)
                 data_df_scaled = pd.DataFrame(data=data_scaled, columns=chain_lengths)
 
             case 'clr':
-                data_multi_replace = multi_replace(data)
-                data_clr = clr(data_multi_replace)
+                data_clr = clr(multi_replace(data))
                 data_df_scaled = pd.DataFrame(data=data_clr, columns=chain_lengths)
-
-            # case 'ilr':
-            #     data_multi_replace = multi_replace(self.data)
-            #     data_ilr = ilr(data_multi_replaced)
-            #     Figure out how to back-transform ilr matrix for PCA per Filzmoser et al. (2009)
-            #     data_df_scaled = pd.DataFrame(data=data_ilr_transform, columns=chain_lengths)
 
             case None:
                 warnings.warn("scaling_method: It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
@@ -439,29 +420,26 @@ class Chain:
             case _:
                 raise ValueError("'scaling_method' must be set to 'z-score' (default), 'clr', or None")
 
-        # PCA procedure regardless of data scaling method
-        data_pca = PCA(n_components=len(chain_lengths))
-        data_pca.fit_transform(data_df_scaled)
-            
-        data_pca_loadings = data_pca.components_
-        data_pca_features = data_df_scaled.columns
-        data_pca_values = np.arange(data_pca.n_components_) + 1
+        pca_model = PCA(n_components=len(chain_lengths))
+        pca_scores = pca_model.fit_transform(data_df_scaled)
+        
+        pc_columns = [None] * pca_model.n_components_
+        for i in range(pca_model.n_components_):
+            pc_columns[i] = "PC" + str(i+1)
 
         pca_dict = {
-            "pca": data_pca,
-            "pc_values": data_pca_values,
-            "features": data_pca_features,
-            "loadings": data_pca_loadings
+            "pca": pca_model,
+            "features": chain_lengths,
+            "loadings": pd.DataFrame(data=pca_model.components_.T, index=chain_lengths, columns=pc_columns),
+            "scores": pd.DataFrame(data=pca_scores, columns=pc_columns)
         }
 
-        for i in range(0, len(chain_lengths)):
-
-            data_pc = data_pca.fit_transform(data_df_scaled)[:,i]
-            data_scale_pc = 1.0 / (data_pc.max() - data_pc.min())
-            data_pc_scores = data_pc * data_scale_pc
-
-            # pca_dict.update({f"wax_pc{i+1}": wax_pc})
-            # pca_dict.update({f"wax_scale_pc{i+1}": wax_scale_pc})
-            pca_dict.update({f"pc{i+1}_scores": data_pc_scores})
-
+        pca_scores_scaled = np.zeros(shape=np.shape(pca_scores))
+        for col in range(pca_model.n_components_):
+            pca_scores_col = pca_scores[:,col]
+            pca_scores_col_scale = 1.0 / (pca_scores_col.max() - pca_scores_col.min())
+            pca_scores_scaled[:,col] = pca_scores_col * pca_scores_col_scale            
+        
+        pca_dict.update({"scores_scaled": pd.DataFrame(data=pca_scores_scaled, columns=pc_columns)})
+            
         return pca_dict
