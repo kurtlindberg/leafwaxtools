@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from skbio.stats.composition import clr, multi_replace
 import warnings
-from ..utils import validate_init, correlation, nan_handling
+from ..utils import preprocessing, correlation
 
 
 class Chain:
@@ -33,7 +33,9 @@ class Chain:
     See also
     --------
     
-    leafwaxtools.utils.validate_init.validate_data_dimensions: Checks to make sure input user data is 2-dimensional.
+    leafwaxtools.utils.preprocessing.validate_data_dimensions: Checks to make sure input user data is 2-dimensional.
+    
+    leafwaxtools.utils.preprocessing.coerce_nan: Converts all non-numeric values to NaNs.
     
     Examples
     --------
@@ -46,9 +48,9 @@ class Chain:
    
     def __init__(self, input_data):
 
-        validate_init.validate_data_dimensions(input_data)
+        preprocessing.validate_data_dimensions(input_data)
         
-        self.data = nan_handling.coerce_nan(input_data)
+        self.data = preprocessing.coerce_nan(input_data)
 
 
     def total_conc(self, calculate_log=False):
@@ -154,27 +156,23 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : array-like
+        chain_lengths : 1-D array-like
             Array-like of integers or floats representing the carbon 
             chain-length number of each column.
-
-        Raises
-        ------
-        ValueError
-            Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns).
 
         Returns
         -------
         acl : numpy.ndarray
             1-D Numpy array of ACL values for each sample (row).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.preprocessing.validate_chain_lengths: Checks to make sure 'chain_lengths' is the same length as the number of user data columns
 
         """
 
-        if len(chain_lengths) != len(self.data[0,:]):
-            raise ValueError(
-                "'chain_lengths' must be the same length as the number of data columns"    
-            )
+        preprocessing.validate_chain_lengths(self.data, chain_lengths)
 
         acl_numer = np.zeros(len(self.data[:,0]))
         acl = np.zeros(len(self.data[:,0]))
@@ -200,7 +198,7 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : array-like
+        chain_lengths : 1-D array-like
             Array-like of integers or floats representing the carbon 
             chain-length number of each column.
         even_over_odd : bool, optional
@@ -212,21 +210,21 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns) or if 'even_over_odd' is neither 
-            True nor False.
+            Raises an error if 'even_over_odd' is neither True nor False.
 
         Returns
         -------
         cpi : numpy.ndarray
             1-D Numpy array of CPI values for each sample (row).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.preprocessing.validate_chain_lengths: Checks to make sure 'chain_lengths' is the same length as the number of user data columns
 
         """
 
-        if len(chain_lengths) != len(self.data[0,:]):
-            raise ValueError(
-                "'chain_lengths' must be the same length as the number of data columns"    
-            )
+        preprocessing.validate_chain_lengths(self.data, chain_lengths)
 
         if chain_lengths[0] % 2 != 0 and even_over_odd is True:
             warnings.warn(
@@ -349,7 +347,7 @@ class Chain:
 
         Parameters
         ----------
-        chain_lengths : array-like
+        chain_lengths : 1-D array-like
             Array-like of integers or floats representing the carbon 
             chain-length number of each column.
         scaling_method : str or None, optional
@@ -367,9 +365,7 @@ class Chain:
         Raises
         ------
         ValueError
-            Raises an error if 'chain_lengths' is not the same length as the
-            number of chain-lengths (columns) or if 'drop_nans' is neither 
-            True nor False.
+            Raises an error if 'drop_nans' is neither True nor False.
 
         Returns
         -------
@@ -386,16 +382,20 @@ class Chain:
             minimum and maximum score of each principal component; useful for 
             creating PCA biplots with loadings and scores set to the same 
             scale).
+            
+        See also
+        --------
+        
+        leafwaxtools.utils.preprocessing.validate_chain_lengths: Checks to make sure 'chain_lengths' is the same length as the number of user data columns
+        
+        leafwaxtools.utils.preprocessing.drop_nan: Removes rows (samples) containing NaN values.
 
         """
         
-        if len(chain_lengths) != len(self.data[0,:]):
-            raise ValueError(
-                "'chain_lengths' must be the same length as the number of data columns"    
-            )
+        preprocessing.validate_chain_lengths(self.data, chain_lengths)
             
         if drop_nans is True:
-            data = nan_handling.drop_nan(self.data)
+            data = preprocessing.drop_nan(self.data)
         
         elif drop_nans is False:
             data = self.data
