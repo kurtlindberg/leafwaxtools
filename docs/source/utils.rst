@@ -6,12 +6,12 @@ leafwaxtools Utilities
 Utilities upon which leafwaxtools depends for higher-level functionalities accessible to users.
 
 
-Validate Init (leafwaxtools.utils.validate_init)
+Preprocessing (leafwaxtools.utils.preprocessing)
 """"""""""""""""""""""""""""""""""""""""""""""""
 
-Contains functionality for validating user input data when initializing API classes.
+Contains functionality for preprocessing user input data when initializing API classes and performing certain functions.
 
-.. automodule:: leafwaxtools.utils.validate_init
+.. automodule:: leafwaxtools.utils.preprocessing
    :members:
     
 Correlation (leafwaxtools.utils.correlation)
