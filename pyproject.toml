@@ -1,14 +1,23 @@
 [project]
 name = "leafwaxtools"
-version = "3.0.0"
+version = "3.1.0"
 description = "A package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data"
 readme = "README.md"
 license = { text = "Apache-2.0" }
-authors = [{ name = "Kurt Lindberg", email = "kurtrlindberg@gmail.com" }]
+authors = [
+  { name = "Kurt Lindberg", email = "kurtrlindberg@gmail.com" }
+]
 requires-python = ">=3.12"
-dependencies = ["pandas", "numpy", "scikit-learn", "scipy", "scikit-bio"]
+dependencies = [
+  "pandas",
+  "numpy",
+  "scikit-learn",
+  "scipy",
+  "scikit-bio"
+]
 
 [tool.setuptools]
+packages = ["leafwaxtools"]
 license-files = []
 
 [project.urls]
