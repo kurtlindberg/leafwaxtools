@@ -364,6 +364,8 @@ class Chain:
             Drops all rows of user input data (self.data) containing NaNs. If 
             NaNs are not dropped from the data, sklearn.decomposition.PCA() 
             raise a ValueError. The default is False.
+        supp_inds: 2-D array-like
+            2-D array-like of plant leaf wax carbon chain-length data
 
         Raises
         ------
@@ -380,11 +382,14 @@ class Chain:
             DataFrame of the vectors/principal component scores of each 
             loading feature (rows) organized by decreasing explained variance 
             (columns)),"scores" (Pandas DataFrame of scores in each principal 
-            component (columns) for every input data sample (rows)), 
+            component (columns) for every input data sample (rows)), and  
             "scores_scaled" (Pandas DataFrame of "scores" scaled by the 
             minimum and maximum score of each principal component; useful for 
             creating PCA biplots with loadings and scores set to the same 
-            scale).
+            scale). If data is also passed to 'supp_inds': "supp_inds_scores" 
+            (same as "scores" for the provided supplemental individuals) and 
+            "supp_inds_scores_scaled" (same as "scores_scaled" for the 
+            provided supplemental indivudals).
             
         See also
         --------
@@ -392,6 +397,8 @@ class Chain:
         leafwaxtools.utils.preprocessing.validate_chain_lengths: Checks to make sure 'chain_lengths' is the same length as the number of user data columns
         
         leafwaxtools.utils.preprocessing.drop_nan: Removes rows (samples) containing NaN values.
+        
+        leafwaxtools.utils.preprocessing.coerce_nan: Converts all non-numeric values to NaNs (applied to 'supp_inds').
 
         """
         
