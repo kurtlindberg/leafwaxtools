@@ -322,8 +322,9 @@ class TestchainChainPca:
     @pytest.mark.filterwarnings("ignore:drop_nans")
     def test_pca_t3(self):
         
-        qpt_acid_chain_df.iloc[0,0] = np.nan
-        qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+        qpt_acid_chain_df_test = qpt_acid_chain_df.copy()
+        qpt_acid_chain_df_test.iloc[0,0] = np.nan
+        qpt_acid_chain_obj = Chain(qpt_acid_chain_df_test)
         qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, drop_nans=True)
         
 
@@ -344,8 +345,9 @@ class TestchainChainPca:
     def test_pca_t6(self):
         
         with pytest.raises(ValueError):
-            qpt_acid_chain_df.iloc[0,0] = np.nan
-            qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
+            qpt_acid_chain_df_test = qpt_acid_chain_df.copy()
+            qpt_acid_chain_df_test.iloc[0,0] = np.nan
+            qpt_acid_chain_obj = Chain(qpt_acid_chain_df_test)
             qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths)
             
     
@@ -353,6 +355,82 @@ class TestchainChainPca:
         
         with pytest.raises(ValueError):
             qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method="z-score", drop_nans="False")
+            qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, drop_nans="False")
             
+            
+    def test_pca_t8(self):
+        
+        with pytest.raises(ValueError):
+            arctic_acid_chain_obj = Chain(arctic_acid_chain_df)
+            arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=arctic_chain_lengths, drop_nans=True, supp_inds=qpt_acid_chain_df)
+            
+    
+    @pytest.mark.filterwarnings("ignore:drop_nans")
+    def test_pca_t9(self):
+        
+        arctic_acid_evenchain_df = arctic_data_df[
+            [
+                'c20_fconc',
+                'c22_fconc',
+                'c24_fconc',
+                'c26_fconc',
+                'c28_fconc',
+                'c30_fconc'
+            ]
+        ]
+        arctic_acid_chain_obj = Chain(arctic_acid_evenchain_df)
+        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, drop_nans=True, supp_inds=qpt_acid_chain_df)
+        
+        
+    @pytest.mark.filterwarnings("ignore:drop_nans")
+    def test_pca_t10(self):
+        
+        arctic_acid_evenchain_df = arctic_data_df[
+            [
+                'c20_fconc',
+                'c22_fconc',
+                'c24_fconc',
+                'c26_fconc',
+                'c28_fconc',
+                'c30_fconc'
+            ]
+        ]
+        arctic_acid_chain_obj = Chain(arctic_acid_evenchain_df)
+        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='clr', drop_nans=True, supp_inds=qpt_acid_chain_df)
+        
+    
+    @pytest.mark.filterwarnings("ignore:drop_nans")
+    @pytest.mark.filterwarnings("ignore:scaling_method")
+    def test_pca_t11(self):
+        
+        arctic_acid_evenchain_df = arctic_data_df[
+            [
+                'c20_fconc',
+                'c22_fconc',
+                'c24_fconc',
+                'c26_fconc',
+                'c28_fconc',
+                'c30_fconc'
+            ]
+        ]
+        arctic_acid_chain_obj = Chain(arctic_acid_evenchain_df)
+        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method=None, drop_nans=True, supp_inds=qpt_acid_chain_df)
+        
+        
+    def test_pca_t12(self):
+        
+        arctic_acid_evenchain_df = arctic_data_df[
+            [
+                'c20_fconc',
+                'c22_fconc',
+                'c24_fconc',
+                'c26_fconc',
+                'c28_fconc',
+                'c30_fconc'
+            ]
+        ]
+        arctic_acid_evenchain_df.dropna(inplace=True)
+        arctic_acid_chain_obj = Chain(arctic_acid_evenchain_df)
+        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, supp_inds=qpt_acid_chain_df)
+        
             
