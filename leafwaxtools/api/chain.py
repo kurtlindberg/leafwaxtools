@@ -80,14 +80,14 @@ class Chain:
         
         total_conc = np.zeros(len(self.data[:,0]))
 
-        for row in range(0, len(self.data[:,0])):
+        for row in range(len(self.data[:,0])):
             total_conc[row] = np.nansum(self.data[row,:])
 
         if calculate_log is True:
             total_conc = np.log(total_conc)
 
         elif calculate_log is False:
-            total_conc = total_conc
+            pass
 
         else:
             raise ValueError("'calculate_log' must either be True or False (default)")
@@ -121,17 +121,17 @@ class Chain:
 
         rel_abd = np.zeros(np.shape(self.data))
 
-        for row in range(0, len(self.data[:,0])):
-            for col in range(0, len(self.data[0,:])):
+        for row in range(len(self.data[:,0])):
+            for col in range(len(self.data[0,:])):
                 rel_abd[row,col] = self.data[row,col]/np.nansum(self.data[row,:])
                     
         if calculate_percent is True:
-            for row in range(0, len(self.data[:,0])):
-                for col in range(0, len(self.data[0,:])):
+            for row in range(len(self.data[:,0])):
+                for col in range(len(self.data[0,:])):
                     rel_abd[row,col] = rel_abd[row,col]*100
                 
         elif calculate_percent is False:
-            rel_abd = rel_abd
+            pass
 
         else:
             raise ValueError("'calculate_percent' must either be True or False (default)")
@@ -178,8 +178,8 @@ class Chain:
         acl_numer = np.zeros(len(self.data[:,0]))
         acl = np.zeros(len(self.data[:,0]))
 
-        for row in range(0, len(self.data[:,0])):
-            for col in range(0, len(self.data[0,:])):
+        for row in range(len(self.data[:,0])):
+            for col in range(len(self.data[0,:])):
                 acl_numer[row] += self.data[row,col] * chain_lengths[col]
 
             acl[row] = acl_numer[row]/np.nansum(self.data[row,:])
@@ -247,11 +247,11 @@ class Chain:
         cpi = np.zeros(len(self.data[:,0]))
 
         if even_over_odd is True:
-            for row in range(0, len(self.data[:,0])):
+            for row in range(len(self.data[:,0])):
                 cpi[row] = (np.nansum(data_even[row,0:-1]) + np.nansum(data_even[row,1:])) / (2 * np.nansum(data_odd[row,:]))
 
         elif even_over_odd is False:
-             for row in range(0, len(self.data[:,0])):
+             for row in range(len(self.data[:,0])):
                  cpi[row] = (np.nansum(data_odd[row,0:-1]) + np.nansum(data_odd[row,1:])) / (2 * np.nansum(data_even[row,:]))
                  
         else:
