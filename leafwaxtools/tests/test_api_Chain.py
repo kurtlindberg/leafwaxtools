@@ -309,7 +309,7 @@ class TestchainChainPca:
     def test_pca_t1(self):
         
         qpt_acid_chain_obj = Chain(qpt_acid_chain_df)
-        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='clr')
+        qpt_acid_pca = qpt_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='z-score')
 
 
     @pytest.mark.filterwarnings("ignore:scaling_method")
@@ -396,7 +396,7 @@ class TestchainChainPca:
             ]
         ]
         arctic_acid_chain_obj = Chain(arctic_acid_evenchain_df)
-        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='clr', drop_nans=True, supp_inds=qpt_acid_chain_df)
+        arctic_acid_pca = arctic_acid_chain_obj.pca(chain_lengths=qpt_chain_lengths, scaling_method='z-score', drop_nans=True, supp_inds=qpt_acid_chain_df)
         
     
     @pytest.mark.filterwarnings("ignore:drop_nans")
