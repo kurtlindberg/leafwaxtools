@@ -355,11 +355,10 @@ class Chain:
             carbon chain-length number of each column.
         scaling_method : str or None, optional
             Scaling method applied to user data prior to PCA. Available 
-            methods include 'z-score' using 
-            sklearn.preprocessing.StandardScaler (Pedregosa et al., 2011), 
-            'clr' (centered log-ratio transformation; Aitchison, 1982) using 
-            skbio.stats.composition.clr (Aton et al., 2026), and None. The 
-            default is 'z-score'.
+            methods include: 'clr' (centered log-ratio transformation; 
+            Aitchison, 1982) using skbio.stats.composition.clr (Aton et al., 
+            2026), 'z-score' using sklearn.preprocessing.StandardScaler 
+            (Pedregosa et al., 2011), and None. The default is 'clr'.
         drop_nans : bool, optional
             Drops all rows of user input data (self.data) containing NaNs. If 
             NaNs are not dropped from the data, sklearn.decomposition.PCA() 
