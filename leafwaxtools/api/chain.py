@@ -323,7 +323,7 @@ class Chain:
         return p_vals
 
 
-    def pca(self, chain_lengths, scaling_method='z-score', drop_nans=False, supp_inds=None):
+    def pca(self, chain_lengths, scaling_method='clr', drop_nans=False, supp_inds=None):
         """
         Performs a Principal Component Analysis (PCA) on the leaf wax 
         chain-length data.
@@ -427,6 +427,14 @@ class Chain:
             raise ValueError("'drop_nans' must either be True or False (default)")
 
         match scaling_method:
+            case 'clr':
+                data_clr = clr(multi_replace(data))
+                data_df_scaled = pd.DataFrame(data=data_clr, columns=chain_lengths)
+                
+                if supp_inds is not None:
+                    supp_inds_clr = clr(multi_replace(supp_inds_data))
+                    supp_inds_df_scaled = pd.DataFrame(data=supp_inds_clr, columns=chain_lengths)
+            
             case 'z-score':
                 data_scaler = StandardScaler()
                 data_scaled = data_scaler.fit_transform(data)
@@ -435,14 +443,6 @@ class Chain:
                 if supp_inds is not None:
                     supp_inds_scaled = data_scaler.transform(supp_inds_data)
                     supp_inds_df_scaled = pd.DataFrame(data=supp_inds_scaled, columns=chain_lengths)
-
-            case 'clr':
-                data_clr = clr(multi_replace(data))
-                data_df_scaled = pd.DataFrame(data=data_clr, columns=chain_lengths)
-                
-                if supp_inds is not None:
-                    supp_inds_clr = clr(multi_replace(supp_inds_data))
-                    supp_inds_df_scaled = pd.DataFrame(data=supp_inds_clr, columns=chain_lengths)
 
             case None:
                 warnings.warn("scaling_method: It is recommended that the user apply a scaling method to their data for Principal Component Analysis.")
@@ -483,8 +483,7 @@ class Chain:
             for col in range(pca_model.n_components_):
                 supp_inds_pca_scores_col = supp_inds_pca_scores[:,col]
                 pca_scores_col = pca_scores[:,col]
-                supp_inds_pca_scores_col_scale = 1.0 / (pca_scores_col.max() - pca_scores_col.min())  # scale to PCA "training" scores
-                # supp_inds_pca_scores_col_scale = 1.0 / (supp_inds_pca_scores_col.max() - supp_inds_pca_scores_col.min())  # or to the supplementary individuals themselves?
+                supp_inds_pca_scores_col_scale = 1.0 / (pca_scores_col.max() - pca_scores_col.min())
                 supp_inds_pca_scores_scaled[:,col] = supp_inds_pca_scores_col * supp_inds_pca_scores_col_scale
             pca_dict.update({"supp_inds_scores_scaled": pd.DataFrame(data=supp_inds_pca_scores_scaled, columns=pc_columns)})
             
