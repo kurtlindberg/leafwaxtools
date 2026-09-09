@@ -7,7 +7,7 @@ authors:
 
 title: "leafwaxtools: A Python package for calculating common indices from plant leaf wax carbon chain-length distribution and isotopic data"
 version: v3.2.0
-date-released: 2026-08-27
+date-released: 2026-09-09
 doi: 10.5281/zenodo.15558247
 url: "https://github.com/kurtlindberg/leafwaxtools"
   
