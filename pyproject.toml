@@ -17,6 +17,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
+packages = ["leafwaxtools"]
 license-files = []
 
 [project.urls]
