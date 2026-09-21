@@ -21,7 +21,7 @@ license-files = []
 
 [project.urls]
 Homepage = "https://github.com/kurtlindberg/leafwaxtools"
-Issues = "https://github.com/kurtrlindberg/leafwaxtools/issues"
+Issues = "https://github.com/kurtlindberg/leafwaxtools/issues"
 
 [build-system]
 requires = ["setuptools>=69.0.2", "wheel"]
