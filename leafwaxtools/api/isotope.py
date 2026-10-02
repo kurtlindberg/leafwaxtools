@@ -216,6 +216,13 @@ class Isotope:
         return source_isotope
 
 
+    def suess_corr(self, correction=0):
+
+        suess_corrected = []
+        
+        return suess_corrected
+
+
     def correlation_rvals(self, minimum_obs=2):
         """
         Calculates the Pearson correlation r-values between each leaf wax 
